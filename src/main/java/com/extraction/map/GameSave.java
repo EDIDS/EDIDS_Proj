@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.extraction.player.Player;
+import com.google.gson.GsonBuilder;
 
 /**
  * Classe che rappresenta un salvataggio di gioco. Salviamo il gioco in JSON, tutte le classi che vogliamo salvare devono avere getter e setter
