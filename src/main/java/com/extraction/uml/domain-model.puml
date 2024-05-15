@@ -1,0 +1,78 @@
+@startuml
+title Extraction - domain model
+
+object Player {
+Health
+}
+
+object Configuration {
+}
+
+object Enemy {
+}
+
+object Item {
+}
+
+object MediKit {
+}
+
+object Game{
+}
+
+object Score{
+}
+
+object StartConfiguration{
+}
+
+object CurrentConfiguration{
+}
+
+object Restart{
+}
+
+object Building{
+}
+
+object Rooms{
+}
+
+object Weapon{
+}
+
+object Ammo{
+}
+
+object GameResult{
+Victory
+Game over
+}
+
+
+
+
+Player "1" --> "1" StartConfiguration: chooses
+Player "1" --> "1" CurrentConfiguration: visualize
+CurrentConfiguration "1" --> "1" Configuration: is a
+StartConfiguration "1" --> "1" Configuration: is a
+Configuration "1" --* "1" Game: contains
+Player "1" --> "1" Restart: requests
+Restart "1" --> "1" Game: modifies
+Player "1" --> "1" Score: visualize
+Score "1" --* "1" Game: contains
+Player "1" --> "1" Building: plays in
+Building "1" --> "1..." Rooms: made of
+Item "0.." --* "1" Rooms: contained in
+MediKit "1" --|> "1" Item: is a
+Ammo"1" --|> "1" Item: is a
+Weapon "1" --|> "1" Item: is a
+Enemy "0..1" --* "1" Rooms: contained in
+Game "1" --> "1.." Enemy: spawns
+Player "1" --> "1" GameResult: visualize
+Game "1" --> "1" GameResult: report
+Player "1" --> "1..5" Item: has some
+Game "1" --> "1.." Item: spawns
+
+
+@enduml

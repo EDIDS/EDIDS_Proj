@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+actor Player
+actor Enemy
+actor Item
+
+usecase "Inizia una partita" as StartGame
+usecase "Recupero Partita" as RecoverGame
+usecase "Visualizzare Stato" as ViewStatus
+usecase "Eseguire Attacco" as ExecuteAttack
+usecase "Scappare" as Escape
+usecase "Raccogliere Oggetto" as CollectItem
+usecase "Terminare Gioco" as EndGame
+usecase "Decidere Direzione" as DecideDirection
+usecase "Controllo Munizioni" as AmmoControl
+usecase "Salvare Stato" as SaveState
+usecase "Salvare Partita" as SaveGame
+usecase "Vittoria" as Victory
+usecase "Scegliere azione" as ChooseAction
+
+Player -- ViewStatus
+Player -- ChooseAction
+Item -- CollectItem
+Enemy -- ExecuteAttack
+
+StartGame .> RecoverGame : <<extends>>
+StartGame .> ViewStatus : <<extends>>
+ChooseAction .> ExecuteAttack : <<extends>>
+ChooseAction .> Escape : <<extends>>
+ChooseAction .> CollectItem : <<extends>>
+ChooseAction .> EndGame : <<extends>>
+ChooseAction .>  DecideDirection
+
+AmmoControl .> CollectItem : <<extends>>
+SaveState .> EndGame : <<extends>>
+
+
+@enduml
