@@ -1,0 +1,26 @@
+@startuml
+
+title Fight
+
+actor User
+participant Fight
+
+loop playerHealth and enemyHealth > 0
+  Fight -> User : displayOptions
+  User -> User : choose
+  User --> Fight : choice
+  alt choice = attack  
+    ref over User, Fight : Attack
+  else choice = defend
+    ref over User, Fight : Defend
+  else choice = escape
+    Fight -> Fight : endFight
+  else choice = cure
+    ref over User, Fight : Cure
+  end
+  else illegal choice
+    Fight --> User : Error(invalid choice)
+end
+Fight -> User : displayResult
+
+@enduml

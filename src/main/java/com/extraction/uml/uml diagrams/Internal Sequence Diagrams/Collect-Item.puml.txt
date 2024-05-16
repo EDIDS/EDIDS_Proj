@@ -1,0 +1,22 @@
+@startuml
+
+title Collect Item
+
+actor User
+participant Player
+participant Item
+participant Bag
+participant Room
+
+
+User -> Player : addItem(item)
+Player -> Item : getWeight
+return weight
+alt weight+playerWeight <= maxWeight
+  Player -> Room : removeItem(item)
+  Player -> Bag : add(item)
+else weight+totalweight > maxWeight
+  Player --> User : Error(bag full)
+end
+
+@enduml

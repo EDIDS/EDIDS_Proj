@@ -1,0 +1,23 @@
+@startuml
+
+title Get Info
+
+actor User
+participant Player
+participant Bag
+participant Enemy
+
+alt
+User -> Player : getPlayerInfo
+return playerInfo
+else
+User -> Player : getItemInfo
+Player -> Bag : requestItemInfo
+return itemInfo
+Player --> User : itemInfo
+else
+User -> Enemy : getEnemyInfo
+return enemyInfo
+end
+
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+
+title Defend
+
+actor User
+participant Fight
+participant Player
+
+Fight -> Player : defend
+return ?
+Fight -> User : ?
+
+@enduml

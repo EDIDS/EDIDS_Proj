@@ -1,0 +1,22 @@
+@startuml
+
+title Throw Item
+
+actor User
+participant Player
+participant Bag
+participant Room
+
+User -> Player : throwItem(item)
+Player -> Bag : search(item)
+alt hasItem
+  return 
+  Player -> Bag : remove(item)
+  Player -> Room : addItem(item)
+  Player -> User : displayItem
+else hasnotItem
+  Bag --> Player : Error(invalid item)
+  Player --> User : Error(item not in bag)
+end
+
+@enduml

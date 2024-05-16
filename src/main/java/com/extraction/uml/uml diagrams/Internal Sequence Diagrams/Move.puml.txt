@@ -1,0 +1,24 @@
+@startuml
+
+title Move
+
+actor User
+participant System
+participant Player
+participant Coordinate
+participant Building
+
+User -> System : requestDirection(direction)
+System -> Coordinate : setColumn/Row(int)
+return newCoordinate
+System -> Building : getRoom(newCoordinate)
+alt valid coordinate
+  Building --> System : room
+  System -> Player : setCurrentRoom(room)
+  System --> User : displayCurrentRoom
+else invalid coordinate
+  Building --> System : Error(null)
+  System --> User : Error(invalid move) 
+end
+
+@enduml

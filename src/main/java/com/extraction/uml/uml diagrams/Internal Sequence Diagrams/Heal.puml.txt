@@ -1,0 +1,24 @@
+@startuml
+
+title Heal
+
+actor User
+participant Fight
+participant Player
+participant Bag
+
+Fight -> Player : search(medikit)
+Player -> Bag : search(medikit)
+alt hasMedikit
+  return medikit
+  Player --> Fight : medikit
+  Fight -> Player : heal(medikit)
+  return
+  Fight -> User : displayHealth
+else hasnotMedikit
+  Bag --> Player : Error(not found)
+  Player --> Fight : Error(not found)
+  Fight -> User : Error(invalid choice) 
+end 
+
+@enduml

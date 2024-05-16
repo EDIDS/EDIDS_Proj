@@ -1,0 +1,121 @@
+@startuml
+
+title Design Class Model
+
+abstract class Alien  {
+  {abstract} attack() : int
+  {abstract} takeDamage(damage:int)
+}
+
+class Clicker {
+  health_ : int
+  attack_ : int
+  attack() : int
+  takeDamage(damage:int)
+}
+
+class Runner {
+  health_ : int
+  attack_ : int
+  attack() : int
+  takeDamage(damage:int)
+}
+
+class Shambler {
+  health_ : int
+  attack_ : int
+  attack() : int
+  takeDamage(damage:int)
+}
+
+class Item {
+  name : ItemName
+  weight : double
+  getWeight() : double
+}
+
+class Weapon {
+  type_ : WeaponType
+  minDamage_ : int
+  maxDamage_ : int
+  calculateDamage() : int
+}
+
+class Medikit{
+  healingAmount_ : int
+  getHealingAmount() : int
+}
+
+class Building {
+  room : Map<String, Room>
+  allItems : Map<String, Item>
+  addRoom(room:Room)
+  getRoom(coordinate:String) : Room
+  removeRoom(coordinate:String)
+  getAvailableDirections(room:Room) : String
+}
+ 
+class Room {
+  coordinate : Coordinate
+  title : String
+  description : String
+  iconPath : String
+  alien=null : Alien
+  is_closed=false : boolean
+  isClosed() : booelan
+  close()
+}
+
+class Coordinate {
+  column : int
+  row : int
+  setColumn(x int)
+  setRow(y int)
+  equals(o:Object) : boolean
+  toString() : String
+}
+
+class Fight {
+  player : Player
+  alien : ALien
+  fight()
+}
+
+class GameSave {
+  gson : Gson
+  saveGame(player:Player, building:Building)
+}
+
+class Player {
+  health_ : int
+  name_ : String
+  bag_ : List<Item>
+  currentWeight_ : double
+  currentRoom_ : Room
+  weapon : Weapon
+  score_ : int
+  hasWeapon() : double
+  attack() : int
+  addItem(item:Item)
+  throwItem(item:Item) : Item
+  heal()
+  takeDamage(damage:int)
+  getData() : String
+  reset()
+}
+
+Alien <|-- Clicker
+Alien <|-- Runner
+Alien <|-- Shambler
+Fight"1" --> "1"Player : lodges
+Fight"1" --> "1"Alien : lodges
+Item <|-- Weapon
+Item <|-- Medikit
+Building o-- Room
+Player"1" --> "1"Weapon : wields
+Player"1" --> "*"Item : holds
+Room"1" --> "*"Item : keeps
+Room"1" --> "1"Alien : keeps
+Room"1" --> "1"Coordinate : is described by
+
+@enduml

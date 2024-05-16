@@ -1,0 +1,21 @@
+@startuml
+
+title Attack
+
+actor User
+participant Fight
+participant Player
+participant Alien
+
+Fight -> Player : attack
+return playerAattack
+Fight -> Alien : attack
+return alienAttack
+Fight -> Alien : takeDamage(playerAttack)
+return
+Fight -> User : displayDealtDamage
+Fight -> Player : takeDamage(alienAttack)
+return
+Fight -> User : displaySufferedDamage
+
+@enduml
