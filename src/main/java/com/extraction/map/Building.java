@@ -30,11 +30,11 @@ public class Building {
     }
 
     public void setItem(Item item, Room room) {
-        allItems.put(room.coordinate.toString(), item);
+        allItems.put(room.getCoordinate().toString(), item);
     }
 
     public Item getItem(Room room) {
-        return allItems.get(room.coordinate.toString());
+        return allItems.get(room.getCoordinate().toString());
     }
 
     public Map<String, Item> getAllItems() {

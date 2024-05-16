@@ -16,21 +16,22 @@ public class Test {
 
         GameSave gameSave;
 
-        Room room1 = new Room("Room 1", new Coordinate(2, 0), "Title of Room 1", "Description of Room 1");
-        Room room2 = new Room("Room 2", new Coordinate(0, 1), "Title of Room 2", "Description of Room 2");
-        Room room3 = new Room("Room 3", new Coordinate(2, 1), "Title of Room 3", "Description of Room 3");
-        Room room4 = new Room("Room 4", new Coordinate(3, 1), "Title of Room 4", "Description of Room 4");
-        Room room5 = new Room("Room 5", new Coordinate(0, 2), "Title of Room 5", "Description of Room 5");
-        Room room6 = new Room("Room 6", new Coordinate(1, 2), "Title of Room 6", "Description of Room 6");
+        Room room1 = new Room("Room 1", new Coordinate(0, 2), "Title of Room 1", "Description of Room 1");
+        Room room2 = new Room("Room 2", new Coordinate(1, 0), "Title of Room 2", "Description of Room 2");
+        Room room3 = new Room("Room 3", new Coordinate(1, 2), "Title of Room 3", "Description of Room 3");
+        Room room4 = new Room("Room 4", new Coordinate(1, 3), "Title of Room 4", "Description of Room 4");
+        Room room5 = new Room("Room 5", new Coordinate(2, 0), "Title of Room 5", "Description of Room 5");
+        Room room6 = new Room("Room 6", new Coordinate(2, 1), "Title of Room 6", "Description of Room 6");
         Room room7 = new Room("Room 7", new Coordinate(2, 2), "Title of Room 7", "Description of Room 7");
-        Room room8 = new Room("Room 8", new Coordinate(3, 2), "Title of Room 8", "Description of Room 8");
-        Room room9 = new Room("Room 9", new Coordinate(4, 2), "Title of Room 9", "Description of Room 9");
-        Room room10 = new Room("Room 10", new Coordinate(1, 3), "Title of Room 10", "Description of Room 10");
-        Room room11 = new Room("Room 11", new Coordinate(4, 2), "Title of Room 11", "Description of Room 11");
-        Room room12 = new Room("Room 12", new Coordinate(1, 4), "Title of Room 12", "Description of Room 12");
-        Room room13 = new Room("Room 13", new Coordinate(2, 4), "Title of Room 13", "Description of Room 13");
+        Room room8 = new Room("Room 8", new Coordinate(2, 3), "Title of Room 8", "Description of Room 8");
+        Room room9 = new Room("Room 9", new Coordinate(2, 4), "Title of Room 9", "Description of Room 9");
+        Room room10 = new Room("Room 10", new Coordinate(3, 1), "Title of Room 10", "Description of Room 10");
+        Room room11 = new Room("Room 11", new Coordinate(2, 4), "Title of Room 11", "Description of Room 11");
+        Room room12 = new Room("Room 12", new Coordinate(4, 1), "Title of Room 12", "Description of Room 12");
+        Room room13 = new Room("Room 13", new Coordinate(4, 2), "Title of Room 13", "Description of Room 13");
 
         room12.setAlien(new Clicker());
+        room5.close();
 
         building.addRoom(room1);
         building.addRoom(room2);
@@ -48,7 +49,7 @@ public class Test {
 
 
         // Set the current coordinate to (2, 4)
-        Coordinate currentCoordinate = new Coordinate(2, 4);
+        Coordinate currentCoordinate = new Coordinate(4, 2);
         Room currentRoom = building.getRoom(currentCoordinate.toString());
         Room temp;
         List<String> availableDirections = new ArrayList<>();
@@ -91,11 +92,19 @@ public class Test {
             temp = currentRoom;
             currentRoom = building.getRoom(currentCoordinate.toString());
             if (currentRoom != null) {
-                System.out.println("You are now in " + currentRoom.getTitle());
-                if (currentRoom.getAlien()!= null){
-                    Fight fight = new Fight(player, currentRoom.getAlien());
-                    fight.fight();
-                    currentRoom.setAlien(null);
+                if (!currentRoom.isClosed()){
+                    System.out.println("You are now in " + currentRoom.getTitle());
+                    if (currentRoom.getAlien()!= null){
+                        Fight fight = new Fight(player, currentRoom.getAlien());
+                        fight.fight();
+                        currentRoom.setAlien(null);
+                    }
+                }
+                else {
+                    System.out.println("The room is closed. You need a key to access it.");
+                    currentRoom = temp;
+                    currentCoordinate = currentRoom.getCoordinate();
+                    temp = null;
                 }
             } else {
                 System.out.println("You cannot go that way.");

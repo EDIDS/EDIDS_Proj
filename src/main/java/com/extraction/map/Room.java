@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
-    Coordinate coordinate;
-    String title;
-    String description;
-    String iconPath = "";
-    Alien alien = null;
+    private Coordinate coordinate;
+    private String title;
+    private String description;
+    private String iconPath = "";
+    private Alien alien = null;
+    private boolean is_closed = false;
 
     public Room(){
         this.coordinate = new Coordinate(0, 0);
@@ -62,4 +63,10 @@ public class Room {
         this.alien = alien;
     }
 
+    public boolean isClosed(){
+        return is_closed;
+    }
+    public void close(){
+        is_closed = true;
+    }
 }

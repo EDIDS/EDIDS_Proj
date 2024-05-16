@@ -40,9 +40,9 @@ public class UI {
     JPanel mapSpacePanel;
     JPanel mapPanel;
     JPanel[][] grid;
-    String playerIconPath = System.getProperty("user.dir") + "/src/Graphic/imgs/user.png";
-    String checkIconPath = System.getProperty("user.dir") + "/src/Graphic/imgs/check-mark.png";
-    String exitIconPath = System.getProperty("user.dir") + "/src/Graphic/imgs/logout.png";
+    String playerIconPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/Graphic/imgs/user.png";
+    String checkIconPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/Graphic/imgs/check-mark.png";
+    String exitIconPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/Graphic/imgs/logout.png";
 
     JPanel mainTextPanel;
     JTextArea mainTextArea;
