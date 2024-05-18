@@ -18,4 +18,8 @@ public class Runner extends Alien{
     public void takeDamage(int damage) {
         this.setHealth(this.getHealth() - damage);
     }
+
+    public double getEscapeChance() {
+        return 0.6;
+    }
 }

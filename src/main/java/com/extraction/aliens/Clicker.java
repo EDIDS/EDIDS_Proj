@@ -18,4 +18,9 @@ public class Clicker extends Alien{
     public void takeDamage(int damage) {
         this.setHealth(this.getHealth() - damage);
     }
+
+    @Override
+    public double getEscapeChance() {
+        return 0.8;
+    }
 }

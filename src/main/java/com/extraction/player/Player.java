@@ -24,6 +24,7 @@ public class Player {
     private double currentWeight_ = 0;
     private Room currentRoom_;
     private Weapon weapon;
+    private Shield shield;
     private int score_;
 
     public Player()
@@ -99,16 +100,25 @@ public class Player {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
+
+    public void setShield(Shield shield) { this.shield = shield; }
     /**
      * Metodi
      */
+
     public boolean hasWeapon() {
         for (Item item : bag_) {
             return item instanceof Weapon;
         }
         return false;
-    }    // end of method hasWeapon()
+    }
 
+    public boolean hasShield() {
+        for (Item item : bag_) {
+            return item instanceof Shield;
+        }
+        return false;
+    }
 
     public int attack()
     {
@@ -117,15 +127,54 @@ public class Player {
         return BASE_ATTACK_DAMAGE;
     }
 
-    public void addItem(Item item){
-        if(currentWeight_ + item.getWeight() <= MAX_WEIGHT){
-
-            bag_.add(item);
-            currentWeight_ += item.getWeight();
+    public int defend(int damage) {
+        if (this.hasShield()) {
+            return damage - shield.getDefense();
         }
 
-        else
+        return damage;
+    }
+
+    public void addItem(Item item){
+        double newWeight = currentWeight_ + item.getWeight();
+
+        if (item instanceof Weapon) {
+            Weapon newWeapon = (Weapon) item;
+            for (Item i : bag_) {
+                if (i instanceof Weapon) {
+                    Weapon oldWeapon = (Weapon) i;
+                    newWeight -= oldWeapon.getWeight();
+                    if(newWeight <= MAX_WEIGHT){
+                        bag_.remove(oldWeapon);
+                        setWeapon(newWeapon);
+                    } else {
+                        System.out.println("You have reached the maximum weight of " + MAX_WEIGHT);
+                    }
+                }
+            }
+        }
+
+        if (item instanceof Shield) {
+            Shield newShield = (Shield) item;
+            for (Item i : bag_) {
+                if (i instanceof Shield) {
+                    Shield oldShield = (Shield) i;
+                    newWeight -= oldShield.getWeight();
+                    if(newWeight<=MAX_WEIGHT){
+                        bag_.remove(oldShield);
+                        setShield(newShield);
+                    } else {
+                        System.out.println("You have reached the maximum weight of " + MAX_WEIGHT);
+                    }
+                }
+            }
+        }
+        if (newWeight <= MAX_WEIGHT) {
+            bag_.add(item);
+            currentWeight_ = newWeight;
+        } else {
             System.out.println("You have reached the maximum weight of " + MAX_WEIGHT);
+        }
     }
 
     public Item throwItem(Item itemToThrow) {

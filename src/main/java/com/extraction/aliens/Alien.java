@@ -31,6 +31,7 @@ public abstract class Alien
     /* instance fields */
     protected int health_;
     protected String name_;
+    protected double escapeChance_;
     /**
      * Constructs a new enemy.
      */
@@ -38,7 +39,7 @@ public abstract class Alien
     {
         name_ = ALIEN_NAMES[RANDOM.nextInt(ALIEN_NAMES.length)];
 
-    } // end of constructor Enemy()
+    }
 
     public void setHealth(int health) {
         this.health_ = health;
@@ -76,6 +77,8 @@ public abstract class Alien
     {
         return health_;
     }
+
+    public abstract double getEscapeChance();
 
 }
 

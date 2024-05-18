@@ -39,31 +39,29 @@ public class Fight {
                     break;
                 case "D":
                     System.out.println("You defend against the " + alien.getName() + "!");
+                    int damage = alien.attack();
+                    int reducedDamage = player.defend(damage);
+                    player.takeDamage(reducedDamage);
+                    System.out.println("The " + alien.getName() + " deals " + reducedDamage + " damage to you!");
                     break;
                 case "R":
                     System.out.println("You try to run away from the " + alien.getName() + "!");
+                    double escapeChance = alien.getEscapeChance();
+                    if (Math.random() < escapeChance) {
+                        System.out.println("You successfully escaped from the " + alien.getName() + "!");
+                        return;
+                    } else {
+                        System.out.println("You failed to escape from the " + alien.getName() + "!");
+                        int damageTaken = alien.attack();
+                        player.takeDamage(damageTaken);
+                    }
                     break;
                 case "H":
-                    boolean hasMedikit = false;
-                    for (Item item : player.getBag()){
-                        if(item != null){
-                            if (item.getName().equals("Medikit")) {
-                                player.heal();
-                                System.out.println("You heal yourself with a medikit!");
-                                hasMedikit = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!hasMedikit) {
-                        System.out.println("You don't have any medikits!");
-                    }
+                    System.out.println("You try to heal yourself!");
+                    player.heal();
                     break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    continue;
-            }
 
+            }
         }
 
         if (player.getHealth() <= 0) {
@@ -72,5 +70,10 @@ public class Fight {
         } else {
             System.out.println("You have defeated the " + alien.getName() + "!");
         }
+    }
+
+    public void displayStatus() {
+        System.out.println("Player Health: " + player.getHealth());
+        System.out.println("Alien Health: " + alien.getHealth());
     }
 }

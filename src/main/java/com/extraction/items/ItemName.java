@@ -6,4 +6,5 @@ public enum ItemName {
     TORCH,
     CROWBAR,
     MEDIKIT,
+    SHIELD,
 }

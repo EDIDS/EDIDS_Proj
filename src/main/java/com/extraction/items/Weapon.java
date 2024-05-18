@@ -8,7 +8,7 @@ public class Weapon extends Item {
     public int minDamage_;
     public int maxDamage_;
 
-    public Weapon(ItemName name, int weight, WeaponType type) {
+    public Weapon(ItemName name, double weight, WeaponType type) {
         super(name, weight);
         this.type_ = type;
         switch (type) {
