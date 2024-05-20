@@ -84,6 +84,9 @@ public class Game {
                     newGame();
                     vm.showHomeScreen();
                     break;
+                case "Save":
+                    // da aggiungere salvataggio - Vulcu
+                    break;
                 case "Start":
                     vm.showMapScreen();
                     story.map();
