@@ -15,7 +15,7 @@ public class UI {
     JToolBar toolbar;
     JMenuBar mb;
     JMenu menu;
-    JMenuItem exit,copy,paste,selectAll;
+    JMenuItem exit,save;
     JTextArea ta;
 
     JPanel bodyPanel;
@@ -94,14 +94,18 @@ public class UI {
 
     private void createMenu() {
         exit = new JMenuItem("Exit");
+        save = new JMenuItem("Save");
         exit.setActionCommand("Exit");
+        save.setActionCommand("Save");
 
         exit.addActionListener(bHandler);
+        save.addActionListener(bHandler);
 
         mb = new JMenuBar();
         menu = new JMenu("Menu");
 
         menu.add(exit);
+        menu.add(save);
 
         mb.add(menu);
 
