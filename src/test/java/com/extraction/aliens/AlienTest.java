@@ -1,10 +1,11 @@
 package com.extraction.aliens;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-class AlienTest {
+@RunWith(Suite.class)
+@Suite.SuiteClasses({ClickerTest.class, RunnerTest.class,
+ShamblerTest.class})
 
-    @BeforeEach
-    void setUp() {
-    }
+public class AlienTest {
 }
