@@ -1,5 +1,6 @@
 package com.extraction.Graphic;
 
+import com.extraction.S3Uploader;
 import com.extraction.map.Building;
 import com.extraction.map.Coordinate;
 import com.extraction.map.Room;
@@ -7,6 +8,7 @@ import com.extraction.player.Player;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Game {
     ButtonsHandler bHandler = new ButtonsHandler();
@@ -85,13 +87,27 @@ public class Game {
                     vm.showHomeScreen();
                     break;
                 case "Save":
-                    // da aggiungere salvataggio - Vulcu
+                    try {
+                        S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
+                        s3Uploader.saveGame(player, building);
+                        //@TODO: Display a message to the user that the game has been saved
+
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     break;
                 case "Start":
                     vm.showMapScreen();
                     story.map();
                     break;
                 case "Load":
+                    try {
+                        S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
+                        s3Uploader.downloadAllGames();
+                    }
+                    catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                     break;
                 case "TopLeft":
                     story.selectPosition(nextPosition1);

@@ -14,6 +14,9 @@ public class AwsConfigReader {
         boolean isProfileSection = false;
 
         for (String line : lines) {
+            if (credentials.size() == 2)
+                break;
+
             System.out.println("Reading line: " + line);
             if (line.startsWith("[profile " + profile + "]") || (profile.equals("default") && line.startsWith("[default]"))) {
                 isProfileSection = true;

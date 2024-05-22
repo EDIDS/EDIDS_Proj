@@ -11,7 +11,7 @@ public class Room {
     private String description;
     private String iconPath = "";
     private Alien alien = null;
-    private boolean is_closed = false;
+    private boolean is_closed = false;;
 
     public Room(){
         this.coordinate = new Coordinate(0, 0);
@@ -66,7 +66,9 @@ public class Room {
     public boolean isClosed(){
         return is_closed;
     }
+
     public void close(){
         is_closed = true;
     }
+
 }
