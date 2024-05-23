@@ -5,7 +5,7 @@ public abstract class Item {
     /* class fields */
     /** An array of possible item types. */
     public static final String[] ITEM_NAMES = {
-            "Kei",
+            "Key",
             "Weapon",
             "Medikit",
             "Shield",

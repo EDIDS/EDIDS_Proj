@@ -1,7 +1,11 @@
 package com.extraction.items;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-class ItemTest {
+@RunWith(Suite.class)
+@Suite.SuiteClasses({WeaponTest.class, ShieldTest.class,
+        MedikitTest.class})
 
+public class ItemTest {
 }
