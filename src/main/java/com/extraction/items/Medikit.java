@@ -3,8 +3,8 @@ package com.extraction.items;
 public class Medikit extends Item {
     private int healingAmount_;
 
-    public Medikit(ItemName name, double weight, int healingAmount) {
-        super(name, weight);
+    public Medikit(double weight, int healingAmount) {
+        super("Medikit", weight);
         this.healingAmount_ = healingAmount;
     }
 

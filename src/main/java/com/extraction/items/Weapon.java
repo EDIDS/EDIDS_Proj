@@ -4,25 +4,42 @@ import java.util.Random;
 
 public class Weapon extends Item {
 
-    public WeaponType type_;
+    /** An array of possible weapon types. */
+    public static final String[] WEAPON_NAMES = {
+            "REVOLVER",
+            "AK47",
+            "USPSWORM"
+    };
+
+    /** Returns the weight of this type's weapon. */
+    public static double type_weight(String type) {
+        return switch (type) {
+            case "REVOLVER" -> 5;
+            case "AK47" -> 10;
+            case "USPSWORM" -> 15;
+            default -> 0;
+        };
+    };
+
+    public String type_;
     public int minDamage_;
     public int maxDamage_;
 
-    public Weapon(ItemName name, double weight, WeaponType type) {
-        super(name, weight);
+    public Weapon(String type) {
+        super("Weapon", type_weight(type));
         this.type_ = type;
         switch (type) {
-            case REVOLVER:
+            case "REVOLVER":
                 this.minDamage_ = 10;
                 this.maxDamage_ = 30;
 
                 break;
-            case AK47:
+            case "AK47":
                 this.minDamage_ = 30;
                 this.maxDamage_ = 50;
 
                 break;
-            case USPSWORM:
+            case "USPSWORM":
                 this.minDamage_ = 20;
                 this.maxDamage_ = 40;
 

@@ -16,7 +16,7 @@ public class Fight {
     public void fight() {
         System.out.println("You have encountered a " + alien.getName() + "!");
 
-        /**
+        /*
          * [A] - Attacca
          * [D] - Difendi - riduci i danni subiti (aggiungere scudo trovabile?)
          * [R] - Scappa

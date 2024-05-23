@@ -3,8 +3,8 @@ package com.extraction.items;
 public class Shield extends Item {
     private int defense;
 
-    public Shield(ItemName name, double weight, int defense) {
-        super(name, weight);
+    public Shield(double weight, int defense) {
+        super("Shield", weight);
         this.defense = defense;
     }
 

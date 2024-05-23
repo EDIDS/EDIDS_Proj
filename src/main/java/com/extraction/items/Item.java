@@ -1,12 +1,22 @@
 package com.extraction.items;
 
 public abstract class Item {
-    private ItemName name;
+
+    /* class fields */
+    /** An array of possible item types. */
+    public static final String[] ITEM_NAMES = {
+            "Kei",
+            "Weapon",
+            "Medikit",
+            "Shield",
+    };
+
+    private String name;
     private double weight;
 
-    public Item(ItemName name, double weight) { this.name = name; this.weight = weight; }
+    public Item(String name, double weight) { this.name = name; this.weight = weight; }
 
-    public ItemName getName() { return name; }
+    public String getName() { return name; }
 
     public double getWeight() { return weight; }
 }
