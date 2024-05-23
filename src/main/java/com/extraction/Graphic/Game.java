@@ -104,6 +104,7 @@ public class Game {
                     try {
                         S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
                         s3Uploader.downloadAllGames();
+                        //@TODO: listare i vari salvataggi e permettere all'utente di sceglierne uno, che verrà poi caricato. I restanti non selezionati vengono eliminati localmente
                     }
                     catch (Exception ex) {
                         throw new RuntimeException(ex);

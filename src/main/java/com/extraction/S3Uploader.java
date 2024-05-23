@@ -55,6 +55,9 @@ public class S3Uploader {
     public void saveGame(Player player, Building building){
         try {
             File directory = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states");
+            if (!directory.exists()){
+                directory.mkdirs();
+            }
             File[] files = directory.listFiles();
 
             // The new save number is one more than the max save number
@@ -86,11 +89,20 @@ public class S3Uploader {
         String bucketName = "edidsgamesave";
         String localDirectoryPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/";
 
+        // Check if the directory exists, if not, create it
+        File directory = new File(localDirectoryPath);
+        if (!directory.exists()){
+            directory.mkdirs();
+        }
+
         ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName);
         ListObjectsV2Result result;
-
         do {
             result = s3Client.listObjectsV2(req);
+            if (result.getObjectSummaries().isEmpty()) {
+                /*@TODO - stampa la mancata presenza di salvataggi a schermo*/
+                break;
+            }
 
             for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
                 String fileName = objectSummary.getKey();
