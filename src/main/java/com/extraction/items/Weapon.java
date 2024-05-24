@@ -31,7 +31,15 @@ public class Weapon extends Item {
 
     public Weapon(String type) {
         super("Weapon", type_weight(type));
-        this.type_ = type;
+        for (String weaponType : WEAPON_NAMES) {
+            if (weaponType.equals(type)) {
+                this.type_ = type;
+                break;
+            }
+        }
+        if (this.type_ == null)
+            throw new IllegalArgumentException();
+
         switch (type) {
             case "REVOLVER":
                 this.minDamage_ = 10;

@@ -21,7 +21,7 @@ public abstract class Item {
                 break;
             }
         }
-        if (name == null)
+        if (this.name == null)
             throw new IllegalArgumentException();
         this.weight = weight;
     }
