@@ -14,7 +14,17 @@ public abstract class Item {
     private String name;
     private double weight;
 
-    public Item(String name, double weight) { this.name = name; this.weight = weight; }
+    public Item(String name, double weight) {
+        for (String itemName : ITEM_NAMES) {
+            if (itemName.equals(name)) {
+                this.name = name;
+                break;
+            }
+        }
+        if (name == null)
+            throw new IllegalArgumentException();
+        this.weight = weight;
+    }
 
     public String getName() { return name; }
 
