@@ -1,15 +1,16 @@
 package com.extraction.items;
 
 public class Shield extends Item {
-    private int defense;
 
-    public Shield(double weight, int defense) {
-        super("Shield", weight);
-        this.defense = defense;
+    public static final int SHIELD_WEIGHT = 5;
+    public static final int SHIELD_DEFENSE = 20;
+
+    public Shield() {
+        super("Shield", SHIELD_WEIGHT);
     }
 
     public int getDefense() {
-        return defense;
+        return SHIELD_DEFENSE;
     }
 
     // Additional methods for Shield

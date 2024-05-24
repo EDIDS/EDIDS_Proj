@@ -192,7 +192,7 @@ public class Player {
         for (Item item : bag_) {
             if (item instanceof Medikit) {
                 Medikit medikit = (Medikit) item;
-                setHealth(medikit.getHealingAmount());
+                setHealth(FULL_HEALTH);
                 throwItem(medikit);
                 return;
             }
