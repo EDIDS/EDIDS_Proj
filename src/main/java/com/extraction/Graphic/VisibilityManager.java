@@ -21,6 +21,7 @@ public class VisibilityManager {
         ui.topPanel.setVisible(false);
         ui.mapSpacePanel.setVisible(false);
         ui.mainTextPanel.setVisible(false);
+        ui.itemsPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
     }
 
@@ -33,6 +34,7 @@ public class VisibilityManager {
         ui.topPanel.setVisible(false);
         ui.mapSpacePanel.setVisible(false);
         ui.mainTextPanel.setVisible(false);
+        ui.itemsPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
     }
 
@@ -43,6 +45,7 @@ public class VisibilityManager {
         ui.actionPanel.setVisible(true);
         // Hide
         ui.mainTextPanel.setVisible(false);
+        ui.itemsPanel.setVisible(false);
         ui.titlePanel.setVisible(false);
         ui.startPanel.setVisible(false);
     }
@@ -51,6 +54,7 @@ public class VisibilityManager {
         // Shown
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);
+        ui.itemsPanel.setVisible(true);
         ui.actionPanel.setVisible(true);
         // Hide
         ui.mapSpacePanel.setVisible(false);

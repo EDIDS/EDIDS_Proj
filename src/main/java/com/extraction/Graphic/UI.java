@@ -54,6 +54,12 @@ public class UI {
     JTextArea mainTextArea;
     Font mainTextFont = new Font("Serif", Font.BOLD, 20);
 
+    JPanel itemsPanel;
+    JButton itemButton1;
+    JButton itemButton2;
+    JButton itemButton3;
+    JButton itemButton4;
+
     JPanel actionPanel;
     JButton actionButton1;
     JButton actionButton2;
@@ -195,12 +201,14 @@ public class UI {
         createTopBarPanel();
         createMapPanel();
         createMainTextPanel();
+        createItemsPanel();
         createActionButtonsPanel();
         createMessageLabel();
 
         bodyPanel.add(topPanel);
         bodyPanel.add(mapSpacePanel);
         bodyPanel.add(mainTextPanel);
+        bodyPanel.add(itemsPanel);
         bodyPanel.add(actionPanel);
         window.add(messageLabel, BorderLayout.SOUTH);
     }
@@ -318,7 +326,7 @@ public class UI {
         // Main Text Panel
         mainTextPanel = new JPanel();
         mainTextPanel.setLayout(null);
-        mainTextPanel.setBounds(20, 80, 745, 350);  // -15
+        mainTextPanel.setBounds(20, 80, 745, 300);  // -15
         mainTextPanel.setBackground(background);
 
         mainTextArea = new JTextArea();
@@ -330,6 +338,27 @@ public class UI {
         mainTextArea.setLineWrap(true);
 
         mainTextPanel.add(mainTextArea);
+    }
+
+    private void createItemsPanel() {
+        //Items Panel
+        itemsPanel = new JPanel();
+        LayoutManager mgr = new GridLayout(1, 4, 10, 0);
+        itemsPanel.setLayout(mgr);
+        itemsPanel.setBounds(120, 400, 545, 40);  // -15
+        itemsPanel.setBackground(background);
+
+        itemButton1 = createButton("MedKit", actionFont, bHandler, "");
+        itemsPanel.add(itemButton1, gbc);
+
+        itemButton2 = createButton("Torcia", actionFont, bHandler, "");
+        itemsPanel.add(itemButton2, gbc);
+
+        itemButton3 = createButton("TNT", actionFont, bHandler, "");
+        itemsPanel.add(itemButton3, gbc);
+
+        itemButton4 = createButton("Item4", actionFont, bHandler, "");
+        itemsPanel.add(itemButton4, gbc);
     }
 
     private void createActionButtonsPanel() {

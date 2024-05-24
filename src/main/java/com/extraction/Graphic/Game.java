@@ -99,8 +99,8 @@ public class Game {
                     }
                     break;
                 case "Start":
-                    vm.showMapScreen();
-                    story.map();
+                    vm.showTextScreen();
+                    //story.map();
                     break;
                 case "Load":
                     /*try {
