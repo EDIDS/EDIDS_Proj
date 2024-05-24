@@ -1,6 +1,7 @@
 package com.extraction.Graphic;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -30,6 +31,11 @@ public class UI {
 
     JButton loadButton;
     Font loadFont = new Font("Serif", Font.BOLD, 40);
+
+    JScrollPane scroll;
+    JPanel loadPanel;
+    JList<JLabel> list;
+    DefaultListModel<JLabel> listModel;
 
     JPanel topPanel;
     JLabel[] topLabel;
@@ -79,7 +85,8 @@ public class UI {
 
         createMenu();
         createTitlePanel();
-        createStartButtonPanel();
+        createStartPanel();
+        createLoadPanel();
 
         // Initial Frame
         window.add(mb, BorderLayout.NORTH);
@@ -88,6 +95,7 @@ public class UI {
 
         bodyPanel.add(titlePanel);
         bodyPanel.add(startPanel);
+        bodyPanel.add(loadPanel);
 
         window.setVisible(true);
     }
@@ -138,7 +146,7 @@ public class UI {
         titlePanel.add(titleLabel, gbc);
     }
 
-    private void createStartButtonPanel() {
+    private void createStartPanel() {
         // Start Button Panel
         startPanel = new JPanel();
         //startPanel.setLayout(new GridBagLayout());
@@ -152,6 +160,34 @@ public class UI {
 
         loadButton = createButton("LOAD", loadFont, bHandler, "Load");
         startPanel.add(loadButton, gbc);
+    }
+
+    private void createLoadPanel() {
+        loadPanel = new JPanel();
+        loadPanel.setBounds(50, 50, 685, 500);
+        loadPanel.setLayout(new BoxLayout(loadPanel, BoxLayout.Y_AXIS));
+        loadPanel.setBackground(Color.BLACK);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(background);
+
+        for (int i = 0; i < 15; i++) {
+            JPanel p = new JPanel();
+            p.setLayout(new GridBagLayout());
+            p.setBackground(background);
+            p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+            JButton b = createButton("Word" + i, startFont, bHandler, "Null");
+            b.setPreferredSize(new Dimension(650, 50));
+            p.add(b, gbc);
+            panel.add(p, BorderLayout.CENTER);
+        }
+
+        scroll = new JScrollPane(panel);
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+
+        loadPanel.add(scroll);
     }
 
     // Game GUI

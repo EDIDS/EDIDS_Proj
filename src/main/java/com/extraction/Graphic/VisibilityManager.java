@@ -17,6 +17,19 @@ public class VisibilityManager {
         ui.titlePanel.setVisible(true);
         ui.startPanel.setVisible(true);
         // Hide
+        ui.loadPanel.setVisible(false);
+        ui.topPanel.setVisible(false);
+        ui.mapSpacePanel.setVisible(false);
+        ui.mainTextPanel.setVisible(false);
+        ui.actionPanel.setVisible(false);
+    }
+
+    public void showLoadScreen() {
+        // Shown
+        ui.loadPanel.setVisible(true);
+        // Hide
+        ui.titlePanel.setVisible(false);
+        ui.startPanel.setVisible(false);
         ui.topPanel.setVisible(false);
         ui.mapSpacePanel.setVisible(false);
         ui.mainTextPanel.setVisible(false);

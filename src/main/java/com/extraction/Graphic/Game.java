@@ -6,6 +6,8 @@ import com.extraction.map.Coordinate;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -101,14 +103,15 @@ public class Game {
                     story.map();
                     break;
                 case "Load":
-                    try {
+                    /*try {
                         S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
                         s3Uploader.downloadAllGames();
                         //@TODO: listare i vari salvataggi e permettere all'utente di sceglierne uno, che verrà poi caricato. I restanti non selezionati vengono eliminati localmente
                     }
                     catch (Exception ex) {
                         throw new RuntimeException(ex);
-                    }
+                    }*/
+                    vm.showLoadScreen();
                     break;
                 case "TopLeft":
                     story.selectPosition(nextPosition1);
