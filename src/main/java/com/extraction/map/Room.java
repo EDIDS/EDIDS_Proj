@@ -71,4 +71,6 @@ public class Room {
         is_closed = true;
     }
 
+    public void open() { is_closed = false; }
+
 }
