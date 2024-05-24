@@ -23,7 +23,7 @@ public class Weapon extends Item {
             case "USPSWORM" -> USPSWORM_WEIGHT;
             default -> 0;
         };
-    };
+    }
 
     public String type_;
     public int minDamage_;
