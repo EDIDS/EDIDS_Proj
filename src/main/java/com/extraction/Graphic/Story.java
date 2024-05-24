@@ -37,6 +37,20 @@ public class Story {
         updatePos();
         ui.topLabelCol1.setText("HP:");
         ui.topLabelCol2.setText(String.valueOf(player.getHealth()));
+        ui.mainTextArea.setText(
+                "Sei un operatore della squadra Rainbow,\n" +
+                "un'élite militare specializzata in infiltrazioni e salvataggio di ostaggi. \n" +
+                "Il mondo è stato invaso da parassiti alieni noti come archei, generando caos e terrore. \n" +
+                "La squadra Rainbow deve intervenire per riportare la pace."
+        );
+        setNextPositions("Avanti", "", "", "");
+    }
+
+    private void setNextPositions(String next1, String next2, String next3, String next4) {
+        game.nextPosition1 = next1;
+        game.nextPosition2 = next2;
+        game.nextPosition3 = next3;
+        game.nextPosition4 = next4;
     }
 
     public void selectPosition(String nextPosition) {

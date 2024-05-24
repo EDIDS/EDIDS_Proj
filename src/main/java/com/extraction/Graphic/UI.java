@@ -1,6 +1,7 @@
 package com.extraction.Graphic;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -31,6 +32,11 @@ public class UI {
     JButton loadButton;
     Font loadFont = new Font("Serif", Font.BOLD, 40);
 
+    JScrollPane scroll;
+    JPanel loadPanel;
+    JList<JLabel> list;
+    DefaultListModel<JLabel> listModel;
+
     JPanel topPanel;
     JLabel[] topLabel;
     JLabel topLabelCol1;
@@ -47,6 +53,12 @@ public class UI {
     JPanel mainTextPanel;
     JTextArea mainTextArea;
     Font mainTextFont = new Font("Serif", Font.BOLD, 20);
+
+    JPanel itemsPanel;
+    JButton itemButton1;
+    JButton itemButton2;
+    JButton itemButton3;
+    JButton itemButton4;
 
     JPanel actionPanel;
     JButton actionButton1;
@@ -79,7 +91,8 @@ public class UI {
 
         createMenu();
         createTitlePanel();
-        createStartButtonPanel();
+        createStartPanel();
+        createLoadPanel();
 
         // Initial Frame
         window.add(mb, BorderLayout.NORTH);
@@ -88,6 +101,7 @@ public class UI {
 
         bodyPanel.add(titlePanel);
         bodyPanel.add(startPanel);
+        bodyPanel.add(loadPanel);
 
         window.setVisible(true);
     }
@@ -138,7 +152,7 @@ public class UI {
         titlePanel.add(titleLabel, gbc);
     }
 
-    private void createStartButtonPanel() {
+    private void createStartPanel() {
         // Start Button Panel
         startPanel = new JPanel();
         //startPanel.setLayout(new GridBagLayout());
@@ -154,17 +168,47 @@ public class UI {
         startPanel.add(loadButton, gbc);
     }
 
+    private void createLoadPanel() {
+        loadPanel = new JPanel();
+        loadPanel.setBounds(50, 50, 685, 500);
+        loadPanel.setLayout(new BoxLayout(loadPanel, BoxLayout.Y_AXIS));
+        loadPanel.setBackground(Color.BLACK);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(background);
+
+        for (int i = 0; i < 15; i++) {
+            JPanel p = new JPanel();
+            p.setLayout(new GridBagLayout());
+            p.setBackground(background);
+            p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+            JButton b = createButton("Word" + i, startFont, bHandler, "Null");
+            b.setPreferredSize(new Dimension(650, 50));
+            p.add(b, gbc);
+            panel.add(p, BorderLayout.CENTER);
+        }
+
+        scroll = new JScrollPane(panel);
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+
+        loadPanel.add(scroll);
+    }
+
     // Game GUI
     public void gameScreen() {
         createTopBarPanel();
         createMapPanel();
         createMainTextPanel();
+        createItemsPanel();
         createActionButtonsPanel();
         createMessageLabel();
 
         bodyPanel.add(topPanel);
         bodyPanel.add(mapSpacePanel);
         bodyPanel.add(mainTextPanel);
+        bodyPanel.add(itemsPanel);
         bodyPanel.add(actionPanel);
         window.add(messageLabel, BorderLayout.SOUTH);
     }
@@ -282,7 +326,7 @@ public class UI {
         // Main Text Panel
         mainTextPanel = new JPanel();
         mainTextPanel.setLayout(null);
-        mainTextPanel.setBounds(20, 80, 745, 350);  // -15
+        mainTextPanel.setBounds(20, 80, 745, 300);  // -15
         mainTextPanel.setBackground(background);
 
         mainTextArea = new JTextArea();
@@ -294,6 +338,27 @@ public class UI {
         mainTextArea.setLineWrap(true);
 
         mainTextPanel.add(mainTextArea);
+    }
+
+    private void createItemsPanel() {
+        //Items Panel
+        itemsPanel = new JPanel();
+        LayoutManager mgr = new GridLayout(1, 4, 10, 0);
+        itemsPanel.setLayout(mgr);
+        itemsPanel.setBounds(120, 400, 545, 40);  // -15
+        itemsPanel.setBackground(background);
+
+        itemButton1 = createButton("MedKit", actionFont, bHandler, "");
+        itemsPanel.add(itemButton1, gbc);
+
+        itemButton2 = createButton("Torcia", actionFont, bHandler, "");
+        itemsPanel.add(itemButton2, gbc);
+
+        itemButton3 = createButton("TNT", actionFont, bHandler, "");
+        itemsPanel.add(itemButton3, gbc);
+
+        itemButton4 = createButton("Item4", actionFont, bHandler, "");
+        itemsPanel.add(itemButton4, gbc);
     }
 
     private void createActionButtonsPanel() {
