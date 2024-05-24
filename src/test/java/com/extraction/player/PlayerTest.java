@@ -47,15 +47,15 @@ class PlayerTest {
     void testPlayerAttack() {
         int attack = player.attack();
         assertEquals(BASE_ATTACK_DAMAGE, attack);
-        player.setWeapon(new Weapon("REVOLVER"));
+        player.addItem(new Weapon("REVOLVER"));
         attack = player.attack();
-        assertEquals(BASE_ATTACK_DAMAGE, attack);
-        player.setWeapon(new Weapon("AK47"));
+        assertTrue(attack >= 10 && attack <= 30);
+        player.addItem(new Weapon("AK47"));
         attack = player.attack();
-        assertEquals(BASE_ATTACK_DAMAGE, attack);
-        player.setWeapon(new Weapon("USPSWORM"));
+        assertTrue(attack >= 30 && attack <= 50);
+        player.addItem(new Weapon("USPSWORM"));
         attack = player.attack();
-        assertEquals(BASE_ATTACK_DAMAGE, attack);
+        assertTrue(attack >= 20 && attack <= 40);
     }
 
     @Test
