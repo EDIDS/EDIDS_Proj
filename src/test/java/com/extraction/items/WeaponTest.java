@@ -1,9 +1,8 @@
 package com.extraction.items;
 
-import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static com.extraction.items.Weapon.type_weight;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WeaponTest {

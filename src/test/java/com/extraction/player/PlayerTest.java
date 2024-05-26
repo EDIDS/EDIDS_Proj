@@ -1,16 +1,18 @@
 package com.extraction.player;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.ValueSource;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.List;
+
 import static com.extraction.player.Player.*;
 import com.extraction.items.Item;
 import com.extraction.items.Weapon;
 
-class PlayerTest {
+public class PlayerTest {
 
     Player player;
 

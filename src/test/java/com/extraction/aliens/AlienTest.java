@@ -1,11 +1,9 @@
 package com.extraction.aliens;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({ClickerTest.class, RunnerTest.class,
-ShamblerTest.class})
-
+@Suite
+@SelectClasses({ClickerTest.class, RunnerTest.class, ShamblerTest.class})
 public class AlienTest {
 }
