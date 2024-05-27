@@ -1,18 +1,17 @@
 package com.extraction.player;
 
+import com.extraction.items.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.extraction.items.Shield.SHIELD_WEIGHT;
+import static com.extraction.items.Weapon.type_weight;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-
 import static com.extraction.player.Player.*;
-import com.extraction.items.Item;
-import com.extraction.items.Weapon;
 
-public class PlayerTest {
+class PlayerTest {
 
     Player player;
 
@@ -23,61 +22,110 @@ public class PlayerTest {
 
     @Test
     void testAnonymousPlayerName() {
-        String name = player.getName();
-        assertEquals(NO_NAME, name);
+        assertEquals(player.getName(), NO_NAME);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"", "0", " "} )
     void testNamedPlayerName(String name) {
         Player named = new Player(name);
-        String name_ = named.getName();
-        assertEquals(name, name_);
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {0, 1, FULL_HEALTH/2, FULL_HEALTH-1, FULL_HEALTH, FULL_HEALTH+1})
-    void testPlayerHealth(int damage) {
-        int health = player.getHealth();
-        assertEquals(FULL_HEALTH, health);
-        player.takeDamage(damage);
-        health = player.getHealth();
-        assertEquals(FULL_HEALTH-damage, health);
+        assertEquals(named.getName(), name);
     }
 
     @Test
-    void testPlayerAttack() {
+    void testSetWeapon_throwWeapon() {
+        // test setWeapon()
+        Weapon weapon = new Weapon("REVOLVER");
+        player.setWeapon(weapon);
+        assertEquals(weapon, player.getWeapon());
+        assertEquals(type_weight("REVOLVER"), player.getCurrentWeight_());
+        weapon = new Weapon("AK47");
+        player.setWeapon(weapon);
+        assertEquals(weapon, player.getWeapon());
+        assertEquals(type_weight("AK47"), player.getCurrentWeight_());
+        weapon = new Weapon("USPSWORM");
+        player.setWeapon(weapon);
+        assertEquals(weapon, player.getWeapon());
+        assertEquals(type_weight("USPSWORM"), player.getCurrentWeight_());
+        // test throwWeapon()
+        player.throwWeapon();
+        assertFalse(player.hasWeapon());
+        assertEquals(0, player.getCurrentWeight_());
+    }
+
+    @Test
+    void testSetShield_ThrowShield() {
+        // test setShield()
+        Shield shield = new Shield();
+        player.setShield(shield);
+        assertEquals(shield, player.getShield());
+        assertEquals(SHIELD_WEIGHT, player.getCurrentWeight_());
+        shield = new Shield();
+        player.setShield(shield);
+        assertNotEquals(shield, player.getShield());
+        // test throwShield()
+        player.throwShield();
+        assertFalse(player.hasShield());
+        assertEquals(0, player.getCurrentWeight_());
+    }
+
+    @Test
+    void testAttack() {
         int attack = player.attack();
         assertEquals(BASE_ATTACK_DAMAGE, attack);
-        player.addItem(new Weapon("REVOLVER"));
+        player.setWeapon(new Weapon("REVOLVER"));
         attack = player.attack();
         assertTrue(attack >= 10 && attack <= 30);
-        player.addItem(new Weapon("AK47"));
+        player.setWeapon(new Weapon("AK47"));
         attack = player.attack();
         assertTrue(attack >= 30 && attack <= 50);
-        player.addItem(new Weapon("USPSWORM"));
+        player.setWeapon(new Weapon("USPSWORM"));
         attack = player.attack();
         assertTrue(attack >= 20 && attack <= 40);
     }
 
     @Test
-    void testPlayerWeight() {
-        double weight = player.getCurrentWeight_();
-        assertEquals(0, weight);
+    void testHeal() {
+        player.setHealth(FULL_HEALTH/2);
+        player.heal();
+        assertEquals(FULL_HEALTH/2, player.getHealth());
+        player.addItem(new Medikit());
+        player.heal();
+        assertEquals(FULL_HEALTH, player.getHealth());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 0, 1, FULL_HEALTH/2, FULL_HEALTH-1, FULL_HEALTH, FULL_HEALTH+1})
+    void testTakeDamage(int damage) {
+        assertEquals(player.getHealth(), FULL_HEALTH);
+        player.takeDamage(damage);
+        if (damage >= 0) assertEquals(player.getHealth(), FULL_HEALTH-damage);
+        else assertEquals(player.getHealth(), FULL_HEALTH);
     }
 
     @Test
-    void testPlayerBag() {
-        List<Item> bag = player.getBag();
-        assertTrue(bag.isEmpty());
+    void testThrowItem() {
+        Key key = new Key("code");
+        Item item = player.throwItem(key);
+        assertNull(item);
+        player.addItem(key);
+        item = player.throwItem(key);
+        assertEquals(key, item);
+        item = player.throwItem("Key");
+        assertNull(item);
+        player.addItem(key);
+        item = player.throwItem("Key");
+        assertEquals(key, item);
     }
 
     @Test
-    void testPlayerInspection() {
-        boolean hasWeapon = player.hasWeapon();
-        assertFalse(hasWeapon);
-        boolean hasShield = player.hasShield();
-        assertFalse(hasShield);
+    void testMaxWeight() {
+        player.setCurrentWeight_(MAX_WEIGHT);
+        player.setWeapon(new Weapon("REVOLVER"));
+        assertNull(player.getWeapon());
+        player.setShield(new Shield());
+        assertNull(player.getShield());
+        player.addItem(new TNT());
+        assertNull(player.findItem("TNT"));
     }
-
 }
