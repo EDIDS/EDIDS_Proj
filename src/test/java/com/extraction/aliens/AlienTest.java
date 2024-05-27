@@ -5,5 +5,5 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({ClickerTest.class, RunnerTest.class, ShamblerTest.class})
-public class AlienTest {
+class AlienTest {
 }

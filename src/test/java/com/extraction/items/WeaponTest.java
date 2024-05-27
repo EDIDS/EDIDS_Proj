@@ -1,8 +1,10 @@
 package com.extraction.items;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.extraction.items.Weapon.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WeaponTest {
@@ -44,6 +46,16 @@ class WeaponTest {
         weapon = new Weapon(type);
         int damage = weapon.calculateDamage();
         assertTrue(damage >= weapon.minDamage_ && damage <= weapon.maxDamage_);
+    }
+
+    @Test
+    void testTypeWeight() {
+        double revWeight = type_weight("REVOLVER");
+        assertEquals(revWeight, REVOLVER_WEIGHT);
+        double ak47Weight = type_weight("AK47");
+        assertEquals(ak47Weight, AK47_WEIGHT);
+        double upsWeight = type_weight("USPSWORM");
+        assertEquals(upsWeight, USPSWORM_WEIGHT);
     }
 
 }
