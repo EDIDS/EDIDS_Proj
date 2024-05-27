@@ -37,6 +37,8 @@ public class Building {
         return allItems.get(room.getCoordinate().toString());
     }
 
+    public void removeItem(Item item, Room room) { allItems.remove(room.getCoordinate().toString()); }
+
     public Map<String, Item> getAllItems() {
         return allItems;
     }
