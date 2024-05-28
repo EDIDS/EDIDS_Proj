@@ -20,7 +20,6 @@ public class Building {
         return rooms.get(coordinate);
     }
 
-
     public void removeRoom(String coordinate) {
         rooms.remove(coordinate);
     }
