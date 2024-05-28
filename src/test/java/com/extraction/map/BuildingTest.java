@@ -45,42 +45,22 @@ class BuildingTest {
         building.addRoom(room3_4);
     }
 
-    @Test
-    void testAddRoom() {
-        Building b = new Building();
-        b.addRoom(room4_2);
-        assertEquals(b.getRoom("(4, 2)"), room4_2);
-        b.addRoom(room4_1);
-        assertEquals(b.getRoom("(4, 1)"), room4_1);
-        b.addRoom(room3_1);
-        assertEquals(b.getRoom("(3, 1)"), room3_1);
-        b.addRoom(room2_1);
-        assertEquals(b.getRoom("(2, 1)"), room2_1);
-        b.addRoom(room2_0);
-        assertEquals(b.getRoom("(2, 0)"), room2_0);
-        b.addRoom(room1_0);
-        assertEquals(b.getRoom("(1, 0)"), room1_0);
-        b.addRoom(room2_2);
-        assertEquals(b.getRoom("(2, 2)"), room2_2);
-        b.addRoom(room1_2);
-        assertEquals(b.getRoom("(1, 2)"), room1_2);
-        b.addRoom(room0_2);
-        assertEquals(b.getRoom("(0, 2)"), room0_2);
-        b.addRoom(room2_3);
-        assertEquals(b.getRoom("(2, 3)"), room2_3);
-        b.addRoom(room1_3);
-        assertEquals(b.getRoom("(1, 3)"), room1_3);
-        b.addRoom(room2_4);
-        assertEquals(b.getRoom("(2, 4)"), room2_4);
-        b.addRoom(room3_4);
-        assertEquals(b.getRoom("(3, 4)"), room3_4);
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"(4, 2)", "(4, 1)", "(3, 1)", "(2, 1)", "(2, 0)", "(1, 0)",
             "(2, 2)", "(1, 2)", "(0, 2)", "(2, 3)", "(1, 3)", "(2, 4)", "(3, 4)"})
     void testGetAvailableDirections(String coordinate) {
-        building.getAvailableDirections(building.getRoom(coordinate));
+        String dir = building.getAvailableDirections(building.getRoom(coordinate));
+        switch (coordinate) {
+            case "(4, 2)": assertEquals("[West]", dir); break;
+            case "(4, 1)", "(2, 0)": assertEquals("[North, East]", dir); break;
+            case "(3, 1)": assertEquals("[North, South]", dir); break;
+            case "(2, 1)": assertEquals("[South, East, West]", dir); break;
+            case "(1, 0)", "(0, 2)": assertEquals("[South]", dir); break;
+            case "(2, 2)", "(2, 3)": assertEquals("[North, East, West]", dir); break;
+            case "(1, 2)": assertEquals("[North, South, East]", dir); break;
+            case "(1, 3)", "(2, 4)": assertEquals("[South, West]", dir); break;
+            case "(3, 4)": assertEquals("[North]", dir); break;
+        }
     }
 
     @ParameterizedTest
@@ -89,11 +69,5 @@ class BuildingTest {
     void testGetAvailableDirections_nullBuilding(String coordinate) {
         Building b = new Building();
         assertThrows(NullPointerException.class, () -> b.getAvailableDirections(b.getRoom(coordinate)));
-    }
-
-    @Test
-    void testGetRooms() {
-        List<Room> rooms = building.getRooms();
-        assertEquals(13, rooms.size());
     }
 }

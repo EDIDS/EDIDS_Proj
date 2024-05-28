@@ -27,10 +27,10 @@ class CoordinateTest {
     @ValueSource(strings = {"35,22", "0,7", "98,1"})
     void testEquals(String value) {
         Coordinate coordinate1 = new Coordinate(value);
-        Coordinate coordinate2 = new Coordinate("0,0");
-        assertFalse(coordinate1.equals(coordinate2));
+        Coordinate coordinate2 = new Coordinate(0,0);
+        assertNotEquals(coordinate1, coordinate2);
         coordinate2.setRow(coordinate1.getRow());
         coordinate2.setColumn(coordinate1.getColumn());
-        assertTrue(coordinate1.equals(coordinate2));
+        assertEquals(coordinate1, coordinate2);
     }
 }
