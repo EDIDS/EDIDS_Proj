@@ -6,17 +6,18 @@ actor User
 participant Player
 participant Item
 participant Bag
-participant Room
+participant RoomList
 
 
 User -> Player : addItem(item)
-Player -> Item : getWeight
+Player -> Item : getWeight()
 return weight
-alt weight+playerWeight <= maxWeight
-  Player -> Room : removeItem(item)
-  Player -> Bag : add(item)
-else weight+totalweight > maxWeight
-  Player --> User : Error(bag full)
+alt currentWeight + weight <= MAX_WEIGHT
+    Player -> RoomList : removeItem(item, currentRoom)
+    Player -> Bag : add(item)
+    Player -> Player : updateCurrentWeight
+else currentWeight + weight > MAX_WEIGHTT
+    Player --> User : Error(bag full)
 end
 
 @enduml

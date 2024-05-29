@@ -7,18 +7,19 @@ participant Fight
 participant Player
 participant Bag
 
-Fight -> Player : search(medikit)
+User -> Fight : heal
+Fight -> Player : heal()
 Player -> Bag : search(medikit)
 alt hasMedikit
-  return medikit
-  Player --> Fight : medikit
-  Fight -> Player : heal(medikit)
-  return
-  Fight -> User : displayHealth
+    return medikit
+    Player -> Player : heal()
+    Player -> Bag : throwItem(medikit)
+    Player --> Fight : FULL:HEALTH
+    Fight --> User
 else hasnotMedikit
-  Bag --> Player : Error(not found)
-  Player --> Fight : Error(not found)
-  Fight -> User : Error(invalid choice) 
+    Bag --> Player : Error(not found)
+    Player --> Fight : Error(not found)
+    Fight --> User : Error(invalid choice)
 end 
 
 @enduml

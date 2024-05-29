@@ -5,19 +5,35 @@ title Move
 actor User
 participant System
 participant Player
-participant Coordinate
 participant Building
+participant RoomList
+participant CurrentRoom
 
 User -> System : requestDirection(direction)
-System -> Coordinate : setColumn/Row(int)
-return newCoordinate
-System -> Building : getRoom(newCoordinate)
-alt valid coordinate
-  Building --> System : room
+System -> Player : getCurrentRoom()
+return currentRoom
+System -> Building : getAvailableDirections(currentRoom)
+loop direction
+    Building -> CurrentRoom : getCoordinate()
+      return coordinate
+    Building -> newCoordinate ** : create(coordinate + direction)
+    return newCoordinate
+    Building -> RoomList : getRoom(newCoordinate)
+    return room
+    opt validRoom
+        Building -> Building : addDirection
+    end
+    destroy newCoordinate
+end
+Building --> System : availableDirections
+alt available direction
+  System -> CurrentRoom : getCoordinate()
+  return coordinate
+  System -> RoomList : getRoom(coordinate + direction)
+  return room
   System -> Player : setCurrentRoom(room)
   System --> User : displayCurrentRoom
-else invalid coordinate
-  Building --> System : Error(null)
+else unavailable direction
   System --> User : Error(invalid move) 
 end
 

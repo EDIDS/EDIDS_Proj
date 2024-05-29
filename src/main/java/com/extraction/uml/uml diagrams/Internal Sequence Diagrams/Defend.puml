@@ -5,9 +5,17 @@ title Defend
 actor User
 participant Fight
 participant Player
+participant Shield
+participant Alien
 
-Fight -> Player : defend
-return ?
-Fight -> User : ?
+User -> Fight : defend
+Fight -> Alien : attack()
+return damage
+Fight -> Player : defend(damage)
+Player -> Shield : getDefense()
+return defense
+Player --> Fight : reducedDamage
+Fight -> Player : takeDamage(reducedDamage)
+Fight --> User : displayReducedDamage
 
 @enduml

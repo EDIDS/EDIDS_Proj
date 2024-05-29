@@ -5,16 +5,16 @@ title Throw Item
 actor User
 participant Player
 participant Bag
-participant Room
+participant RoomList
 
 User -> Player : throwItem(item)
-Player -> Bag : search(item)
+Player -> Bag : findItem(item)
 alt hasItem
-  return 
+  return item
   Player -> Bag : remove(item)
-  Player -> Room : addItem(item)
-  Player -> User : displayItem
-else hasnotItem
+  Player -> RoomList : setItem(item, currentRomm)
+  Player --> User : item
+else hasNotItem
   Bag --> Player : Error(invalid item)
   Player --> User : Error(item not in bag)
 end
