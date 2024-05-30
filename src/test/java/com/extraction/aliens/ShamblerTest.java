@@ -27,7 +27,7 @@ class ShamblerTest {
     @RepeatedTest(100)
     void TestAttack() {
         int attack = shambler.attack();
-        assertTrue(attack < TIER3_MAXIMUM_ATTACK_DAMAGE);
+        assertTrue(attack > 0 && attack <= TIER3_MAXIMUM_ATTACK_DAMAGE);
     }
 
     @ParameterizedTest

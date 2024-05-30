@@ -27,7 +27,7 @@ class RunnerTest {
     @RepeatedTest(100)
     void TestAttack() {
         int attack = runner.attack();
-        assertTrue(attack < TIER2_MAXIMUM_ATTACK_DAMAGE);
+        assertTrue(attack > 0 && attack <= TIER2_MAXIMUM_ATTACK_DAMAGE);
     }
 
     @ParameterizedTest

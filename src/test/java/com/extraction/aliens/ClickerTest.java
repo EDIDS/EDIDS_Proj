@@ -27,7 +27,7 @@ class ClickerTest {
     @RepeatedTest(100)
     void TestAttack() {
         int attack = clicker.attack();
-        assertTrue(attack < TIER1_MAXIMUM_ATTACK_DAMAGE);
+        assertTrue(attack > 0 && attack <= TIER1_MAXIMUM_ATTACK_DAMAGE);
     }
 
     @ParameterizedTest
