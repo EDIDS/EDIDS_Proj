@@ -15,7 +15,7 @@ return weight
 alt currentWeight + weight <= MAX_WEIGHT
     Player -> RoomList : removeItem(item, currentRoom)
     Player -> Bag : add(item)
-    Player -> Player : updateCurrentWeight
+    Player -> Bag : updateCurrentWeight
 else currentWeight + weight > MAX_WEIGHTT
     Player --> User : Error(bag full)
 end

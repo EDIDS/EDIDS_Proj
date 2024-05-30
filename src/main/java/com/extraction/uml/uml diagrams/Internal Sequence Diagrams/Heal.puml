@@ -16,7 +16,7 @@ alt hasMedikit
     Player -> Bag : throwItem(medikit)
     Player --> Fight : FULL:HEALTH
     Fight --> User
-else hasnotMedikit
+else hasNotMedikit
     Bag --> Player : Error(not found)
     Player --> Fight : Error(not found)
     Fight --> User : Error(invalid choice)

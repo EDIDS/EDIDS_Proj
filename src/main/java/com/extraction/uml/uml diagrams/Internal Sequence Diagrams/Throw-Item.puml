@@ -12,6 +12,7 @@ Player -> Bag : findItem(item)
 alt hasItem
   return item
   Player -> Bag : remove(item)
+  Player -> Bag : updateCurrentWeight
   Player -> RoomList : setItem(item, currentRomm)
   Player --> User : item
 else hasNotItem

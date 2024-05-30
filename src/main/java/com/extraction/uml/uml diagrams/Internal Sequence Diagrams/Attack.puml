@@ -6,16 +6,16 @@ actor User
 participant Fight
 participant Player
 participant Alien
+participant Weapon
 
-Fight -> Player : attack
-return playerAattack
-Fight -> Alien : attack
-return alienAttack
+User -> Fight : attack
+Fight -> Player : attack()
+opt
+    Player -> Weapon : calculateDamage()
+    return damage
+end
+Player --> Fight : playerAttack
 Fight -> Alien : takeDamage(playerAttack)
-return
-Fight -> User : displayDealtDamage
-Fight -> Player : takeDamage(alienAttack)
-return
-Fight -> User : displaySufferedDamage
+Fight -> User : displayDamage
 
 @enduml
