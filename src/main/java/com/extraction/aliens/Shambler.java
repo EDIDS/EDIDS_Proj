@@ -19,7 +19,11 @@ public class Shambler extends Alien{
         this.setHealth(this.getHealth() - damage);
     }
 
+    @Override
     public double getEscapeChance() {
         return 0.4;
     }
+
+    @Override
+    public double getEludeChance()  { return 0.2; }
 }

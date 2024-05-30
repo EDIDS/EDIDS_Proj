@@ -19,7 +19,11 @@ public class Runner extends Alien{
         this.setHealth(this.getHealth() - damage);
     }
 
+    @Override
     public double getEscapeChance() {
         return 0.6;
     }
+
+    @Override
+    public double getEludeChance()  { return 0.4; }
 }

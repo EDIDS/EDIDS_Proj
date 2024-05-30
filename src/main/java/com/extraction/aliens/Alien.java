@@ -80,5 +80,6 @@ public abstract class Alien
 
     public abstract double getEscapeChance();
 
+    public abstract double getEludeChance();
 }
 

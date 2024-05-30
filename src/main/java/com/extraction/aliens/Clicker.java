@@ -23,4 +23,7 @@ public class Clicker extends Alien{
     public double getEscapeChance() {
         return 0.8;
     }
+
+    @Override
+    public double getEludeChance()  { return 0.6; }
 }

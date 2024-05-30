@@ -212,6 +212,17 @@ public class Player {
         return null;
     }
 
+    public int detonateTNT() {
+        TNT tnt = (TNT) this.findItem("TNT");
+        if (tnt != null) {
+            int explosion = tnt.getDamage();
+            throwItem(tnt);
+            return explosion;
+        }
+        System.out.println("No tnt found");
+        return 0;
+    }
+
     public String getData() {
         return name_ + " " + health_;
     }
