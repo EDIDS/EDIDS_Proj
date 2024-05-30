@@ -11,7 +11,7 @@ public class Clicker extends Alien{
 
     @Override
     public int attack() {
-        return RANDOM.nextInt(TIER1_MAXIMUM_ATTACK_DAMAGE);
+        return RANDOM.nextInt(TIER1_MAXIMUM_ATTACK_DAMAGE)+1;
     }
 
     @Override
