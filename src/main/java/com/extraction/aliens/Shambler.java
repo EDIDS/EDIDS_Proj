@@ -3,7 +3,7 @@ package com.extraction.aliens;
 public class Shambler extends Alien{
 
     public Shambler() {
-        super();
+        super("Shambler");
 
         this.setName(this.getClass().getSimpleName());
         this.setHealth(TIER3_HEALTH);

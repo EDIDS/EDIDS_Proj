@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.List;
 import com.extraction.items.*;
 import com.extraction.map.Room;
+import com.extraction.map.Building;
 
 public class Player {
 

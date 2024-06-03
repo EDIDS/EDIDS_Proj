@@ -3,7 +3,7 @@ package com.extraction.aliens;
 public class Runner extends Alien{
 
     public Runner() {
-        super();
+        super("Runner");
 
         this.setName(this.getClass().getSimpleName());
         this.setHealth(TIER1_HEALTH);
