@@ -1,7 +1,11 @@
 package com.extraction.Graphic;
 
+import com.extraction.aliens.Clicker;
+import com.extraction.aliens.Runner;
+import com.extraction.aliens.Shambler;
 import com.extraction.map.Building;
 import com.extraction.map.Coordinate;
+import com.extraction.map.Fight;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
 
@@ -35,15 +39,15 @@ public class Story {
                 ui.playerIconPath
         );
         updatePos();
-        ui.topLabelCol1.setText("HP:");
-        ui.topLabelCol2.setText(String.valueOf(player.getHealth()));
+        ui.topLabelCol1.setText("HP: " + player.getHealth());
+        ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getName());
         ui.mainTextArea.setText(
                 "Sei un operatore della squadra Rainbow,\n" +
                 "un'élite militare specializzata in infiltrazioni e salvataggio di ostaggi. \n" +
                 "Il mondo è stato invaso da parassiti alieni noti come archei, generando caos e terrore. \n" +
                 "La squadra Rainbow deve intervenire per riportare la pace."
         );
-        setNextPositions("Avanti", "", "", "");
+        setNextPositions("Avanti", "Map", "", "");
     }
 
     private void setNextPositions(String next1, String next2, String next3, String next4) {
@@ -182,6 +186,9 @@ public class Story {
             updatePos();
             map();
         } else {
+            nextRoom = game.room4_1;
+            fightClicker();
+
             /*vm.showTextScreen();
 
             ui.mainTextArea.setText("Room 4_1");
@@ -195,10 +202,25 @@ public class Story {
             game.nextPosition2 = "Null";
             game.nextPosition3 = "Proceed";
             game.nextPosition4 = "Map";*/
-
-            nextRoom = game.room4_1;
-            proceed();
         }
+    }
+
+    public void fightClicker() {
+        Clicker clicker = new Clicker();
+        Fight fight = new Fight(player, clicker, ui);
+        fight.fight();
+    }
+
+    public void fightRunner() {
+        Runner runner = new Runner();
+        Fight fight = new Fight(player, runner, ui);
+        fight.fight();
+    }
+
+    public void fightShambler() {
+        Shambler shambler = new Shambler();
+        Fight fight = new Fight(player, shambler, ui);
+        fight.fight();
     }
 
     public void room3_1() {

@@ -3,14 +3,17 @@ package com.extraction.map;
 import com.extraction.aliens.Alien;
 import com.extraction.items.Item;
 import com.extraction.player.Player;
+import com.extraction.Graphic.UI;
 
 public class Fight {
     Player player;
     Alien alien;
+    UI ui;
 
-    public Fight(Player player, Alien alien) {
+    public Fight(Player player, Alien alien, UI ui) {
         this.player = player;
         this.alien = alien;
+        this.ui = ui;
     }
 
     public void fight() {

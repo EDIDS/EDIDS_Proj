@@ -3,9 +3,7 @@ package com.extraction.aliens;
 public class Clicker extends Alien{
 
     public Clicker() {
-        super();
-
-        this.setName(this.getClass().getSimpleName());
+        super("Clicker");
         this.setHealth(TIER2_HEALTH);
     }
 

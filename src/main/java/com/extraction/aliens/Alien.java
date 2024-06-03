@@ -5,15 +5,6 @@ import java.util.Random;
 public abstract class Alien
 {
     /* class fields */
-    /** An array of possible enemy types. */
-    public static final String[] ALIEN_NAMES = {
-            // TIER 1
-            "Runner",
-            // TIER 2
-            "Clicker",
-            // TIER 3
-            "Shambler",
-    };
 
     /** The maximum attack damage of this enemy. */
     public static final int TIER1_MAXIMUM_ATTACK_DAMAGE = 2;
@@ -35,10 +26,9 @@ public abstract class Alien
     /**
      * Constructs a new enemy.
      */
-    public Alien()
+    public Alien(String name)
     {
-        name_ = ALIEN_NAMES[RANDOM.nextInt(ALIEN_NAMES.length)];
-
+        name_ = name;
     }
 
     public void setHealth(int health) {
