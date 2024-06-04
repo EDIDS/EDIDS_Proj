@@ -14,12 +14,14 @@ public class Story {
     UI ui;
     VisibilityManager vm;
     Player player;
+    IntroductionDialog introduction;
 
     int playerX;
     int playerY;
     int nextColumn, nextRow;
     Room nextRoom;
     boolean hasCo = false;
+    Fight fight;
 
     Building building;
 
@@ -40,14 +42,17 @@ public class Story {
         );
         updatePos();
         ui.topLabelCol1.setText("HP: " + player.getHealth());
-        ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getName());
+        ui.topLabelCol2.setText("Weapon: "/* + player.getWeapon().getName()*/);
         ui.mainTextArea.setText(
                 "Sei un operatore della squadra Rainbow,\n" +
                 "un'élite militare specializzata in infiltrazioni e salvataggio di ostaggi. \n" +
                 "Il mondo è stato invaso da parassiti alieni noti come archei, generando caos e terrore. \n" +
                 "La squadra Rainbow deve intervenire per riportare la pace."
         );
-        game.nextPosition0 = "Continue";
+
+        introduction = new IntroductionDialog();
+
+        game.nextPosition0 = "Introduction";
     }
 
     private void setNextPositions(String next1, String next2, String next3, String next4) {
@@ -62,8 +67,27 @@ public class Story {
             case "Null":
                 vm.showMessage("Path Closed", 1000);
                 break;
-            case "Continue":
+            case "Introduction":
+                try {
+                    ui.mainTextArea.setText(introduction.nextDialogue());
+                } catch (Exception e) {
+                    map();
+                }
+                break;
+            case "Extraction":
                 ui.mainTextArea.setText("");
+                break;
+            case "Attack":
+                fight.attack();
+                break;
+            case "Leave":
+                fight.run();
+                break;
+            case "Defend":
+                fight.defend();
+                break;
+            case "Elude":
+                fight.elude();
                 break;
             case "Map":
                 map();
@@ -75,7 +99,7 @@ public class Story {
                 room4_2();
                 break;
             case "Room4_1":
-                room4_1();
+                //room4_1();
                 room(4, 1);
                 break;
             case "Room3_1":
@@ -126,22 +150,20 @@ public class Story {
         ui.actionButton3.setText("SOUTH");
         ui.actionButton4.setText("WEST");
 
-        game.nextPosition1 =
+        setNextPositions(
                 building.getAvailableDirections(player.getCurrentRoom_()).contains("North") ?
                         "Room" + (playerY - 1) + "_" + playerX :
-                        "Null";
-        game.nextPosition2 =
+                        "Null",
                 building.getAvailableDirections(player.getCurrentRoom_()).contains("East") ?
                         "Room" + playerY + "_" + (playerX + 1) :
-                        "Null";
-        game.nextPosition3 =
+                        "Null",
                 building.getAvailableDirections(player.getCurrentRoom_()).contains("South") ?
                         "Room" + (playerY + 1) + "_" + playerX :
-                        "Null";
-        game.nextPosition4 =
+                        "Null",
                 building.getAvailableDirections(player.getCurrentRoom_()).contains("West") ?
                         "Room" + playerY + "_" + (playerX - 1) :
-                        "Null";
+                        "Null"
+        );
     }
 
     private void updatePos() {
@@ -193,6 +215,7 @@ public class Story {
             map();
         } else if (room.getAlien() != null) {
             nextRoom = room;
+            vm.showFightScreen();
 
             switch (room.getAlien().getName()) {
                 case "Clicker":
@@ -208,7 +231,8 @@ public class Story {
                     break;
             }
         } else {
-
+            vm.showFightScreen();
+            fightClicker();
         }
     }
 
@@ -244,19 +268,22 @@ public class Story {
 
     public void fightClicker() {
         Clicker clicker = new Clicker();
-        Fight fight = new Fight(player, clicker, ui);
+        fight = new Fight(player, clicker, ui, vm);
+        setNextPositions("Attack", "Leave", "Defend", "Elude");
         fight.fight();
     }
 
     public void fightRunner() {
         Runner runner = new Runner();
-        Fight fight = new Fight(player, runner, ui);
+        fight = new Fight(player, runner, ui, vm);
+        setNextPositions("Attack", "Leave", "Defend", "Elude");
         fight.fight();
     }
 
     public void fightShambler() {
         Shambler shambler = new Shambler();
-        Fight fight = new Fight(player, shambler, ui);
+        fight = new Fight(player, shambler, ui, vm);
+        setNextPositions("Attack", "Leave", "Defend", "Elude");
         fight.fight();
     }
 

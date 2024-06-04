@@ -29,6 +29,8 @@ public class Game {
         ui.homeScreen();
         ui.gameScreen();
 
+        newGame();
+
         story.defaultSetup();
 
         vm.showHomeScreen();
@@ -67,12 +69,12 @@ public class Game {
         player.setCurrentRoom(startRoom);
 
 
-        player.setCurrentRoom(startRoom);
+        /*player.setCurrentRoom(startRoom);
         ui.newMap();
         for(Room room : building.getRooms()) {
             room.setIconPath("");
         }
-        story.defaultSetup();
+        story.defaultSetup();*/
     }
 
     public static void main(String[] args) {
@@ -113,6 +115,15 @@ public class Game {
                         throw new RuntimeException(ex);
                     }*/
                     vm.showLoadScreen();
+                    break;
+                case "MedKit":
+                    story.fight.heal();
+                    break;
+                case "Torcia":
+
+                    break;
+                case "TNT":
+                    story.fight.tnt();
                     break;
                 case "NextDialog":
                     story.selectPosition(nextPosition0);

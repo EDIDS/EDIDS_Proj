@@ -51,7 +51,7 @@ public class UI {
     String exitIconPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/Graphic/imgs/logout.png";
 
     JPanel mainTextPanel;
-    JTextArea mainTextArea;
+    public JTextArea mainTextArea;
     Font mainTextFont = new Font("Serif", Font.BOLD, 20);
 
     JPanel itemsPanel;
@@ -61,10 +61,10 @@ public class UI {
     JButton itemButton4;
 
     JPanel actionPanel;
-    JButton actionButton1;
-    JButton actionButton2;
-    JButton actionButton3;
-    JButton actionButton4;
+    public JButton actionButton1;
+    public JButton actionButton2;
+    public JButton actionButton3;
+    public JButton actionButton4;
     Font actionFont = new Font("Serif", Font.BOLD, 20);
 
     JPanel dialogBPanel;
@@ -207,6 +207,7 @@ public class UI {
         createMainTextPanel();
         createItemsPanel();
         createActionButtonsPanel();
+        createDialogButtonsPanel();
         createMessageLabel();
 
         bodyPanel.add(topPanel);
@@ -353,13 +354,13 @@ public class UI {
         itemsPanel.setBounds(120, 400, 545, 40);  // -15
         itemsPanel.setBackground(background);
 
-        itemButton1 = createButton("MedKit", actionFont, bHandler, "");
+        itemButton1 = createButton("MedKit", actionFont, bHandler, "MedKit");
         itemsPanel.add(itemButton1, gbc);
 
-        itemButton2 = createButton("Torcia", actionFont, bHandler, "");
+        itemButton2 = createButton("Torcia", actionFont, bHandler, "Torcia");
         itemsPanel.add(itemButton2, gbc);
 
-        itemButton3 = createButton("TNT", actionFont, bHandler, "");
+        itemButton3 = createButton("TNT", actionFont, bHandler, "TNT");
         itemsPanel.add(itemButton3, gbc);
 
         itemButton4 = createButton("Item4", actionFont, bHandler, "");
@@ -387,7 +388,28 @@ public class UI {
         actionPanel.add(actionButton4, gbc);
     }
 
-    private void DialogButtonsPanel() {
+    public void setMyTurnButton() {
+        actionButton1.setEnabled(true);
+        actionButton2.setEnabled(true);
+        actionButton3.setEnabled(false);
+        actionButton4.setEnabled(false);
+    }
+
+    public void setAlienTurnButton() {
+        actionButton1.setEnabled(false);
+        actionButton2.setEnabled(false);
+        actionButton3.setEnabled(true);
+        actionButton4.setEnabled(true);
+    }
+
+    public void setEnableButtons() {
+        actionButton1.setEnabled(true);
+        actionButton2.setEnabled(true);
+        actionButton3.setEnabled(true);
+        actionButton4.setEnabled(true);
+    }
+
+    private void createDialogButtonsPanel() {
         //Action Buttons Panel
         dialogBPanel = new JPanel();
         LayoutManager mgr = new GridBagLayout();
@@ -396,7 +418,7 @@ public class UI {
         dialogBPanel.setBackground(background);
 
         dialogButton = createButton("Continue...", actionFont, bHandler, "NextDialog");
-        dialogBPanel.add(dialogBPanel, gbc);
+        dialogBPanel.add(dialogButton, gbc);
     }
 
     private JButton createButton(String initialLabel, Font font, ActionListener handler, String command) {

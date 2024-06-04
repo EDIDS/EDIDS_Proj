@@ -58,11 +58,11 @@ public class VisibilityManager {
         // Shown
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);
-        ui.itemsPanel.setVisible(true);
         ui.dialogBPanel.setVisible(true);
         // Hide
         ui.loadPanel.setVisible(false);
         ui.mapSpacePanel.setVisible(false);
+        ui.itemsPanel.setVisible(false);
         ui.titlePanel.setVisible(false);
         ui.startPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
