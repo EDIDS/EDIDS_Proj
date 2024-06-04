@@ -21,9 +21,9 @@ public class Runner extends Alien{
 
     @Override
     public double getEscapeChance() {
-        return 0.6;
+        return 0.2;
     }
 
     @Override
-    public double getEludeChance()  { return 0.4; }
+    public double getEludeChance()  { return 0.3; }
 }

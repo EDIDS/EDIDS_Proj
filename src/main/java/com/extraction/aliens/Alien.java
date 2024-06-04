@@ -7,9 +7,9 @@ public abstract class Alien
     /* class fields */
 
     /** The maximum attack damage of this enemy. */
-    public static final int TIER1_MAXIMUM_ATTACK_DAMAGE = 2;
-    public static final int TIER2_MAXIMUM_ATTACK_DAMAGE = 8;
-    public static final int TIER3_MAXIMUM_ATTACK_DAMAGE = 14;
+    public static final int TIER1_MAXIMUM_ATTACK_DAMAGE = 25;
+    public static final int TIER2_MAXIMUM_ATTACK_DAMAGE = 50;
+    public static final int TIER3_MAXIMUM_ATTACK_DAMAGE = 75;
 
     /** The maximum health of this enemy. */
     public static final int TIER1_HEALTH = 50;

@@ -22,7 +22,8 @@ public class UI {
     JPanel bodyPanel;
 
     JPanel titlePanel;
-    JLabel titleLabel;
+    public JLabel titleLabel;
+    String title = "Extraction";
     Font titleFont = new Font("Serif", Font.BOLD, 70);
 
     JPanel startPanel;
@@ -39,7 +40,7 @@ public class UI {
 
     JPanel topPanel;
     JLabel[] topLabel;
-    JLabel topLabelCol1;
+    public JLabel topLabelCol1;
     JLabel topLabelCol2;
     Font topFont = new Font("Serif", Font.BOLD, 20);
 
@@ -149,7 +150,7 @@ public class UI {
         titlePanel.setBounds(20, 70, 745, 150);  // -15
         titlePanel.setBackground(background);
 
-        titleLabel = new JLabel("Game Title");
+        titleLabel = new JLabel(title);
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(titleFont);
 
@@ -407,6 +408,13 @@ public class UI {
         actionButton2.setEnabled(true);
         actionButton3.setEnabled(true);
         actionButton4.setEnabled(true);
+    }
+
+    public void setUnenableButtons() {
+        actionButton1.setEnabled(false);
+        actionButton2.setEnabled(false);
+        actionButton3.setEnabled(false);
+        actionButton4.setEnabled(false);
     }
 
     private void createDialogButtonsPanel() {

@@ -82,6 +82,20 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
+    public void showGameOverScreen() {
+        // Shown
+        ui.titlePanel.setVisible(true);
+        // Hide
+        ui.startPanel.setVisible(false);
+        ui.loadPanel.setVisible(false);
+        ui.topPanel.setVisible(false);
+        ui.mapSpacePanel.setVisible(false);
+        ui.mainTextPanel.setVisible(false);
+        ui.itemsPanel.setVisible(false);
+        ui.actionPanel.setVisible(false);
+        ui.dialogBPanel.setVisible(false);
+    }
+
     public void showMessage(String message, int timerTime) {
         ui.messageLabel.setText(message); // Imposta il messaggio
         ui.messageLabel.setBorder(BorderFactory.createLineBorder(Color.RED));

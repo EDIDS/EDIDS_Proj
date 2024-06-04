@@ -42,18 +42,18 @@ public class Weapon extends Item {
 
         switch (type) {
             case "REVOLVER":
-                this.minDamage_ = 10;
-                this.maxDamage_ = 30;
+                this.minDamage_ = 20;
+                this.maxDamage_ = 40;
 
                 break;
             case "AK47":
-                this.minDamage_ = 30;
-                this.maxDamage_ = 50;
+                this.minDamage_ = 40;
+                this.maxDamage_ = 60;
 
                 break;
             case "USPSWORM":
-                this.minDamage_ = 20;
-                this.maxDamage_ = 40;
+                this.minDamage_ = 30;
+                this.maxDamage_ = 50;
 
                 break;
         }

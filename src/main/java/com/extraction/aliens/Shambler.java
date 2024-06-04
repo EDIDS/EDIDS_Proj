@@ -21,7 +21,7 @@ public class Shambler extends Alien{
 
     @Override
     public double getEscapeChance() {
-        return 0.4;
+        return 0.1;
     }
 
     @Override

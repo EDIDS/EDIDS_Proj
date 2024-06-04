@@ -231,6 +231,7 @@ public class Story {
                     break;
             }
         } else {
+            nextRoom = room;
             vm.showFightScreen();
             fightClicker();
         }
@@ -270,6 +271,7 @@ public class Story {
         Clicker clicker = new Clicker();
         fight = new Fight(player, clicker, ui, vm);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
+        game.nextPosition0 = "Proceed";
         fight.fight();
     }
 
@@ -277,6 +279,7 @@ public class Story {
         Runner runner = new Runner();
         fight = new Fight(player, runner, ui, vm);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
+        game.nextPosition0 = "Proceed";
         fight.fight();
     }
 
@@ -284,6 +287,7 @@ public class Story {
         Shambler shambler = new Shambler();
         fight = new Fight(player, shambler, ui, vm);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
+        game.nextPosition0 = "Proceed";
         fight.fight();
     }
 

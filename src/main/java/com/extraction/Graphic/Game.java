@@ -88,6 +88,7 @@ public class Game {
 
             switch (buttonClicked) {
                 case "Exit":
+                    ui.titleLabel.setText(ui.title);
                     newGame();
                     vm.showHomeScreen();
                     break;
