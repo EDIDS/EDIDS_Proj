@@ -180,7 +180,7 @@ public class Player {
             if (item != null) {
                 bag_.remove(item);
                 currentWeight_ -= item.getWeight();
-                //currentRoom_.setItem(itemToThrow); --> da fixare, non esiste il metodo setItem in Room, ma in Building
+                currentRoom_.addItem(item);
                 return item;
             }
         return null;
@@ -191,7 +191,7 @@ public class Player {
         if (item != null) {
             bag_.remove(item);
             currentWeight_ -= item.getWeight();
-            //currentRoom_.setItem(itemToThrow); --> da fixare, non esiste il metodo setItem in Room, ma in Building
+            currentRoom_.addItem(item);
             return item;
         }
         return null;

@@ -20,12 +20,21 @@ public class Game {
     Player player = new Player();
     Story story = new Story(this, ui, vm, building, player);
 
-    String nextPosition1, nextPosition2, nextPosition3, nextPosition4;
+    String nextPosition0, nextPosition1, nextPosition2, nextPosition3, nextPosition4;
 
     Room room4_2, room4_1, room3_1, room2_1, room2_0, room1_0, room2_2, room1_2, room0_2, room2_3, room1_3, room2_4, room3_4;
     Room startRoom;
 
     public Game() {
+        ui.homeScreen();
+        ui.gameScreen();
+
+        story.defaultSetup();
+
+        vm.showHomeScreen();
+    }
+
+    public void newGame() {
         room4_2 = new Room("Room 4_2", new Coordinate(4, 2), "Hall", "A large dark hall");
         room4_1 = new Room("Room 4_1", new Coordinate(4, 1), "Hall", "A large dark hall");
         room3_1 = new Room("Room 3_1", new Coordinate(3, 1), "Hall", "A large dark hall");
@@ -57,15 +66,7 @@ public class Game {
         startRoom = room4_2;
         player.setCurrentRoom(startRoom);
 
-        ui.homeScreen();
-        ui.gameScreen();
 
-        story.defaultSetup();
-
-        vm.showHomeScreen();
-    }
-
-    public void newGame() {
         player.setCurrentRoom(startRoom);
         ui.newMap();
         for(Room room : building.getRooms()) {
@@ -112,6 +113,9 @@ public class Game {
                         throw new RuntimeException(ex);
                     }*/
                     vm.showLoadScreen();
+                    break;
+                case "NextDialog":
+                    story.selectPosition(nextPosition0);
                     break;
                 case "TopLeft":
                     story.selectPosition(nextPosition1);

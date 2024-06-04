@@ -47,7 +47,7 @@ public class Story {
                 "Il mondo è stato invaso da parassiti alieni noti come archei, generando caos e terrore. \n" +
                 "La squadra Rainbow deve intervenire per riportare la pace."
         );
-        setNextPositions("Avanti", "Map", "", "");
+        game.nextPosition0 = "Continue";
     }
 
     private void setNextPositions(String next1, String next2, String next3, String next4) {
@@ -62,6 +62,9 @@ public class Story {
             case "Null":
                 vm.showMessage("Path Closed", 1000);
                 break;
+            case "Continue":
+                ui.mainTextArea.setText("");
+                break;
             case "Map":
                 map();
                 break;
@@ -73,6 +76,7 @@ public class Story {
                 break;
             case "Room4_1":
                 room4_1();
+                room(4, 1);
                 break;
             case "Room3_1":
                 room3_1();
@@ -160,8 +164,8 @@ public class Story {
         nextRow = 4;
         nextColumn = 2;
 
-        int playerX = player.getCurrentRoom_().getCoordinate().getColumn();
-        int playerY = player.getCurrentRoom_().getCoordinate().getRow();
+        playerX = player.getCurrentRoom_().getCoordinate().getColumn();
+        playerY = player.getCurrentRoom_().getCoordinate().getRow();
 
         if (hasCo) {
             System.out.println("You Win");
@@ -172,6 +176,39 @@ public class Story {
             player.setCurrentRoom(game.room4_2);
             updatePos();
             map();
+        }
+    }
+
+    public void room(int nextRow, int nextColumn) {
+        this.nextRow = nextRow;
+        this.nextColumn = nextColumn;
+        Coordinate temp = new Coordinate(nextRow, nextColumn);
+        Room room = building.getRoom(temp.toString());
+
+        if (room.getIconPath().equals(ui.checkIconPath)) {
+            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
+            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
+            player.setCurrentRoom(room);
+            updatePos();
+            map();
+        } else if (room.getAlien() != null) {
+            nextRoom = room;
+
+            switch (room.getAlien().getName()) {
+                case "Clicker":
+                    fightClicker();
+                    break;
+                case "Runner":
+                    fightRunner();
+                    break;
+                case "Shambler":
+                    fightShambler();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+
         }
     }
 

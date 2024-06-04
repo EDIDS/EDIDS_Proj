@@ -6,8 +6,6 @@ import java.util.*;
 
 public class Building {
     private Map<String, Room> rooms = new HashMap<String, Room>();
-    //lista tutti gli oggetti presenti nella mappa nelle corispettive stanze, la chiave è la coordinata della stanza
-    private Map<String, Item> allItems = new HashMap<String, Item>();
 
     public Building() {
     }
@@ -28,23 +26,6 @@ public class Building {
         return new ArrayList<Room>(rooms.values());
     }
 
-    public void setItem(Item item, Room room) {
-        allItems.put(room.getCoordinate().toString(), item);
-    }
-
-    public Item getItem(Room room) {
-        return allItems.get(room.getCoordinate().toString());
-    }
-
-    public void removeItem(Item item, Room room) { allItems.remove(room.getCoordinate().toString()); }
-
-    public Map<String, Item> getAllItems() {
-        return allItems;
-    }
-
-    public void setAllItems(Map<String, Item> allItems) {
-        this.allItems = allItems;
-    }
 
     public String getAvailableDirections(Room currentRoom) {
         List<String> availableDirections = new ArrayList<>();

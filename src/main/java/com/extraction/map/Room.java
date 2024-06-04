@@ -11,7 +11,8 @@ public class Room {
     private String description;
     private String iconPath = "";
     private Alien alien = null;
-    private boolean is_closed = false;;
+    private boolean is_closed = false;
+    private List<Item> items = new ArrayList<Item>();
 
     public Room(){
         this.coordinate = new Coordinate(0, 0);
@@ -28,6 +29,12 @@ public class Room {
     public Coordinate getCoordinate(){
         return coordinate;
     }
+
+    public List<Item> getItems() {return items;}
+
+    public void addItem(Item item){items.add(item);}
+
+    public void removeItem(Item itemToBeRemoved){items.remove(itemToBeRemoved);} //da modificare per dedidere sulla base di cosa (nome, id, ecc) rimuovere l'item
 
     public String getTitle(){
         return title;

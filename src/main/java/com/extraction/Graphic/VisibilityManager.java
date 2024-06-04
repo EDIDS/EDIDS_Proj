@@ -23,6 +23,7 @@ public class VisibilityManager {
         ui.mainTextPanel.setVisible(false);
         ui.itemsPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
+        ui.dialogBPanel.setVisible(false);
     }
 
     public void showLoadScreen() {
@@ -36,6 +37,7 @@ public class VisibilityManager {
         ui.mainTextPanel.setVisible(false);
         ui.itemsPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
+        ui.dialogBPanel.setVisible(false);
     }
 
     public void showMapScreen() {
@@ -44,10 +46,12 @@ public class VisibilityManager {
         ui.mapSpacePanel.setVisible(true);
         ui.actionPanel.setVisible(true);
         // Hide
+        ui.loadPanel.setVisible(false);
         ui.mainTextPanel.setVisible(false);
         ui.itemsPanel.setVisible(false);
         ui.titlePanel.setVisible(false);
         ui.startPanel.setVisible(false);
+        ui.dialogBPanel.setVisible(false);
     }
 
     public void showTextScreen() {
@@ -55,11 +59,27 @@ public class VisibilityManager {
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);
         ui.itemsPanel.setVisible(true);
-        ui.actionPanel.setVisible(true);
+        ui.dialogBPanel.setVisible(true);
         // Hide
+        ui.loadPanel.setVisible(false);
         ui.mapSpacePanel.setVisible(false);
         ui.titlePanel.setVisible(false);
         ui.startPanel.setVisible(false);
+        ui.actionPanel.setVisible(false);
+    }
+
+    public void showFightScreen() {
+        // Shown
+        ui.topPanel.setVisible(true);
+        ui.mainTextPanel.setVisible(true);
+        ui.itemsPanel.setVisible(true);
+        ui.actionPanel.setVisible(true);
+        // Hide
+        ui.loadPanel.setVisible(false);
+        ui.mapSpacePanel.setVisible(false);
+        ui.titlePanel.setVisible(false);
+        ui.startPanel.setVisible(false);
+        ui.dialogBPanel.setVisible(false);
     }
 
     public void showMessage(String message, int timerTime) {

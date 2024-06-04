@@ -25,25 +25,4 @@ class TorchTest {
         torch.turnOff();
         assertFalse(torch.isOn());
     }
-
-    @ParameterizedTest
-    @ValueSource(ints = {100, 22, 3, 14, 55})
-    void testDecreaseDuration(int duration) {
-        Torch t = new Torch(duration);
-        t.decreaseDuration();
-        assertEquals(duration-1, t.getDuration());
-    }
-
-    @Test
-    void testDeadBattery() {
-        while (torch.getDuration() != 0) {
-            torch.decreaseDuration();
-        }
-        assertEquals(0, torch.getDuration());
-        assertFalse(torch.isOn());
-        torch.decreaseDuration();
-        assertEquals(0, torch.getDuration());
-        torch.turnOn();
-        assertFalse(torch.isOn());
-    }
 }

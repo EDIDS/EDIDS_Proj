@@ -75,10 +75,11 @@ public class S3Uploader {
 
             // Convert the map to JSON and write it to the file
             gson.toJson(gameData, writer);
-            uploadFile(file);
-
+            writer.flush();
             writer.close();
+            uploadFile(file);
             file.delete();
+            generateGameList();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,7 +149,7 @@ public class S3Uploader {
                 String fileName = objectSummary.getKey();
 
                 // Check if the file is a save file
-                if (fileName.endsWith(".json")) {
+                if (fileName.startsWith("save") && fileName.endsWith(".json")) {
                     // Extract the save number from the file name
                     int saveNumber = Integer.parseInt(fileName.substring(4, fileName.length() - 5));
 
@@ -169,5 +170,51 @@ public class S3Uploader {
         int newSaveNumber = maxSaveNumber + 1;
 
         return newSaveNumber;
+    }
+
+    private void generateGameList() {
+        ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName);
+        ListObjectsV2Result result;
+        List<String> gameList = new ArrayList<>();
+
+        do {
+            result = s3Client.listObjectsV2(req);
+
+            for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
+                String fileName = objectSummary.getKey();
+
+                // Check if the file is a save file
+                if (fileName.endsWith(".json")) {
+                    gameList.add(fileName);
+                }
+            }
+
+            String token = result.getNextContinuationToken();
+            req.setContinuationToken(token);
+        } while (result.isTruncated());
+
+        deleteFile("gameList.json");
+
+        // Write the game list to a JSON file
+        File gameListFile = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/gameList.json");
+        try (FileWriter writer = new FileWriter(gameListFile)) {
+            gson.toJson(gameList, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Upload the game list file to the S3 bucket
+        uploadFile(gameListFile);
+
+        // Delete the local game list file
+        gameListFile.delete();
+    }
+
+    private void deleteFile(String fileName) {
+        try {
+            s3Client.deleteObject(new DeleteObjectRequest(bucketName, fileName));
+        } catch (AmazonServiceException e) {
+            System.err.println(e.getErrorMessage());
+        }
     }
 }

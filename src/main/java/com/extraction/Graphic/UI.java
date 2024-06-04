@@ -67,6 +67,10 @@ public class UI {
     JButton actionButton4;
     Font actionFont = new Font("Serif", Font.BOLD, 20);
 
+    JPanel dialogBPanel;
+    JButton dialogButton;
+
+
     JLabel messageLabel;
 
     protected UI(Game.ButtonsHandler bHandler) {
@@ -210,6 +214,7 @@ public class UI {
         bodyPanel.add(mainTextPanel);
         bodyPanel.add(itemsPanel);
         bodyPanel.add(actionPanel);
+        bodyPanel.add(dialogBPanel);
         window.add(messageLabel, BorderLayout.SOUTH);
     }
 
@@ -380,6 +385,18 @@ public class UI {
 
         actionButton4 = createButton("WEST", actionFont, bHandler, "BottomRight");
         actionPanel.add(actionButton4, gbc);
+    }
+
+    private void DialogButtonsPanel() {
+        //Action Buttons Panel
+        dialogBPanel = new JPanel();
+        LayoutManager mgr = new GridBagLayout();
+        dialogBPanel.setLayout(mgr);
+        dialogBPanel.setBounds(20, 450, 745, 90);  // -15
+        dialogBPanel.setBackground(background);
+
+        dialogButton = createButton("Continue...", actionFont, bHandler, "NextDialog");
+        dialogBPanel.add(dialogBPanel, gbc);
     }
 
     private JButton createButton(String initialLabel, Font font, ActionListener handler, String command) {

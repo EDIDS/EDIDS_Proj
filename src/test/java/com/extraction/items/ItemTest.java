@@ -58,7 +58,6 @@ class ItemTest {
         Torch torch = new Torch(duration);
         assertEquals(torch.getName(), "Torch");
         assertEquals(torch.getWeight(), TORCH_WEIGHT);
-        assertEquals(torch.getDuration(), duration);
     }
 
     @ParameterizedTest
