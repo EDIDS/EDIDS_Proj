@@ -212,16 +212,25 @@ public class UI {
             panel.add(p, BorderLayout.CENTER);
         }*/
 
+        File directory = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states");
+        int count = 0;
+        if (directory.exists()) {
+            File[] files = directory.listFiles();
+            for (File file : files) {
+                if (file.getName().contains("save")) {
+                    JPanel p = new JPanel();
+                    p.setLayout(new GridBagLayout());
+                    p.setBackground(background);
+                    p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        for (int i = 0; i < 15; i++) {
-            JPanel p = new JPanel();
-            p.setLayout(new GridBagLayout());
-            p.setBackground(background);
-            p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-            JButton b = createButton("Word" + i, startFont, lHandler, "Null");
-            b.setPreferredSize(new Dimension(650, 50));
-            p.add(b, gbc);
-            panel.add(p, BorderLayout.CENTER);
+                    JButton b = createButton(file.getName(), startFont, bHandler, "LoadFile");
+
+                    b.setPreferredSize(new Dimension(650, 50));
+                    p.add(b, gbc);
+                    panel.add(p, BorderLayout.CENTER);
+                    count++;
+                }
+            }
         }
     }
 

@@ -1,18 +1,29 @@
 package com.extraction.Graphic;
 
+import com.extraction.GameSave;
 import com.extraction.S3Uploader;
-import com.extraction.aliens.Clicker;
-import com.extraction.aliens.Runner;
-import com.extraction.aliens.Shambler;
+import com.extraction.aliens.*;
 import com.extraction.map.Building;
 import com.extraction.map.Coordinate;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
 import com.extraction.items.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.TypeAdapterFactory.*;
+import com.google.gson.reflect.TypeToken;
 
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
     ButtonsHandler bHandler = new ButtonsHandler();
@@ -139,6 +150,8 @@ public class Game {
                         throw new RuntimeException(ex);
                     }
                     vm.showLoadScreen();
+                    //tira con gson
+                    e.getActionCommand();
                     break;
                 case "MedKit":
                     story.fight.heal();
@@ -172,6 +185,21 @@ public class Game {
                 case "BottomRight":
                     story.selectPosition(nextPosition4);
                     break;
+                case "LoadFile":
+                    JButton button = (JButton) e.getSource();
+                    String filename = button.getText();
+
+
+                    Gson gson = new GsonBuilder().registerTypeAdapter(Alien.class, new AlienTypeAdapter()).setPrettyPrinting().create();
+                    try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + filename)) {
+                        GameSave gameData = new GameSave(null, null, null);
+                        gameData = gson.fromJson(reader, gameData.getClass());
+                        System.out.println("Game loaded");
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+
                 default:
 
             }
