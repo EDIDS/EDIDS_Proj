@@ -120,6 +120,13 @@ public class Fight {
         int reducedDamage = player.defend(damage);
         player.takeDamage(reducedDamage);
         ui.topLabelCol1.setText("HP: " + player.getHealth());
+        if(!player.hasShield()) {
+            ui.mainTextArea.setText("You don't have a shield!");
+            Timer timer = new Timer(TIMER, e -> {
+            });
+            timer.setRepeats(false);
+            timer.start();
+        }
         ui.mainTextArea.setText("The " + alien.getName() + " deals " + reducedDamage + " damage to you!");
         playerTurn();
     }

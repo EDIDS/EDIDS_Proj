@@ -124,16 +124,13 @@ public class Player {
         }
     }
 
-    public Weapon throwWeapon() {
+    public void throwWeapon() {
         Weapon weapon_ = getWeapon();
-        this.currentWeight_ -= weapon.getWeight();
         this.weapon = null;
-        return weapon_;
     }
 
     public Shield throwShield() {
         Shield shield_ = getShield();
-        this.currentWeight_ -= shield.getWeight();
         this.shield = null;
         return shield_;
     }
@@ -179,6 +176,9 @@ public class Player {
     public void addItem(Item item){
         double newWeight = currentWeight_ + item.getWeight();
         if (newWeight <= MAX_WEIGHT) {
+            if(item instanceof Weapon) {
+                this.setWeapon((Weapon) item);
+            }
             bag_.add(item);
             currentWeight_ = newWeight;
         } else {
@@ -186,14 +186,13 @@ public class Player {
         }
     }
 
-
-
-
     public Item throwItem(Item itemToThrow) {
         Item item = this.findItem(itemToThrow);
             if (item != null && item.isThrowable()) {
+                if(itemToThrow instanceof Weapon) this.throwWeapon();
                 bag_.remove(item);
                 currentWeight_ -= item.getWeight();
+                if(itemToThrow instanceof Weapon) throwWeapon();
                 return item;
             }
         return null;
@@ -202,6 +201,7 @@ public class Player {
     public Item throwItem(String itemToThrow) {
         Item item = this.findItem(itemToThrow);
         if (item != null && item.isThrowable()) {
+            if(item instanceof Weapon) this.throwWeapon();
             bag_.remove(item);
             currentWeight_ -= item.getWeight();
             return item;

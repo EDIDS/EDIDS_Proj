@@ -18,9 +18,9 @@ public class Game {
     ButtonsHandler bHandler = new ButtonsHandler();
     UI ui = new UI(bHandler);
     VisibilityManager vm = new VisibilityManager(ui);
-    Building building = new Building();
-    Player player = new Player(ui, vm);
-    Story story = new Story(this, ui, vm, building, player);
+    Building building;
+    Player player;
+    Story story;
 
     String nextPosition0, nextPosition1, nextPosition2, nextPosition3, nextPosition4;
 
@@ -35,6 +35,10 @@ public class Game {
     }
 
     public void newGame() {
+        player = new Player(ui, vm);
+        building = new Building();
+        story = new Story(this, ui, vm, building, player);
+
         room4_2 = new Room("Room 4_2", new Coordinate(4, 2), "Hall", "A large dark hall");
         room4_1 = new Room("Room 4_1", new Coordinate(4, 1), "Hall", "A large dark hall");
         room3_1 = new Room("Room 3_1", new Coordinate(3, 1), "Hall", "A large dark hall");
@@ -151,6 +155,10 @@ public class Game {
                 case "ExitItems":
                     ui.setEnableButtons();
                     story.exitItems();
+                    break;
+                case "ThrowItems":
+                    ui.setEnableButtons();
+                    story.throwItems();
                     break;
                 case "TopLeft":
                     story.selectPosition(nextPosition1);

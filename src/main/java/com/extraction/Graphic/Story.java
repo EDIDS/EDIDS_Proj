@@ -50,13 +50,17 @@ public class Story {
         );
         updatePos();
         ui.topLabelCol1.setText("HP: " + player.getHealth());
-        ui.topLabelCol2.setText("Weapon: "/* + player.getWeapon().getName()*/);
+        Weapon weapon = player.getWeapon();
+        if (weapon == null) ui.topLabelCol2.setText("Weapon: Punch");
+        else ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
         ui.mainTextArea.setText(
                 "Sei un operatore della squadra Rainbow,\n" +
                 "un'élite militare specializzata in infiltrazioni e salvataggio di ostaggi. \n" +
                 "Il mondo è stato invaso da parassiti alieni noti come archei, generando caos e terrore. \n" +
                 "La squadra Rainbow deve intervenire per riportare la pace."
         );
+
+        ui.setEnableButtons();
 
         //introduction = new IntroductionDialog();
 
@@ -212,6 +216,8 @@ public class Story {
 
     private void showItems() {
         vm.showTextScreen();
+        ui.exitItemButton.setEnabled(true);
+        ui.throwButton.setEnabled(true);
         List<Item> items = nextRoom.getItems();
         if(items.isEmpty()) proceed();
         StringBuilder str = new StringBuilder("You found:\n");
@@ -260,14 +266,95 @@ public class Story {
         } catch (Exception ignore) {}
     }
 
+    public void exitItems() {
+        ui.actionButton1.removeActionListener(actionListener1);
+        ui.actionButton2.removeActionListener(actionListener2);
+        ui.actionButton3.removeActionListener(actionListener3);
+        ui.actionButton4.removeActionListener(actionListener4);
+
+        ui.actionButton1.removeActionListener(ui.bHandler);
+        ui.actionButton2.removeActionListener(ui.bHandler);
+        ui.actionButton3.removeActionListener(ui.bHandler);
+        ui.actionButton4.removeActionListener(ui.bHandler);
+
+        ui.actionButton1.addActionListener(ui.bHandler);
+        ui.actionButton2.addActionListener(ui.bHandler);
+        ui.actionButton3.addActionListener(ui.bHandler);
+        ui.actionButton4.addActionListener(ui.bHandler);
+        proceed();
+    }
+
     private ActionListener addListener(JButton b, String item) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                b.setEnabled(false);
-                execute(item);
-            }
+        return e -> {
+            b.setEnabled(false);
+            execute(item);
         };
+    }
+
+    public void throwItems() {
+        vm.showTextScreen();
+        exitThrow();
+        ui.exitItemButton.setEnabled(false);
+        ui.throwButton.setEnabled(false);
+        List<Item> items = player.getBag();
+        if(items.isEmpty()) {
+            ui.setUnenableButtons();
+            ui.mainTextArea.setText("No items Found in your Bag");
+            Timer timer = new Timer(2000, e -> showItems());
+            timer.setRepeats(false);
+            timer.start();
+            return;
+        }
+        StringBuilder str = new StringBuilder("You have:\n");
+        for (Item item : items) {
+            str.append("- ").append(item.getName()).append("\n");
+        }
+        ui.mainTextArea.setText(str.toString());
+
+        String item1, item2, item3, item4;
+        try {
+            ui.actionButton1.setText("");
+            ui.actionButton2.setText("");
+            ui.actionButton3.setText("");
+            ui.actionButton4.setText("");
+            ui.setUnenableButtons();
+
+            item1 = items.get(0).getName();
+            ui.actionButton1.setText(item1);
+            ui.actionButton1.setEnabled(true);
+            ui.actionButton1.removeActionListener(ui.bHandler);
+            actionListener1 = addListener(ui.actionButton1, "Remove" + item1);
+            ui.actionButton1.addActionListener(actionListener1);
+
+            item2 = items.get(1).getName();
+            ui.actionButton2.setText(item2);
+            ui.actionButton2.setEnabled(true);
+            ui.actionButton2.removeActionListener(game.bHandler);
+            actionListener2 = addListener(ui.actionButton2, "Remove" + item2);
+            ui.actionButton2.addActionListener(actionListener2);
+
+            item3 = items.get(2).getName();
+            ui.actionButton3.setText(item3);
+            ui.actionButton3.setEnabled(true);
+            ui.actionButton3.removeActionListener(game.bHandler);
+            actionListener3 = addListener(ui.actionButton3, "Remove" + item3);
+            ui.actionButton3.addActionListener(actionListener3);
+
+            item4 = items.get(3).getName();
+            ui.actionButton4.setText(item4);
+            ui.actionButton4.setEnabled(true);
+            ui.actionButton4.removeActionListener(game.bHandler);
+            actionListener4 = addListener(ui.actionButton4, "Remove" + item4);
+            ui.actionButton4.addActionListener(actionListener4);
+
+        } catch (Exception ignore) {}
+    }
+
+    private void exitThrow() {
+        ui.actionButton1.removeActionListener(actionListener1);
+        ui.actionButton2.removeActionListener(actionListener2);
+        ui.actionButton3.removeActionListener(actionListener3);
+        ui.actionButton4.removeActionListener(actionListener4);
     }
 
     private void execute (String item) {
@@ -300,38 +387,48 @@ public class Story {
             case "REVOLVER":
                 Weapon revolver = new Weapon("REVOLVER");
                 player.addItem(revolver);
+                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
                 break;
             case "USPSWORM":
                 Weapon usp = new Weapon("USPSWORM");
                 player.addItem(usp);
+                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
                 break;
             case "AK47":
                 Weapon ak = new Weapon("AK47");
                 player.addItem(ak);
+                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
+                break;
+            case "RemoveMedKit":
+                player.throwItem("MedKit");
+                exitThrow();
+                showItems();
+                break;
+            case "RemoveTNT":
+                player.throwItem("TNT");
+                exitThrow();
+                showItems();
+                break;
+            case "RemoveShield":
+                player.throwItem("Shield");
+                exitThrow();
+                showItems();
+                break;
+            case "RemoveTorch":
+                player.throwItem("Torch");
+                exitThrow();
+                showItems();
+                break;
+            case "RemoveWeapon":
+                player.throwWeapon();
+                exitThrow();
+                showItems();
                 break;
             default:
         }
-    }
-
-    public void exitItems() {
-        ui.actionButton1.removeActionListener(actionListener1);
-        ui.actionButton2.removeActionListener(actionListener2);
-        ui.actionButton3.removeActionListener(actionListener3);
-        ui.actionButton4.removeActionListener(actionListener4);
-
-        ui.actionButton1.removeActionListener(ui.bHandler);
-        ui.actionButton2.removeActionListener(ui.bHandler);
-        ui.actionButton3.removeActionListener(ui.bHandler);
-        ui.actionButton4.removeActionListener(ui.bHandler);
-
-        ui.actionButton1.addActionListener(ui.bHandler);
-        ui.actionButton2.addActionListener(ui.bHandler);
-        ui.actionButton3.addActionListener(ui.bHandler);
-        ui.actionButton4.addActionListener(ui.bHandler);
-        proceed();
     }
 
     public void room4_2() {

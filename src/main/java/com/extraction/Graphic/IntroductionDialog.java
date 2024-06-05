@@ -18,7 +18,12 @@ public class IntroductionDialog {
     }
 
     public void initializeDialogues() {
-        dialogues.add("Sei un operatore della squadra Rainbow, un'élite militare specializzata in infiltrazioni e salvataggio di ostaggi. Il mondo è stato invaso da parassiti alieni noti come archei, generando caos e terrore. La squadra Rainbow deve intervenire per riportare la pace.");
+        dialogues.add(
+                "Sei un operatore della squadra Rainbow,\n" +
+                "un'élite militare specializzata in infiltrazioni e salvataggio di ostaggi. \n" +
+                "Il mondo è stato invaso da parassiti alieni noti come archei, generando caos e terrore. \n" +
+                "La squadra Rainbow deve intervenire per riportare la pace."
+        );
         dialogues.add("Inserisci il tuo nome:");
         dialogues.add("Ti trovi agli HQ, ti dirigi verso la sala operativa. Incontri il capo del team Rainbow.");
         dialogues.add("...: “Tu sei nome, il nuovo ingresso nel team”");

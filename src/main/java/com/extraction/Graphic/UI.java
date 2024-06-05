@@ -75,6 +75,7 @@ public class UI {
 
     JPanel exitItemBPanel;
     JButton exitItemButton;
+    JButton throwButton;
 
     JPanel dialogBPanel;
     JButton dialogButton;
@@ -396,13 +397,16 @@ public class UI {
     private void createExitItemsButtonPanel() {
         //Exit Items Button Panel
         exitItemBPanel = new JPanel();
-        LayoutManager mgr = new GridBagLayout();
+        LayoutManager mgr = new GridLayout(1, 2, 10, 10);
         exitItemBPanel.setLayout(mgr);
-        exitItemBPanel.setBounds(120, 400, 545, 40);  // -15
+        exitItemBPanel.setBounds(270, 400, 245, 40);  // -15
         exitItemBPanel.setBackground(background);
 
         exitItemButton = createButton("Exit", actionFont, bHandler, "ExitItems");
+        throwButton = createButton("Throw", actionFont, bHandler, "ThrowItems");
+
         exitItemBPanel.add(exitItemButton, gbc);
+        exitItemBPanel.add(throwButton, gbc);
     }
 
     private void createActionButtonsPanel() {
