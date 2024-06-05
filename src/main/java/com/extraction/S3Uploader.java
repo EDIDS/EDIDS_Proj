@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import com.extraction.map.Building;
 import com.extraction.player.Player;
+import com.extraction.player.PlayerData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -69,12 +70,12 @@ public class S3Uploader {
             FileWriter writer = new FileWriter(file);
 
             // Create a map to hold both Player and Building objects
-            Map<String, Object> gameData = new HashMap<>();
-            gameData.put("player", player);
-            gameData.put("building", building);
+
+            GameSave gameSave = new GameSave(new PlayerData(player), building, "save" + newSaveNumber);
+
 
             // Convert the map to JSON and write it to the file
-            gson.toJson(gameData, writer);
+            gson.toJson(gameSave, writer);
             writer.flush();
             writer.close();
             uploadFile(file);
