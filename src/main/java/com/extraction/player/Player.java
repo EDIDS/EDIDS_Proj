@@ -186,6 +186,9 @@ public class Player {
         }
     }
 
+
+
+
     public Item throwItem(Item itemToThrow) {
         Item item = this.findItem(itemToThrow);
             if (item != null && item.isThrowable()) {

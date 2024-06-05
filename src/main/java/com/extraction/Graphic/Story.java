@@ -1,8 +1,7 @@
 package com.extraction.Graphic;
 
 import com.extraction.aliens.Alien;
-import com.extraction.items.Item;
-import com.extraction.items.Weapon;
+import com.extraction.items.*;
 import com.extraction.map.Building;
 import com.extraction.map.Coordinate;
 import com.extraction.map.Fight;
@@ -217,7 +216,8 @@ public class Story {
         if(items.isEmpty()) proceed();
         StringBuilder str = new StringBuilder("You found:\n");
         for (Item item : items) {
-            str.append("- ").append(item.getName()).append("\n");
+            if (item instanceof Weapon) str.append("- ").append(((Weapon) item).getType()).append("\n");
+            else str.append("- ").append(item.getName()).append("\n");
         }
         ui.mainTextArea.setText(str.toString());
 
@@ -273,20 +273,44 @@ public class Story {
     private void execute (String item) {
         switch (item) {
             case "MedKit":
+                MedKit med = new MedKit();
+                player.addItem(med);
+                nextRoom.removeItem("MedKit");
                 break;
             case "TNT":
+                TNT tnt = new TNT();
+                player.addItem(tnt);
+                nextRoom.removeItem("TNT");
                 break;
             case "Shield":
+                Shield shield= new Shield();
+                player.addItem(shield);
+                nextRoom.removeItem("Shield");
                 break;
             case "Key":
+                Key key = new Key();
+                player.addItem(key);
+                nextRoom.removeItem("Key");
                 break;
             case "Torch":
+                Torch torch = new Torch();
+                player.addItem(torch);
+                nextRoom.removeItem("Torch");
                 break;
             case "REVOLVER":
+                Weapon revolver = new Weapon("REVOLVER");
+                player.addItem(revolver);
+                nextRoom.removeItem("Weapon");
                 break;
             case "USPSWORM":
+                Weapon usp = new Weapon("USPSWORM");
+                player.addItem(usp);
+                nextRoom.removeItem("Weapon");
                 break;
             case "AK47":
+                Weapon ak = new Weapon("AK47");
+                player.addItem(ak);
+                nextRoom.removeItem("Weapon");
                 break;
             default:
         }

@@ -34,7 +34,18 @@ public class Room {
 
     public void addItem(Item item){items.add(item);}
 
-    public void removeItem(Item itemToBeRemoved){items.remove(itemToBeRemoved);} //da modificare per dedidere sulla base di cosa (nome, id, ecc) rimuovere l'item
+    public void removeItem(String itemToThrow){
+        Item item = this.findItem(itemToThrow);
+        if (item != null && item.isThrowable()) items.remove(item);
+    }
+
+    public Item findItem(String itemToFind){
+        for (Item item : items) {
+            if (item.getName().equals(itemToFind))
+                return item;
+        }
+        return null;
+    }
 
     public String getTitle(){
         return title;
