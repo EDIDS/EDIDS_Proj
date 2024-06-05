@@ -1,9 +1,13 @@
 package com.extraction.Graphic;
 
+import com.extraction.S3Uploader;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class UI {
     JFrame window;
@@ -79,7 +83,7 @@ public class UI {
     }
 
     // Home GUI
-    public void homeScreen() {
+    public void homeScreen() throws IOException {
         window = new JFrame();
         window.setTitle("EDIDS_Proj2");
         window.setLayout(new BorderLayout());
@@ -173,7 +177,7 @@ public class UI {
         startPanel.add(loadButton, gbc);
     }
 
-    private void createLoadPanel() {
+    public void createLoadPanel() throws IOException {
         loadPanel = new JPanel();
         loadPanel.setBounds(50, 50, 685, 500);
         loadPanel.setLayout(new BoxLayout(loadPanel, BoxLayout.Y_AXIS));
@@ -183,7 +187,16 @@ public class UI {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(background);
 
-        for (int i = 0; i < 15; i++) {
+        fillLoadList(panel);
+
+        scroll = new JScrollPane(panel);
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+
+        loadPanel.add(scroll);
+    }
+
+    private void fillLoadList(JPanel panel) throws IOException {
+        /*for (int i = 0; i < 15; i++) {
             JPanel p = new JPanel();
             p.setLayout(new GridBagLayout());
             p.setBackground(background);
@@ -193,12 +206,19 @@ public class UI {
             b.setPreferredSize(new Dimension(650, 50));
             p.add(b, gbc);
             panel.add(p, BorderLayout.CENTER);
+        }*/
+
+
+        for (int i = 0; i < 15; i++) {
+            JPanel p = new JPanel();
+            p.setLayout(new GridBagLayout());
+            p.setBackground(background);
+            p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+            JButton b = createButton("Word" + i, startFont, bHandler, "Null");
+            b.setPreferredSize(new Dimension(650, 50));
+            p.add(b, gbc);
+            panel.add(p, BorderLayout.CENTER);
         }
-
-        scroll = new JScrollPane(panel);
-        scroll.setBorder(BorderFactory.createEmptyBorder());
-
-        loadPanel.add(scroll);
     }
 
     // Game GUI
@@ -394,6 +414,10 @@ public class UI {
         actionButton2.setEnabled(true);
         actionButton3.setEnabled(false);
         actionButton4.setEnabled(false);
+        itemButton1.setEnabled(true);
+        itemButton2.setEnabled(true);
+        itemButton3.setEnabled(true);
+        itemButton4.setEnabled(true);
     }
 
     public void setAlienTurnButton() {
@@ -401,6 +425,10 @@ public class UI {
         actionButton2.setEnabled(false);
         actionButton3.setEnabled(true);
         actionButton4.setEnabled(true);
+        itemButton1.setEnabled(false);
+        itemButton2.setEnabled(false);
+        itemButton3.setEnabled(false);
+        itemButton4.setEnabled(false);
     }
 
     public void setEnableButtons() {
@@ -408,6 +436,10 @@ public class UI {
         actionButton2.setEnabled(true);
         actionButton3.setEnabled(true);
         actionButton4.setEnabled(true);
+        itemButton1.setEnabled(true);
+        itemButton2.setEnabled(true);
+        itemButton3.setEnabled(true);
+        itemButton4.setEnabled(true);
     }
 
     public void setUnenableButtons() {
@@ -415,6 +447,10 @@ public class UI {
         actionButton2.setEnabled(false);
         actionButton3.setEnabled(false);
         actionButton4.setEnabled(false);
+        itemButton1.setEnabled(false);
+        itemButton2.setEnabled(false);
+        itemButton3.setEnabled(false);
+        itemButton4.setEnabled(false);
     }
 
     private void createDialogButtonsPanel() {

@@ -3,16 +3,18 @@ package com.extraction.player;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
+
+import com.extraction.Graphic.UI;
+import com.extraction.Graphic.VisibilityManager;
 import com.extraction.items.*;
 import com.extraction.map.Room;
-import com.extraction.map.Building;
 
 public class Player {
 
     public static Random RANDOM = new Random();
 
     public static final int FULL_HEALTH = 100;
-    public static final int BASE_ATTACK_DAMAGE = 25;
+    public static final int BASE_ATTACK_DAMAGE = 100;
     public static final String NO_NAME = "";
     public static final int MAX_WEIGHT = 100;
 
@@ -24,17 +26,23 @@ public class Player {
     private Weapon weapon;
     private Shield shield;
     private int score_;
+    private UI ui_;
+    private VisibilityManager vm_;
 
-    public Player() {
+    public Player(UI ui, VisibilityManager vm) {
         name_ = NO_NAME;
         health_ = FULL_HEALTH;
         bag_ = new ArrayList<Item>();
+        ui_ = ui;
+        vm_ = vm;
     }
 
-    public Player(String name) {
+    public Player(String name, UI ui, VisibilityManager vm) {
         name_ = name;
         health_ = FULL_HEALTH;
         bag_ = new ArrayList<Item>();
+        ui_ = ui;
+        vm_ = vm;
     }
 
     /**
@@ -150,14 +158,17 @@ public class Player {
         return damage;
     }
 
-    public void heal() {
-        Medikit medikit = (Medikit) this.findItem("Medikit");
-        if (medikit != null) {
+    public boolean heal() {
+        MedKit medKit = (MedKit) this.findItem("MedKit");
+        if (medKit != null) {
             setHealth(FULL_HEALTH);
-            throwItem(medikit);
-            return;
+            ui_.topLabelCol1.setText("HP: " + this.getHealth());
+            throwItem(medKit);
+            return true;
         }
-        System.out.println("No medikit found");
+        vm_.showMessage("No MedKit Found", 3000);
+        System.out.println("No medKit found");
+        return false;
     }
 
     public void takeDamage(int damage) {
@@ -177,10 +188,9 @@ public class Player {
 
     public Item throwItem(Item itemToThrow) {
         Item item = this.findItem(itemToThrow);
-            if (item != null) {
+            if (item != null && item.isThrowable()) {
                 bag_.remove(item);
                 currentWeight_ -= item.getWeight();
-                currentRoom_.addItem(item);
                 return item;
             }
         return null;
@@ -188,10 +198,9 @@ public class Player {
 
     public Item throwItem(String itemToThrow) {
         Item item = this.findItem(itemToThrow);
-        if (item != null) {
+        if (item != null && item.isThrowable()) {
             bag_.remove(item);
             currentWeight_ -= item.getWeight();
-            currentRoom_.addItem(item);
             return item;
         }
         return null;
@@ -220,6 +229,7 @@ public class Player {
             throwItem(tnt);
             return explosion;
         }
+        vm_.showMessage("No TNT Found", 3000);
         System.out.println("No tnt found");
         return 0;
     }

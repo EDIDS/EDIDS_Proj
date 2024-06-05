@@ -1,13 +1,15 @@
 package com.extraction.Graphic;
 
 import com.extraction.S3Uploader;
+import com.extraction.aliens.Clicker;
+import com.extraction.aliens.Runner;
+import com.extraction.aliens.Shambler;
 import com.extraction.map.Building;
 import com.extraction.map.Coordinate;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
+import com.extraction.items.*;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -17,7 +19,7 @@ public class Game {
     UI ui = new UI(bHandler);
     VisibilityManager vm = new VisibilityManager(ui);
     Building building = new Building();
-    Player player = new Player();
+    Player player = new Player(ui, vm);
     Story story = new Story(this, ui, vm, building, player);
 
     String nextPosition0, nextPosition1, nextPosition2, nextPosition3, nextPosition4;
@@ -25,15 +27,11 @@ public class Game {
     Room room4_2, room4_1, room3_1, room2_1, room2_0, room1_0, room2_2, room1_2, room0_2, room2_3, room1_3, room2_4, room3_4;
     Room startRoom;
 
-    public Game() {
+    public Game() throws IOException {
         ui.homeScreen();
         ui.gameScreen();
 
         newGame();
-
-        story.defaultSetup();
-
-        vm.showHomeScreen();
     }
 
     public void newGame() {
@@ -65,19 +63,35 @@ public class Game {
         building.addRoom(room2_4);
         building.addRoom(room3_4);
 
+        Runner runner = new Runner();
+        room4_1.setAlien(runner);
+        Clicker clicker = new Clicker();
+        room2_0.setAlien(clicker);
+        Shambler shambler = new Shambler();
+        room3_4.setAlien(shambler);
+
+        TNT tnt = new TNT();
+        room4_1.addItem(tnt);
+
+        MedKit med = new MedKit();
+        room4_1.addItem(med);
+
+        Weapon revolver = new Weapon("REVOLVER");
+        room4_1.addItem(revolver);
+
         startRoom = room4_2;
         player.setCurrentRoom(startRoom);
 
-
-        /*player.setCurrentRoom(startRoom);
         ui.newMap();
         for(Room room : building.getRooms()) {
             room.setIconPath("");
         }
-        story.defaultSetup();*/
+
+        story.defaultSetup();
+        vm.showHomeScreen();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new Game();
     }
 
@@ -90,31 +104,29 @@ public class Game {
                 case "Exit":
                     ui.titleLabel.setText(ui.title);
                     newGame();
-                    vm.showHomeScreen();
                     break;
                 case "Save":
                     try {
                         S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
                         s3Uploader.saveGame(player, building);
                         //@TODO: Display a message to the user that the game has been saved
-
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    newGame();
                     break;
                 case "Start":
-                    vm.showTextScreen();
+                    vm.showDialogScreen();
                     //story.map();
                     break;
                 case "Load":
-                    /*try {
+                    try {
                         S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
                         s3Uploader.downloadAllGames();
-                        //@TODO: listare i vari salvataggi e permettere all'utente di sceglierne uno, che verrà poi caricato. I restanti non selezionati vengono eliminati localmente
                     }
                     catch (Exception ex) {
                         throw new RuntimeException(ex);
-                    }*/
+                    }
                     vm.showLoadScreen();
                     break;
                 case "MedKit":

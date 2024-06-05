@@ -6,7 +6,7 @@ public class Shield extends Item {
     public static final int SHIELD_DEFENSE = 20;
 
     public Shield() {
-        super("Shield", SHIELD_WEIGHT);
+        super("Shield", SHIELD_WEIGHT, true);
     }
 
     public int getDefense() {

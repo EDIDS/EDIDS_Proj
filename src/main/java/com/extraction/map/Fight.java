@@ -4,26 +4,27 @@ import com.extraction.Graphic.VisibilityManager;
 import com.extraction.aliens.Alien;
 import com.extraction.player.Player;
 import com.extraction.Graphic.UI;
+import com.extraction.Graphic.Story;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Fight {
     Player player;
     Alien alien;
     UI ui;
+    Story story;
     VisibilityManager vm;
     final Object lock = new Object();
     final int TIMER = 3500;
 
     volatile Boolean selected = false;
 
-    public Fight(Player player, Alien alien, UI ui, VisibilityManager vm) {
+    public Fight(Player player, Alien alien, UI ui, VisibilityManager vm, Story story) {
         this.player = player;
         this.alien = alien;
         this.ui = ui;
         this.vm = vm;
+        this.story = story;
     }
 
     public void fight() {
@@ -57,8 +58,9 @@ public class Fight {
         Timer timer = new Timer(TIMER, e -> {
             if (alien.getHealth() <= 0) {
                 ui.mainTextArea.setText("You have defeated the " + alien.getName() + "!");
-                vm.showTextScreen();
+                vm.showDialogScreen();
                 ui.setEnableButtons();
+                story.checkRoom();
             } else {
                 ui.setAlienTurnButton();
                 ui.mainTextArea.setText(displayStatus() + "\n\nThe alien is attacking you!\nWhat do you want to do?");
@@ -82,8 +84,9 @@ public class Fight {
         double escapeChance = alien.getEscapeChance();
         if (Math.random() < escapeChance) {
             ui.mainTextArea.setText("You successfully escaped from the " + alien.getName() + "!");
-            vm.showTextScreen();
+            vm.showDialogScreen();
             ui.setEnableButtons();
+            story.checkRoom();
         } else {
             ui.mainTextArea.setText("You failed to escape from the " + alien.getName() + "!");
             alienTurn();
@@ -92,16 +95,23 @@ public class Fight {
 
     public void heal() {
         ui.mainTextArea.setText("You try to heal yourself!");
-        player.heal();
-        alienTurn();
+        if (player.heal()) {
+            ui.mainTextArea.setText("You successfully heal yourself!");
+            alienTurn();
+        } else
+            playerTurn();
     }
 
     public void tnt() {
-        ui.mainTextArea.setText("You throw TNT at " + alien.getName() + "!");
         int tntDamage = player.detonateTNT();
-        alien.takeDamage(tntDamage);
-        ui.mainTextArea.setText("You deal " + tntDamage + " damage to the " + alien.getName() + "!");
-        alienTurn();
+        if(tntDamage == 0){
+            playerTurn();
+        } else {
+            ui.mainTextArea.setText("You throw TNT at " + alien.getName() + "!");
+            alien.takeDamage(tntDamage);
+            ui.mainTextArea.setText("You deal " + tntDamage + " damage to the " + alien.getName() + "!");
+            alienTurn();
+        }
     }
 
     public void defend() {

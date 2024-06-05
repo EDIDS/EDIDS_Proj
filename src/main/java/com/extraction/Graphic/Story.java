@@ -1,13 +1,16 @@
 package com.extraction.Graphic;
 
-import com.extraction.aliens.Clicker;
-import com.extraction.aliens.Runner;
-import com.extraction.aliens.Shambler;
+import com.extraction.aliens.Alien;
+import com.extraction.items.Item;
+import com.extraction.items.Weapon;
 import com.extraction.map.Building;
 import com.extraction.map.Coordinate;
 import com.extraction.map.Fight;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
+
+import java.util.List;
+import java.util.Objects;
 
 public class Story {
     Game game;
@@ -50,7 +53,7 @@ public class Story {
                 "La squadra Rainbow deve intervenire per riportare la pace."
         );
 
-        introduction = new IntroductionDialog();
+        //introduction = new IntroductionDialog();
 
         game.nextPosition0 = "Introduction";
     }
@@ -89,6 +92,25 @@ public class Story {
             case "Elude":
                 fight.elude();
                 break;
+            case"ShowItems":
+                showItems();
+                break;
+            case "MedKit":
+                break;
+            case "TNT":
+                break;
+            case "Shield":
+                break;
+            case "Key":
+                break;
+            case "Torch":
+                break;
+            case "REVOLVER":
+                break;
+            case "USPSWORM":
+                break;
+            case "AK47":
+                break;
             case "Map":
                 map();
                 break;
@@ -103,19 +125,24 @@ public class Story {
                 room(4, 1);
                 break;
             case "Room3_1":
-                room3_1();
+                //room3_1();
+                room(3, 1);
                 break;
             case "Room2_1":
-                room2_1();
+                //room2_1();
+                room(2, 1);
                 break;
             case "Room2_0":
-                room2_0();
+                //room2_0();
+                room(2, 0);
                 break;
             case "Room1_0":
-                room1_0();
+                //room1_0();
+                room(1, 0);
                 break;
             case "Room2_2":
-                room2_2();
+                //room2_2();
+                room(2, 2);
                 break;
             case "Room1_2":
                 room1_2();
@@ -133,7 +160,8 @@ public class Story {
                 room2_4();
                 break;
             case "Room3_4":
-                room3_4();
+                //room3_4();
+                room(3, 4);
                 break;
             default:
                 System.out.println("Invalid position");
@@ -174,12 +202,53 @@ public class Story {
     private void proceed() {
         ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
         ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-        building.getRoom(new Coordinate(nextRow, nextColumn).toString()).setIconPath(ui.checkIconPath);
 
-        player.setCurrentRoom(nextRoom);
         updatePos();
 
         map();
+    }
+
+    public void checkRoom() {
+        Room room = building.getRoom(new Coordinate(nextRow, nextColumn).toString());
+        room.setIconPath(ui.checkIconPath);
+        room.setAlien(null);
+    }
+
+    private void showItems() {
+        vm.showTextScreen();
+        List<Item> items = player.getCurrentRoom_().getItems();
+        if(items.isEmpty()) proceed();
+        StringBuilder str = new StringBuilder("You found:\n");
+        for (Item item : items) {
+            str.append("- ").append(item.getName()).append("\n");
+        }
+        ui.mainTextArea.setText(str.toString());
+
+        try {
+            ui.actionButton1.setText("");
+            ui.actionButton2.setText("");
+            ui.actionButton3.setText("");
+            ui.actionButton4.setText("");
+            ui.setUnenableButtons();
+            String item1 = items.get(0) instanceof Weapon ? ((Weapon) items.get(0)).getType() : items.get(0).getName();
+            ui.actionButton1.setText(item1);
+            ui.actionButton1.setEnabled(true);
+            System.out.println(item1);
+            String item2 = items.get(1) instanceof Weapon ? ((Weapon) items.get(1)).getType() : items.get(1).getName();
+            ui.actionButton2.setText(item2);
+            ui.actionButton2.setEnabled(true);
+            System.out.println(item2);
+            String item3 = items.get(2) instanceof Weapon ? ((Weapon) items.get(2)).getType() : items.get(2).getName();
+            ui.actionButton3.setText(item3);
+            ui.actionButton3.setEnabled(true);
+            System.out.println(item3);
+            String item4 = items.get(3) instanceof Weapon ? ((Weapon) items.get(3)).getType() : items.get(3).getName();
+            ui.actionButton4.setText(item4);
+            ui.actionButton4.setEnabled(true);
+            System.out.println(item4);
+
+            setNextPositions(item1, item2, item3, item4);
+        } catch (Exception ignore) {}
     }
 
     public void room4_2() {
@@ -204,10 +273,25 @@ public class Story {
     public void room(int nextRow, int nextColumn) {
         this.nextRow = nextRow;
         this.nextColumn = nextColumn;
-        Coordinate temp = new Coordinate(nextRow, nextColumn);
-        Room room = building.getRoom(temp.toString());
+        Coordinate coords = new Coordinate(nextRow, nextColumn);
+        Room room = building.getRoom(coords.toString());
+        nextRoom = room;
+        player.setCurrentRoom(nextRoom);
 
-        if (room.getIconPath().equals(ui.checkIconPath)) {
+        if (room.getAlien() != null) {
+            vm.showTextScreen();
+            fightAlien(room.getAlien());
+        } else if (!room.getItems().isEmpty()) {
+            if (!room.getIconPath().equals(ui.checkIconPath)) checkRoom();
+            System.out.println("Eccomi");
+            showItems();
+            System.out.println("Baaaaam");
+        } else {
+            if (!room.getIconPath().equals(ui.checkIconPath)) checkRoom();
+            proceed();
+        }
+        System.out.println("wella");
+        /*if (room.getIconPath().equals(ui.checkIconPath)) {
             ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
             ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
             player.setCurrentRoom(room);
@@ -215,26 +299,11 @@ public class Story {
             map();
         } else if (room.getAlien() != null) {
             nextRoom = room;
-            vm.showFightScreen();
-
-            switch (room.getAlien().getName()) {
-                case "Clicker":
-                    fightClicker();
-                    break;
-                case "Runner":
-                    fightRunner();
-                    break;
-                case "Shambler":
-                    fightShambler();
-                    break;
-                default:
-                    break;
-            }
+            vm.showTextScreen();
+            fightAlien(room.getAlien());
         } else {
-            nextRoom = room;
-            vm.showFightScreen();
-            fightClicker();
-        }
+
+        }*/
     }
 
     public void room4_1() {
@@ -249,7 +318,7 @@ public class Story {
             map();
         } else {
             nextRoom = game.room4_1;
-            fightClicker();
+            //fightAlien();
 
             /*vm.showTextScreen();
 
@@ -267,15 +336,14 @@ public class Story {
         }
     }
 
-    public void fightClicker() {
-        Clicker clicker = new Clicker();
-        fight = new Fight(player, clicker, ui, vm);
+    public void fightAlien(Alien alien) {
+        fight = new Fight(player, alien, ui, vm, this);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
-        game.nextPosition0 = "Proceed";
+        game.nextPosition0 = "Room" + nextRow + "_" + nextColumn;
         fight.fight();
     }
 
-    public void fightRunner() {
+    /*public void fightRunner() {
         Runner runner = new Runner();
         fight = new Fight(player, runner, ui, vm);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
@@ -289,7 +357,7 @@ public class Story {
         setNextPositions("Attack", "Leave", "Defend", "Elude");
         game.nextPosition0 = "Proceed";
         fight.fight();
-    }
+    }*/
 
     public void room3_1() {
         nextRow = 3;

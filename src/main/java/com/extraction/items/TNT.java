@@ -7,7 +7,7 @@ public class TNT extends Item{
     public static final int TNT_DAMAGE = 50;
 
     public TNT() {
-        super("TNT", TNT_WEIGHT);
+        super("TNT", TNT_WEIGHT, true);
     }
 
     public int getDamage() {

@@ -11,7 +11,7 @@ public class Runner extends Alien{
 
     @Override
     public int attack() {
-        return RANDOM.nextInt(TIER2_MAXIMUM_ATTACK_DAMAGE)+1;
+        return RANDOM.nextInt(TIER1_MAXIMUM_ATTACK_DAMAGE)+1;
     }
 
     @Override
@@ -21,9 +21,9 @@ public class Runner extends Alien{
 
     @Override
     public double getEscapeChance() {
-        return 0.2;
+        return 0.3;
     }
 
     @Override
-    public double getEludeChance()  { return 0.3; }
+    public double getEludeChance()  { return 0.4; }
 }

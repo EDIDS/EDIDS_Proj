@@ -5,7 +5,7 @@ public class Torch extends Item {
     private boolean isOn;
 
     public Torch(int duration) {
-        super("Torch", TORCH_WEIGHT);
+        super("Torch", TORCH_WEIGHT, false);
         this.isOn = false;
     }
 

@@ -5,7 +5,7 @@ public class Key extends Item {
     private String code;
 
     public Key(String code) {
-        super("Key", KEY_WEIGHT);
+        super("Key", KEY_WEIGHT, false);
         this.code = code;
     }
 

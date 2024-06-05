@@ -7,7 +7,7 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 import static com.extraction.items.Key.KEY_WEIGHT;
-import static com.extraction.items.Medikit.MEDIKIT_WEIGHT;
+import static com.extraction.items.MedKit.MEDKIT_WEIGHT;
 import static com.extraction.items.Shield.SHIELD_DEFENSE;
 import static com.extraction.items.Shield.SHIELD_WEIGHT;
 import static com.extraction.items.TNT.TNT_DAMAGE;
@@ -30,10 +30,10 @@ class ItemTest {
     }
 
     @Test
-    void testMedikit() {
-        Medikit medikit = new Medikit();
-        assertEquals(medikit.getName(), "Medikit");
-        assertEquals(medikit.getWeight(), MEDIKIT_WEIGHT);
+    void testMedKit() {
+        MedKit medKit = new MedKit();
+        assertEquals(medKit.getName(), "MedKit");
+        assertEquals(medKit.getWeight(), MEDKIT_WEIGHT);
     }
 
     @Test

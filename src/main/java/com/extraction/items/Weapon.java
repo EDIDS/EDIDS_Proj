@@ -30,7 +30,7 @@ public class Weapon extends Item {
     public int maxDamage_;
 
     public Weapon(String type) {
-        super("Weapon", type_weight(type));
+        super("Weapon", type_weight(type), true);
         for (String weaponType : WEAPON_NAMES) {
             if (weaponType.equals(type)) {
                 this.type_ = type;
@@ -58,6 +58,8 @@ public class Weapon extends Item {
                 break;
         }
     }
+
+    public String getType() { return type_; }
 
     public int calculateDamage() {
         Random rand = new Random();

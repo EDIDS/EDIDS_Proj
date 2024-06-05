@@ -1,6 +1,8 @@
 package com.extraction.player;
 
 import com.extraction.items.*;
+import com.extraction.Graphic.UI;
+import com.extraction.Graphic.VisibilityManager;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,10 +16,12 @@ import static com.extraction.player.Player.*;
 class PlayerTest {
 
     Player player;
+    UI ui;
+    VisibilityManager vm;
 
     @BeforeEach
     void setUp() {
-        player = new Player();
+        player = new Player(ui,vm);
     }
 
     @Test
@@ -28,7 +32,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "0", " "} )
     void testNamedPlayerName(String name) {
-        Player named = new Player(name);
+        Player named = new Player(name, ui, vm);
         assertEquals(named.getName(), name);
     }
 
@@ -89,7 +93,7 @@ class PlayerTest {
         player.setHealth(FULL_HEALTH/2);
         player.heal();
         assertEquals(FULL_HEALTH/2, player.getHealth());
-        player.addItem(new Medikit());
+        player.addItem(new MedKit());
         player.heal();
         assertEquals(FULL_HEALTH, player.getHealth());
     }

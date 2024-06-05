@@ -9,7 +9,7 @@ public class Clicker extends Alien{
 
     @Override
     public int attack() {
-        return RANDOM.nextInt(TIER1_MAXIMUM_ATTACK_DAMAGE)+1;
+        return RANDOM.nextInt(TIER2_MAXIMUM_ATTACK_DAMAGE)+1;
     }
 
     @Override
@@ -19,9 +19,9 @@ public class Clicker extends Alien{
 
     @Override
     public double getEscapeChance() {
-        return 0.3;
+        return 0.2;
     }
 
     @Override
-    public double getEludeChance()  { return 0.4; }
+    public double getEludeChance()  { return 0.3; }
 }

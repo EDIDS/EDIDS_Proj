@@ -54,7 +54,7 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
-    public void showTextScreen() {
+    public void showDialogScreen() {
         // Shown
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);
@@ -68,7 +68,7 @@ public class VisibilityManager {
         ui.actionPanel.setVisible(false);
     }
 
-    public void showFightScreen() {
+    public void showTextScreen() {
         // Shown
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);

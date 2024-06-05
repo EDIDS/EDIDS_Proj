@@ -6,7 +6,7 @@ public abstract class Item {
     /** An array of possible item types. */
     public static final String[] ITEM_NAMES = {
             "Key",
-            "Medikit",
+            "MedKit",
             "Shield",
             "TNT",
             "Torch",
@@ -15,8 +15,9 @@ public abstract class Item {
 
     private String name;
     private double weight;
+    private boolean throwable;
 
-    public Item(String name, double weight) {
+    public Item(String name, double weight, boolean throwable) {
         for (String itemName : ITEM_NAMES) {
             if (itemName.equals(name)) {
                 this.name = name;
@@ -26,9 +27,13 @@ public abstract class Item {
         if (this.name == null)
             throw new IllegalArgumentException();
         this.weight = weight;
+
+        this.throwable = throwable;
     }
 
     public String getName() { return name; }
 
     public double getWeight() { return weight; }
+
+    public boolean isThrowable() { return throwable; }
 }
