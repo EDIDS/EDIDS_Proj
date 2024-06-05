@@ -9,6 +9,10 @@ import com.extraction.map.Fight;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +29,8 @@ public class Story {
     Room nextRoom;
     boolean hasCo = false;
     Fight fight;
+
+    ActionListener actionListener1, actionListener2, actionListener3, actionListener4;
 
     Building building;
 
@@ -95,22 +101,6 @@ public class Story {
             case"ShowItems":
                 showItems();
                 break;
-            case "MedKit":
-                break;
-            case "TNT":
-                break;
-            case "Shield":
-                break;
-            case "Key":
-                break;
-            case "Torch":
-                break;
-            case "REVOLVER":
-                break;
-            case "USPSWORM":
-                break;
-            case "AK47":
-                break;
             case "Map":
                 map();
                 break;
@@ -145,19 +135,24 @@ public class Story {
                 room(2, 2);
                 break;
             case "Room1_2":
-                room1_2();
+                //room1_2();
+                room(1, 2);
                 break;
             case "Room0_2":
-                room0_2();
+                //room0_2();
+                room(0, 2);
                 break;
             case "Room2_3":
-                room2_3();
+                //room2_3();
+                room(2, 3);
                 break;
             case "Room1_3":
-                room1_3();
+                //room1_3();
+                room(1, 3);
                 break;
             case "Room2_4":
-                room2_4();
+                //room2_4();
+                room(2, 4);
                 break;
             case "Room3_4":
                 //room3_4();
@@ -203,6 +198,8 @@ public class Story {
         ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
         ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
 
+        player.setCurrentRoom(nextRoom);
+
         updatePos();
 
         map();
@@ -216,7 +213,7 @@ public class Story {
 
     private void showItems() {
         vm.showTextScreen();
-        List<Item> items = player.getCurrentRoom_().getItems();
+        List<Item> items = nextRoom.getItems();
         if(items.isEmpty()) proceed();
         StringBuilder str = new StringBuilder("You found:\n");
         for (Item item : items) {
@@ -224,31 +221,93 @@ public class Story {
         }
         ui.mainTextArea.setText(str.toString());
 
+        String item1, item2, item3, item4;
         try {
             ui.actionButton1.setText("");
             ui.actionButton2.setText("");
             ui.actionButton3.setText("");
             ui.actionButton4.setText("");
             ui.setUnenableButtons();
-            String item1 = items.get(0) instanceof Weapon ? ((Weapon) items.get(0)).getType() : items.get(0).getName();
+
+            item1 = items.get(0) instanceof Weapon ? ((Weapon) items.get(0)).getType() : items.get(0).getName();
             ui.actionButton1.setText(item1);
             ui.actionButton1.setEnabled(true);
-            System.out.println(item1);
-            String item2 = items.get(1) instanceof Weapon ? ((Weapon) items.get(1)).getType() : items.get(1).getName();
+            ui.actionButton1.removeActionListener(ui.bHandler);
+            actionListener1 = addListener(ui.actionButton1, item1);
+            ui.actionButton1.addActionListener(actionListener1);
+
+            item2 = items.get(1) instanceof Weapon ? ((Weapon) items.get(1)).getType() : items.get(1).getName();
             ui.actionButton2.setText(item2);
             ui.actionButton2.setEnabled(true);
-            System.out.println(item2);
-            String item3 = items.get(2) instanceof Weapon ? ((Weapon) items.get(2)).getType() : items.get(2).getName();
+            ui.actionButton2.removeActionListener(game.bHandler);
+            actionListener2 = addListener(ui.actionButton2, item2);
+            ui.actionButton2.addActionListener(actionListener2);
+
+            item3 = items.get(2) instanceof Weapon ? ((Weapon) items.get(2)).getType() : items.get(2).getName();
             ui.actionButton3.setText(item3);
             ui.actionButton3.setEnabled(true);
-            System.out.println(item3);
-            String item4 = items.get(3) instanceof Weapon ? ((Weapon) items.get(3)).getType() : items.get(3).getName();
+            ui.actionButton3.removeActionListener(game.bHandler);
+            actionListener3 = addListener(ui.actionButton3, item3);
+            ui.actionButton3.addActionListener(actionListener3);
+
+            item4 = items.get(3) instanceof Weapon ? ((Weapon) items.get(3)).getType() : items.get(3).getName();
             ui.actionButton4.setText(item4);
             ui.actionButton4.setEnabled(true);
-            System.out.println(item4);
+            ui.actionButton4.removeActionListener(game.bHandler);
+            actionListener4 = addListener(ui.actionButton4, item4);
+            ui.actionButton4.addActionListener(actionListener4);
 
-            setNextPositions(item1, item2, item3, item4);
         } catch (Exception ignore) {}
+    }
+
+    private ActionListener addListener(JButton b, String item) {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                b.setEnabled(false);
+                execute(item);
+            }
+        };
+    }
+
+    private void execute (String item) {
+        switch (item) {
+            case "MedKit":
+                break;
+            case "TNT":
+                break;
+            case "Shield":
+                break;
+            case "Key":
+                break;
+            case "Torch":
+                break;
+            case "REVOLVER":
+                break;
+            case "USPSWORM":
+                break;
+            case "AK47":
+                break;
+            default:
+        }
+    }
+
+    public void exitItems() {
+        ui.actionButton1.removeActionListener(actionListener1);
+        ui.actionButton2.removeActionListener(actionListener2);
+        ui.actionButton3.removeActionListener(actionListener3);
+        ui.actionButton4.removeActionListener(actionListener4);
+
+        ui.actionButton1.removeActionListener(ui.bHandler);
+        ui.actionButton2.removeActionListener(ui.bHandler);
+        ui.actionButton3.removeActionListener(ui.bHandler);
+        ui.actionButton4.removeActionListener(ui.bHandler);
+
+        ui.actionButton1.addActionListener(ui.bHandler);
+        ui.actionButton2.addActionListener(ui.bHandler);
+        ui.actionButton3.addActionListener(ui.bHandler);
+        ui.actionButton4.addActionListener(ui.bHandler);
+        proceed();
     }
 
     public void room4_2() {
@@ -276,21 +335,18 @@ public class Story {
         Coordinate coords = new Coordinate(nextRow, nextColumn);
         Room room = building.getRoom(coords.toString());
         nextRoom = room;
-        player.setCurrentRoom(nextRoom);
+        //player.setCurrentRoom(nextRoom);
 
         if (room.getAlien() != null) {
-            vm.showTextScreen();
+            vm.showFightScreen();
             fightAlien(room.getAlien());
         } else if (!room.getItems().isEmpty()) {
             if (!room.getIconPath().equals(ui.checkIconPath)) checkRoom();
-            System.out.println("Eccomi");
             showItems();
-            System.out.println("Baaaaam");
         } else {
             if (!room.getIconPath().equals(ui.checkIconPath)) checkRoom();
             proceed();
         }
-        System.out.println("wella");
         /*if (room.getIconPath().equals(ui.checkIconPath)) {
             ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
             ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
@@ -306,404 +362,10 @@ public class Story {
         }*/
     }
 
-    public void room4_1() {
-        nextRow = 4;
-        nextColumn = 1;
-
-        if (game.room4_1.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room4_1);
-            updatePos();
-            map();
-        } else {
-            nextRoom = game.room4_1;
-            //fightAlien();
-
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";*/
-        }
-    }
-
     public void fightAlien(Alien alien) {
         fight = new Fight(player, alien, ui, vm, this);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
         game.nextPosition0 = "Room" + nextRow + "_" + nextColumn;
         fight.fight();
-    }
-
-    /*public void fightRunner() {
-        Runner runner = new Runner();
-        fight = new Fight(player, runner, ui, vm);
-        setNextPositions("Attack", "Leave", "Defend", "Elude");
-        game.nextPosition0 = "Proceed";
-        fight.fight();
-    }
-
-    public void fightShambler() {
-        Shambler shambler = new Shambler();
-        fight = new Fight(player, shambler, ui, vm);
-        setNextPositions("Attack", "Leave", "Defend", "Elude");
-        game.nextPosition0 = "Proceed";
-        fight.fight();
-    }*/
-
-    public void room3_1() {
-        nextRow = 3;
-        nextColumn = 1;
-
-        if (game.room3_1.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room3_1);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";*/
-
-            nextRoom = game.room3_1;
-            proceed();
-        }
-    }
-
-    public void room2_1() {
-        nextRow = 2;
-        nextColumn = 1;
-
-        if (game.room2_1.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room2_1);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";*/
-
-            nextRoom = game.room2_1;
-            proceed();
-        }
-    }
-
-    public void room2_0() {
-        nextRow = 2;
-        nextColumn = 0;
-
-        if (game.room2_0.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room2_0);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room2_0;
-            proceed();
-        }
-    }
-
-    public void room1_0() {
-        nextRow = 1;
-        nextColumn = 0;
-
-        if (game.room1_0.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room1_0);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room1_0;
-            proceed();
-        }
-    }
-
-    public void room2_2() {
-        nextRow = 2;
-        nextColumn = 2;
-
-        if (game.room2_2.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room2_2);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room2_2;
-            proceed();
-        }
-    }
-
-    public void room1_2() {
-        nextRow = 1;
-        nextColumn = 2;
-
-        if (game.room1_2.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room1_2);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room1_2;
-            proceed();
-        }
-    }
-
-    public void room0_2() {
-        nextRow = 0;
-        nextColumn = 2;
-
-        if (game.room0_2.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room0_2);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room0_2;
-            proceed();
-        }
-    }
-
-    public void room2_3() {
-        nextRow = 2;
-        nextColumn = 3;
-
-        if (game.room2_3.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room2_3);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room2_3;
-            proceed();
-        }
-    }
-
-    public void room1_3() {
-        nextRow = 1;
-        nextColumn = 3;
-
-        if (game.room1_3.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room1_3);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room1_3;
-            proceed();
-        }
-    }
-
-    public void room2_4() {
-        nextRow = 2;
-        nextColumn = 4;
-
-        if (game.room2_4.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room2_4);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room2_4;
-            proceed();
-        }
-    }
-
-    public void room3_4() {
-        nextRow = 3;
-        nextColumn = 4;
-
-        if (game.room3_4.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room3_4);
-            updatePos();
-            map();
-        } else {
-            /*vm.showTextScreen();
-
-            ui.mainTextArea.setText("Room 4_1");
-
-            ui.actionButton1.setText("TopLeft 4_1");
-            ui.actionButton2.setText("TopRight 4_1");
-            ui.actionButton3.setText("Proceed");
-            ui.actionButton4.setText("Map");
-
-            game.nextPosition1 = "Null";
-            game.nextPosition2 = "Null";
-            game.nextPosition3 = "Proceed";
-            game.nextPosition4 = "Map";
-
-            nextRoom = game.room4_1;*/
-
-            nextRoom = game.room3_4;
-            proceed();
-        }
     }
 }

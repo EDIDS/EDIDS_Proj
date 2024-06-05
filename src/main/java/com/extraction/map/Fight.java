@@ -15,7 +15,7 @@ public class Fight {
     Story story;
     VisibilityManager vm;
     final Object lock = new Object();
-    final int TIMER = 3500;
+    final int TIMER = 1000;
 
     volatile Boolean selected = false;
 

@@ -22,6 +22,7 @@ public class VisibilityManager {
         ui.mapSpacePanel.setVisible(false);
         ui.mainTextPanel.setVisible(false);
         ui.itemsPanel.setVisible(false);
+        ui.exitItemBPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
         ui.dialogBPanel.setVisible(false);
     }
@@ -36,6 +37,7 @@ public class VisibilityManager {
         ui.mapSpacePanel.setVisible(false);
         ui.mainTextPanel.setVisible(false);
         ui.itemsPanel.setVisible(false);
+        ui.exitItemBPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
         ui.dialogBPanel.setVisible(false);
     }
@@ -51,6 +53,7 @@ public class VisibilityManager {
         ui.itemsPanel.setVisible(false);
         ui.titlePanel.setVisible(false);
         ui.startPanel.setVisible(false);
+        ui.exitItemBPanel.setVisible(false);
         ui.dialogBPanel.setVisible(false);
     }
 
@@ -65,10 +68,26 @@ public class VisibilityManager {
         ui.itemsPanel.setVisible(false);
         ui.titlePanel.setVisible(false);
         ui.startPanel.setVisible(false);
+        ui.exitItemBPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
     }
 
     public void showTextScreen() {
+        // Shown
+        ui.topPanel.setVisible(true);
+        ui.mainTextPanel.setVisible(true);
+        ui.exitItemBPanel.setVisible(true);
+        ui.actionPanel.setVisible(true);
+        // Hide
+        ui.loadPanel.setVisible(false);
+        ui.mapSpacePanel.setVisible(false);
+        ui.itemsPanel.setVisible(false);
+        ui.titlePanel.setVisible(false);
+        ui.startPanel.setVisible(false);
+        ui.dialogBPanel.setVisible(false);
+    }
+
+    public void showFightScreen() {
         // Shown
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);
@@ -79,6 +98,7 @@ public class VisibilityManager {
         ui.mapSpacePanel.setVisible(false);
         ui.titlePanel.setVisible(false);
         ui.startPanel.setVisible(false);
+        ui.exitItemBPanel.setVisible(false);
         ui.dialogBPanel.setVisible(false);
     }
 
@@ -93,6 +113,7 @@ public class VisibilityManager {
         ui.mainTextPanel.setVisible(false);
         ui.itemsPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
+        ui.exitItemBPanel.setVisible(false);
         ui.dialogBPanel.setVisible(false);
     }
 

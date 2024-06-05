@@ -79,6 +79,9 @@ public class Game {
         Weapon revolver = new Weapon("REVOLVER");
         room4_1.addItem(revolver);
 
+//        Weapon ak = new Weapon("AK47");
+//        room4_1.addItem(ak);
+
         startRoom = room4_2;
         player.setCurrentRoom(startRoom);
 
@@ -89,6 +92,10 @@ public class Game {
 
         story.defaultSetup();
         vm.showHomeScreen();
+    }
+
+    public void loadGame(String game) {
+
     }
 
     public static void main(String[] args) throws IOException {
@@ -141,6 +148,10 @@ public class Game {
                 case "NextDialog":
                     story.selectPosition(nextPosition0);
                     break;
+                case "ExitItems":
+                    ui.setEnableButtons();
+                    story.exitItems();
+                    break;
                 case "TopLeft":
                     story.selectPosition(nextPosition1);
                     break;
@@ -156,6 +167,12 @@ public class Game {
                 default:
 
             }
+        }
+    }
+    protected class loadHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loadGame(e.getActionCommand());
         }
     }
 }

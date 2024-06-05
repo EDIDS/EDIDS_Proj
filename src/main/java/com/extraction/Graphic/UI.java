@@ -16,6 +16,7 @@ public class UI {
     String position = "";
     Color background = Color.BLACK;
     Game.ButtonsHandler bHandler;
+    Game.loadHandler lHandler;
 
     JToolBar toolbar;
     JMenuBar mb;
@@ -72,9 +73,11 @@ public class UI {
     public JButton actionButton4;
     Font actionFont = new Font("Serif", Font.BOLD, 20);
 
+    JPanel exitItemBPanel;
+    JButton exitItemButton;
+
     JPanel dialogBPanel;
     JButton dialogButton;
-
 
     JLabel messageLabel;
 
@@ -214,7 +217,7 @@ public class UI {
             p.setLayout(new GridBagLayout());
             p.setBackground(background);
             p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-            JButton b = createButton("Word" + i, startFont, bHandler, "Null");
+            JButton b = createButton("Word" + i, startFont, lHandler, "Null");
             b.setPreferredSize(new Dimension(650, 50));
             p.add(b, gbc);
             panel.add(p, BorderLayout.CENTER);
@@ -227,6 +230,7 @@ public class UI {
         createMapPanel();
         createMainTextPanel();
         createItemsPanel();
+        createExitItemsButtonPanel();
         createActionButtonsPanel();
         createDialogButtonsPanel();
         createMessageLabel();
@@ -235,6 +239,7 @@ public class UI {
         bodyPanel.add(mapSpacePanel);
         bodyPanel.add(mainTextPanel);
         bodyPanel.add(itemsPanel);
+        bodyPanel.add(exitItemBPanel);
         bodyPanel.add(actionPanel);
         bodyPanel.add(dialogBPanel);
         window.add(messageLabel, BorderLayout.SOUTH);
@@ -388,6 +393,18 @@ public class UI {
         itemsPanel.add(itemButton4, gbc);
     }
 
+    private void createExitItemsButtonPanel() {
+        //Exit Items Button Panel
+        exitItemBPanel = new JPanel();
+        LayoutManager mgr = new GridBagLayout();
+        exitItemBPanel.setLayout(mgr);
+        exitItemBPanel.setBounds(120, 400, 545, 40);  // -15
+        exitItemBPanel.setBackground(background);
+
+        exitItemButton = createButton("Exit", actionFont, bHandler, "ExitItems");
+        exitItemBPanel.add(exitItemButton, gbc);
+    }
+
     private void createActionButtonsPanel() {
         //Action Buttons Panel
         actionPanel = new JPanel();
@@ -454,7 +471,7 @@ public class UI {
     }
 
     private void createDialogButtonsPanel() {
-        //Action Buttons Panel
+        //Dialog Button Panel
         dialogBPanel = new JPanel();
         LayoutManager mgr = new GridBagLayout();
         dialogBPanel.setLayout(mgr);
