@@ -19,48 +19,47 @@ public class IntroductionDialog {
 
     public void initializeDialogues() {
         dialogues.add("""
-                    Sei un operatore della squadra Rainbow,
-                    un'élite militare specializzata in infiltrazioni e salvataggio di ostaggi.\s
-                    Il mondo è stato invaso da parassiti alieni noti come archei,\s
-                    generando caos e terrore.\s
-                    La squadra Rainbow deve intervenire per riportare la pace.
+                    You are an operator of the Rainbow team,\s
+                    an elite military unit specialized in infiltration and hostage rescue.\s
+                    The world has been invaded by alien parasites known as Archeans,\s
+                    causing chaos and terror.\s
+                    The Rainbow team must intervene to restore peace.\s
                     """);
-        //dialogues.add("Inserisci il tuo nome:");
-        dialogues.add("""
-                    Ti trovi agli HQ, ti dirigi verso la sala operativa.\s
-                    Incontri il capo del team Rainbow.
-                    """);
-        dialogues.add("...: “Tu sei NOME, il nuovo ingresso nel team”");
-        dialogues.add("TU: “Sì sono proprio io”");
-        dialogues.add("""
-                    Mira: “Bene, io sono Ash, il capo della squadra Rainbow Six.\s
-                                 Ho letto i tuoi fascicoli, sei un Navy Seal,\s
-                                 esattamente ciò di cui ho bisogno ora.\s
-                                 In una recente missione, un nostro compagno è caduto in battaglia\s
-                                 ed è stato preso prigioniero dagli archei.\s
-                                 Il tuo obiettivo sarà quello di infiltrarti all’interno della struttura,\s
-                                 trovarlo e riportarlo al punto di estrazione.\s
-                                 È chiaro cosa devi fare?”
-                    """);
-        dialogues.add("TU: “Sì signora!”");
-        dialogues.add("""
-                    Ash: “Bene.\s
-                               Fa attenzione però, gli archei ci vanno giù pesante.\s
-                               Probabilmente l’accesso alla stanza dove Smoke è stato imprigionato\s
-                               non sarà immediato.\s
-                               Esplora l’edificio e raccogli tutto ciò che può esserti utile ad entrare.\s
-                               Buona fortuna.”
-                    """);
-        dialogues.add("""
-                    Dopo aver raccolto informazioni e attrezzature necessarie,\s
-                    ti dirigi verso la zona designata.\s
-                    Una volta arrivato, entri nell'edificio e la tua missione comincia,\s
-                    con l'obiettivo di trovare e salvare il tuo compagno.
 
+        dialogues.add("""
+                    You are at the HQ, heading towards the operations room.\s
+                    You meet the leader of the Rainbow team.\s
+                    """);
+        dialogues.add("...: \"You are SERGIO, the new recruit to the team.\"");
+        dialogues.add("YOU: \"Yes, that's me.\"");
+        dialogues.add("""
+                    Mira: "Good, I'm Ash, the leader of Rainbow Six team.\s
+                    I've read your files, you're a Navy Seal,\s
+                    exactly what I need right now.\s
+                    In a recent mission, one of our teammates fell in battle\s
+                    and was taken prisoner by the Archeans.\s
+                    Your objective will be to infiltrate the facility,\s
+                    find him, and bring him back to the extraction point.\s
+                    Is it clear what you need to do?"\s
+                    """);
+        dialogues.add("YOU: \"Yes, ma'am!\"");
+        dialogues.add("""
+                    Ash: "Good.\s
+                    But be careful, the Archeans are tough.\s
+                    Access to the room where Smoke has been imprisoned\s
+                    probably won't be immediate.\s
+                    Explore the building and gather anything that might help you get in.\s
+                    Good luck."\s
                     """);
         dialogues.add("""
-                    Ogni volta che ti sposti da una stanza ad un’altra,\s
-                    ti appare la descrizione di cosa vedi attorno
+                    After gathering necessary information and equipment,\s
+                    you head towards the designated area.\s
+                    Once there, you enter the building and your mission begins,\s
+                    with the objective of finding and rescuing your teammate.\s
+                    """);
+        dialogues.add("""
+                    Each time you move from one room to another,\s
+                    a description of what you see around you appears.\s
                     """);
     }
 

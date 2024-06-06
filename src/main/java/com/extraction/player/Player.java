@@ -2,7 +2,6 @@ package com.extraction.player;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.List;
 
 import com.extraction.Graphic.UI;
@@ -11,8 +10,6 @@ import com.extraction.items.*;
 import com.extraction.map.Room;
 
 public class Player {
-
-    public static Random RANDOM = new Random();
 
     public static final int FULL_HEALTH = 100;
     public static final int BASE_ATTACK_DAMAGE = 100;
@@ -27,8 +24,9 @@ public class Player {
     private Weapon weapon;
     private Shield shield;
     private int score_;
-    private UI ui_;
-    private VisibilityManager vm_;
+    private int numKeys;
+    private final UI ui_;
+    private final VisibilityManager vm_;
 
 
     /**
@@ -108,6 +106,8 @@ public class Player {
 
     public Shield getShield() { return shield; }
 
+    public int getKeys() { return numKeys; }
+
     public void setWeapon(Weapon newWeapon) {
         double newWeight = currentWeight_ + newWeapon.getWeight();
         if (this.hasWeapon()) {
@@ -141,19 +141,15 @@ public class Player {
      * This method will set the player's weapon to null.
      */
     public void throwWeapon() {
-        Weapon weapon_ = getWeapon();
         this.weapon = null;
     }
 
     /**
      * Removes the player's shield.
      * This method will set the player's shield to null and return the removed shield.
-     * @return the removed shield.
      */
-    public Shield throwShield() {
-        Shield shield_ = getShield();
+    public void throwShield() {
         this.shield = null;
-        return shield_;
     }
 
     /**
@@ -235,6 +231,7 @@ public class Player {
                 }
                 this.setWeapon((Weapon) item);
             }
+            if(item instanceof Key) this.numKeys++;
             bag_.add(item);
             currentWeight_ = newWeight;
         } else {
@@ -251,6 +248,7 @@ public class Player {
         Item item = this.findItem(itemToThrow);
             if (item != null && item.isThrowable()) {
                 if(itemToThrow instanceof Weapon) this.throwWeapon();
+                if(itemToThrow instanceof Key) this.numKeys--;
                 bag_.remove(item);
                 currentWeight_ -= item.getWeight();
                 if(itemToThrow instanceof Weapon) throwWeapon();
@@ -268,6 +266,7 @@ public class Player {
         Item item = this.findItem(itemToThrow);
         if (item != null && item.isThrowable()) {
             if(item instanceof Weapon) this.throwWeapon();
+            if(item instanceof Key) this.numKeys--;
             bag_.remove(item);
             currentWeight_ -= item.getWeight();
             return item;

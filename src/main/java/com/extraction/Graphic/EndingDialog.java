@@ -18,7 +18,7 @@ public class EndingDialog {
     }
 
     public void initializeDialogues() {
-        dialogues.add("Aggiungere una conclusione");
+        dialogues.add("THE MISSION WAS A SUCCESS, WELL DONE SOLDIER!");
     }
 
     public Iterator<String> getDialogueIterator() {

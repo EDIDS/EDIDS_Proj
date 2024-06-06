@@ -78,26 +78,42 @@ public class Game {
         building.addRoom(room3_4);
 
         Runner runner = new Runner();
+        Clicker clicker = new Clicker();
+        Shambler shambler = new Shambler();
+
+        Key key1 = new Key();
+        Key key2 = new Key();
+        MedKit medKit = new MedKit();
+        Shield shield = new Shield();
+        TNT tnt = new TNT();
+        Torch torch = new Torch();
+        Weapon revolver = new Weapon("REVOLVER");
+        Weapon ak47 = new Weapon("AK47");
+        Weapon uspsworm = new Weapon("USPSWORM");
+
         room4_1.setAlien(runner);
-//        Clicker clicker = new Clicker();
-//        room2_0.setAlien(clicker);
-//        Shambler shambler = new Shambler();
-//        room3_4.setAlien(shambler);
-//
-//        TNT tnt = new TNT();
-//        room4_1.addItem(tnt);
-//
-//        MedKit med = new MedKit();
-//        room4_1.addItem(med);
-//
-//        Weapon revolver = new Weapon("REVOLVER");
-//        room4_1.addItem(revolver);
-//
-//        Weapon ak = new Weapon("AK47");
-//        room4_1.addItem(ak);
+        room4_1.addItem(revolver);
+
+        room2_1.addItem(shield);
+
+        room2_0.setAlien(clicker);
+        room2_0.addItem(torch);
+
+        room1_0.addItem(uspsworm);
+        room1_0.addItem(key1);
+
+        room2_2.addItem(tnt);
+
+        room2_3.addItem(medKit);
+        room2_3.addItem(ak47);
+
+        room2_4.setAlien(shambler);
+
+        room3_4.addItem(key2);
 
         story.startRoom = room4_2;
         player.setCurrentRoom(story.startRoom);
+
 
         story.coRoom = room0_2;
 
@@ -125,6 +141,7 @@ public class Game {
 
             switch (buttonClicked) {
                 case "Exit":
+                    story.exitItems();
                     ui.titleLabel.setText(ui.title);
                     newGame();
                     break;
@@ -157,7 +174,9 @@ public class Game {
                 case "MedKit":
                     story.fight.heal();
                     break;
-                case "Torcia":
+                case "Torch":
+                    ui.dialogButton.setText("Continue...");
+                    ui.dialogButton.setActionCommand("NextDialog");
                     story.lightOn();
                     break;
                 case "TNT":
@@ -167,11 +186,9 @@ public class Game {
                     story.selectPosition(nextPosition0);
                     break;
                 case "ExitItems":
-                    ui.setEnableButtons();
                     story.exitItems();
                     break;
                 case "ThrowItems":
-                    ui.setEnableButtons();
                     story.throwItems();
                     break;
                 case "TopLeft":

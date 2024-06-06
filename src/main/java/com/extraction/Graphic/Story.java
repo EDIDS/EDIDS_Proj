@@ -10,7 +10,9 @@ import com.extraction.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Story {
@@ -269,6 +271,9 @@ public class Story {
         ui.actionButton2.addActionListener(ui.bHandler);
         ui.actionButton3.addActionListener(ui.bHandler);
         ui.actionButton4.addActionListener(ui.bHandler);
+
+        ui.setEnableButtons();
+
         proceed();
     }
 
@@ -280,11 +285,13 @@ public class Story {
     }
 
     public void throwItems() {
+        ui.setEnableButtons();
         vm.showTextScreen();
         exitThrow();
         ui.exitItemButton.setEnabled(false);
         ui.throwButton.setEnabled(false);
-        List<Item> items = player.getBag();
+        List<Item> items = new ArrayList<>(player.getBag());
+        items.removeIf(item -> item.getName().equals("Torch") || item.getName().equals("Key"));
         if (items.isEmpty()) {
             ui.setUnenableButtons();
             ui.mainTextArea.setText("No items Found in your Bag");
@@ -399,29 +406,49 @@ public class Story {
                 break;
             case "RemoveMedKit":
                 player.throwItem("MedKit");
-                exitThrow();
-                showItems();
+                if (nextRoom.getItems().isEmpty()) {
+                    exitItems();
+                } else {
+                    exitThrow();
+                    showItems();
+                }
                 break;
             case "RemoveTNT":
                 player.throwItem("TNT");
-                exitThrow();
-                showItems();
+                if (nextRoom.getItems().isEmpty()) {
+                    exitItems();
+                } else {
+                    exitThrow();
+                    showItems();
+                }
                 break;
             case "RemoveShield":
                 player.throwItem("Shield");
-                exitThrow();
-                showItems();
+                if (nextRoom.getItems().isEmpty()) {
+                    exitItems();
+                } else {
+                    exitThrow();
+                    showItems();
+                }
                 break;
             case "RemoveTorch":
                 player.throwItem("Torch");
-                exitThrow();
-                showItems();
+                if (nextRoom.getItems().isEmpty()) {
+                    exitItems();
+                } else {
+                    exitThrow();
+                    showItems();
+                }
                 break;
             case "RemoveWeapon":
-                player.throwWeapon();
+                player.throwItem("Weapon");
                 ui.topLabelCol2.setText("Weapon: Punch");
-                exitThrow();
-                showItems();
+                if (nextRoom.getItems().isEmpty()) {
+                    exitItems();
+                } else {
+                    exitThrow();
+                    showItems();
+                }
                 break;
             default:
         }
@@ -440,13 +467,26 @@ public class Story {
                     ui.mainTextArea.setText(ending.nextDialogue());
                     vm.showDialogScreen();
                 }
-                else proceed();
+                else {
+                    showRoomInfo(nextRoom.getDescription() + "\nNOME COMPAGNEROS needs your help!",
+                            "Back", "Proceed");
+                }
             } else if (nextRoom == coRoom) {
-                checkRoom();
-                hasCo = true;
-                vm.showMessage("You found the Co", 2000, Color.GREEN);
-                proceed();
+                if (player.getKeys() == 2) {
+                    checkRoom();
+                    hasCo = true;
+                    showRoomInfo(nextRoom.getDescription() + "\nYou found NOME COMPAGNEROS, it's time to go back home!",
+                            "Back", "Proceed");
+                    vm.showMessage("You found the Co.", 2000, Color.GREEN);
+                } else if (player.getKeys() == 1) {
+                    vm.showMessage("You have just one Key, needed another one.", 2000, Color.GREEN);
+                } else {
+                    vm.showMessage("You don't have the two Keys.", 2000, Color.GREEN);
+                }
+
             } else if (nextRoom.getAlien() != null) {
+                showRoomInfo(nextRoom.getDescription() + "\nThere is something strange.\nWhat is it!",
+                        "Go Closer", "Fight");
                 vm.showFightScreen();
                 fightAlien(nextRoom.getAlien());
             } else if (!nextRoom.getItems().isEmpty()) {
@@ -457,14 +497,20 @@ public class Story {
                 proceed();
             }
         } else {
-            ui.mainTextArea.setText(nextRoom.getDescription() + "\nUnfortunately is too dark to see, use the Torch");
-            ui.setUnenableButtons();
-            ui.itemButton2.setEnabled(true);
+            showRoomInfo(nextRoom.getDescription() + "\nUnfortunately is too dark to see, use the Torch.",
+                    "Use Torch", "Torch");
         }
     }
 
+    private void showRoomInfo(String text, String buttonText, String actionCommand) {
+        ui.mainTextArea.setText(text);
+        ui.dialogButton.setText(buttonText);
+        game.nextPosition0 = actionCommand;
+        vm.showDialogScreen();
+    }
+
     public void lightOn() {
-        if (player.findItem("Torch") != null) {
+        if (player.findItem("Torch") == null) {
             vm.showMessage("You don't have the Torch", 2000, Color.RED);
             map();
         }
