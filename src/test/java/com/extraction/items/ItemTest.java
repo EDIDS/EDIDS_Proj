@@ -17,16 +17,14 @@ import static com.extraction.items.Weapon.type_weight;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Suite
-@SelectClasses({TorchTest.class, WeaponTest.class})
+@SelectClasses({WeaponTest.class})
 class ItemTest {
 
-    @ParameterizedTest
-    @ValueSource (strings = {"abcd", "0001"})
-    void testKey(String code) {
-        Key key = new Key(code);
+    @Test
+    void testKey() {
+        Key key = new Key();
         assertEquals(key.getName(), "Key");
         assertEquals(key.getWeight(), KEY_WEIGHT);
-        assertEquals(key.getCode(), code);
     }
 
     @Test
@@ -52,10 +50,9 @@ class ItemTest {
         assertEquals(tnt.getDamage(), TNT_DAMAGE);
     }
 
-    @ParameterizedTest
-    @ValueSource (ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15})
-    void testTorch(int duration) {
-        Torch torch = new Torch(duration);
+    @Test
+    void testTorch() {
+        Torch torch = new Torch();
         assertEquals(torch.getName(), "Torch");
         assertEquals(torch.getWeight(), TORCH_WEIGHT);
     }

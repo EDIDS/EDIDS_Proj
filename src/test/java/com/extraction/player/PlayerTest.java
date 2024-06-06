@@ -109,7 +109,7 @@ class PlayerTest {
 
     @Test
     void testThrowItem() {
-        Key key = new Key("code");
+        Key key = new Key();
         Item item = player.throwItem(key);
         assertNull(item);
         player.addItem(key);
