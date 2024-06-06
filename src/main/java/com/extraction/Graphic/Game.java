@@ -36,7 +36,6 @@ public class Game {
     String nextPosition0, nextPosition1, nextPosition2, nextPosition3, nextPosition4;
 
     Room room4_2, room4_1, room3_1, room2_1, room2_0, room1_0, room2_2, room1_2, room0_2, room2_3, room1_3, room2_4, room3_4;
-    Room startRoom;
 
     public Game() throws IOException {
         ui.homeScreen();
@@ -80,25 +79,27 @@ public class Game {
 
         Runner runner = new Runner();
         room4_1.setAlien(runner);
-        Clicker clicker = new Clicker();
-        room2_0.setAlien(clicker);
-        Shambler shambler = new Shambler();
-        room3_4.setAlien(shambler);
-
-        TNT tnt = new TNT();
-        room4_1.addItem(tnt);
-
-        MedKit med = new MedKit();
-        room4_1.addItem(med);
-
-        Weapon revolver = new Weapon("REVOLVER");
-        room4_1.addItem(revolver);
-
+//        Clicker clicker = new Clicker();
+//        room2_0.setAlien(clicker);
+//        Shambler shambler = new Shambler();
+//        room3_4.setAlien(shambler);
+//
+//        TNT tnt = new TNT();
+//        room4_1.addItem(tnt);
+//
+//        MedKit med = new MedKit();
+//        room4_1.addItem(med);
+//
+//        Weapon revolver = new Weapon("REVOLVER");
+//        room4_1.addItem(revolver);
+//
 //        Weapon ak = new Weapon("AK47");
 //        room4_1.addItem(ak);
 
-        startRoom = room4_2;
-        player.setCurrentRoom(startRoom);
+        story.startRoom = room4_2;
+        player.setCurrentRoom(story.startRoom);
+
+        story.coRoom = room0_2;
 
         ui.newMap();
         for(Room room : building.getRooms()) {
@@ -157,7 +158,7 @@ public class Game {
                     story.fight.heal();
                     break;
                 case "Torcia":
-
+                    story.lightOn();
                     break;
                 case "TNT":
                     story.fight.tnt();

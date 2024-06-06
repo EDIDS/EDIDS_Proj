@@ -13,6 +13,7 @@ public class Room {
     private Alien alien = null;
     private boolean is_closed = false;
     private List<Item> items = new ArrayList<Item>();
+    private boolean is_dark = false;
 
     public Room(){
         this.coordinate = new Coordinate(0, 0);
@@ -84,6 +85,10 @@ public class Room {
     public boolean isClosed(){
         return is_closed;
     }
+
+    public boolean isDark(){ return is_dark; }
+
+    public void setDark(boolean is_dark){ this.is_dark = is_dark; }
 
     public void close(){
         is_closed = true;

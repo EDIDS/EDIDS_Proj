@@ -10,10 +10,8 @@ import com.extraction.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Objects;
 
 public class Story {
     Game game;
@@ -21,11 +19,14 @@ public class Story {
     VisibilityManager vm;
     Player player;
     IntroductionDialog introduction;
+    EndingDialog ending;
 
     int playerX;
     int playerY;
     int nextColumn, nextRow;
     Room nextRoom;
+    Room startRoom;
+    Room coRoom;
     boolean hasCo = false;
     Fight fight;
 
@@ -42,27 +43,24 @@ public class Story {
     }
 
     public void defaultSetup() {
-        game.startRoom.setIconPath(ui.exitIconPath);
+        startRoom.setIconPath(ui.exitIconPath);
         ui.setIcon(
-                game.startRoom.getCoordinate().getRow(),
-                game.startRoom.getCoordinate().getColumn(),
+                startRoom.getCoordinate().getRow(),
+                startRoom.getCoordinate().getColumn(),
                 ui.playerIconPath
         );
-        updatePos();
+        updatePlayerPos();
         ui.topLabelCol1.setText("HP: " + player.getHealth());
         Weapon weapon = player.getWeapon();
         if (weapon == null) ui.topLabelCol2.setText("Weapon: Punch");
         else ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
-        ui.mainTextArea.setText(
-                "Sei un operatore della squadra Rainbow,\n" +
-                "un'élite militare specializzata in infiltrazioni e salvataggio di ostaggi. \n" +
-                "Il mondo è stato invaso da parassiti alieni noti come archei, generando caos e terrore. \n" +
-                "La squadra Rainbow deve intervenire per riportare la pace."
-        );
+
+        introduction = new IntroductionDialog();
+        ui.mainTextArea.setText(introduction.nextDialogue());
+
+        ending = new EndingDialog();
 
         ui.setEnableButtons();
-
-        //introduction = new IntroductionDialog();
 
         game.nextPosition0 = "Introduction";
     }
@@ -77,7 +75,7 @@ public class Story {
     public void selectPosition(String nextPosition) {
         switch (nextPosition) {
             case "Null":
-                vm.showMessage("Path Closed", 1000);
+                vm.showMessage("Path Closed", 1000, Color.RED);
                 break;
             case "Introduction":
                 try {
@@ -87,7 +85,11 @@ public class Story {
                 }
                 break;
             case "Extraction":
-                ui.mainTextArea.setText("");
+                try {
+                    ui.mainTextArea.setText(ending.nextDialogue());
+                } catch (Exception e) {
+                    vm.showEndScreen("YOU WIN");
+                }
                 break;
             case "Attack":
                 fight.attack();
@@ -101,7 +103,7 @@ public class Story {
             case "Elude":
                 fight.elude();
                 break;
-            case"ShowItems":
+            case "ShowItems":
                 showItems();
                 break;
             case "Map":
@@ -111,54 +113,42 @@ public class Story {
                 proceed();
                 break;
             case "Room4_2":
-                room4_2();
+                room(4, 2);
                 break;
             case "Room4_1":
-                //room4_1();
                 room(4, 1);
                 break;
             case "Room3_1":
-                //room3_1();
                 room(3, 1);
                 break;
             case "Room2_1":
-                //room2_1();
                 room(2, 1);
                 break;
             case "Room2_0":
-                //room2_0();
                 room(2, 0);
                 break;
             case "Room1_0":
-                //room1_0();
                 room(1, 0);
                 break;
             case "Room2_2":
-                //room2_2();
                 room(2, 2);
                 break;
             case "Room1_2":
-                //room1_2();
                 room(1, 2);
                 break;
             case "Room0_2":
-                //room0_2();
                 room(0, 2);
                 break;
             case "Room2_3":
-                //room2_3();
                 room(2, 3);
                 break;
             case "Room1_3":
-                //room1_3();
                 room(1, 3);
                 break;
             case "Room2_4":
-                //room2_4();
                 room(2, 4);
                 break;
             case "Room3_4":
-                //room3_4();
                 room(3, 4);
                 break;
             default:
@@ -169,7 +159,7 @@ public class Story {
 
     public void map() {
         vm.showMapScreen();
-        updatePos();
+        updatePlayerPos();
 
         ui.actionButton1.setText("NORTH");
         ui.actionButton2.setText("EAST");
@@ -192,7 +182,7 @@ public class Story {
         );
     }
 
-    private void updatePos() {
+    private void updatePlayerPos() {
         playerX = player.getCurrentRoom_().getCoordinate().getColumn();
         playerY = player.getCurrentRoom_().getCoordinate().getRow();
     }
@@ -203,7 +193,7 @@ public class Story {
 
         player.setCurrentRoom(nextRoom);
 
-        updatePos();
+        updatePlayerPos();
 
         map();
     }
@@ -219,12 +209,9 @@ public class Story {
         ui.exitItemButton.setEnabled(true);
         ui.throwButton.setEnabled(true);
         List<Item> items = nextRoom.getItems();
-        if(items.isEmpty()) proceed();
+        if (items.isEmpty()) proceed();
         StringBuilder str = new StringBuilder("You found:\n");
-        for (Item item : items) {
-            if (item instanceof Weapon) str.append("- ").append(((Weapon) item).getType()).append("\n");
-            else str.append("- ").append(item.getName()).append("\n");
-        }
+        str = getItems(items, str);
         ui.mainTextArea.setText(str.toString());
 
         String item1, item2, item3, item4;
@@ -263,7 +250,8 @@ public class Story {
             actionListener4 = addListener(ui.actionButton4, item4);
             ui.actionButton4.addActionListener(actionListener4);
 
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
     }
 
     public void exitItems() {
@@ -297,7 +285,7 @@ public class Story {
         ui.exitItemButton.setEnabled(false);
         ui.throwButton.setEnabled(false);
         List<Item> items = player.getBag();
-        if(items.isEmpty()) {
+        if (items.isEmpty()) {
             ui.setUnenableButtons();
             ui.mainTextArea.setText("No items Found in your Bag");
             Timer timer = new Timer(2000, e -> showItems());
@@ -306,9 +294,7 @@ public class Story {
             return;
         }
         StringBuilder str = new StringBuilder("You have:\n");
-        for (Item item : items) {
-            str.append("- ").append(item.getName()).append("\n");
-        }
+        str = getItems(items, str);
         ui.mainTextArea.setText(str.toString());
 
         String item1, item2, item3, item4;
@@ -347,7 +333,8 @@ public class Story {
             actionListener4 = addListener(ui.actionButton4, "Remove" + item4);
             ui.actionButton4.addActionListener(actionListener4);
 
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
     }
 
     private void exitThrow() {
@@ -357,7 +344,15 @@ public class Story {
         ui.actionButton4.removeActionListener(actionListener4);
     }
 
-    private void execute (String item) {
+    public StringBuilder getItems(List<Item> items, StringBuilder str) {
+        for (Item item : items) {
+            if (item instanceof Weapon) str.append("- ").append(((Weapon) item).getType()).append("\n");
+            else str.append("- ").append(item.getName()).append("\n");
+        }
+        return str;
+    }
+
+    private void execute(String item) {
         switch (item) {
             case "MedKit":
                 MedKit med = new MedKit();
@@ -370,7 +365,7 @@ public class Story {
                 nextRoom.removeItem("TNT");
                 break;
             case "Shield":
-                Shield shield= new Shield();
+                Shield shield = new Shield();
                 player.addItem(shield);
                 nextRoom.removeItem("Shield");
                 break;
@@ -424,6 +419,7 @@ public class Story {
                 break;
             case "RemoveWeapon":
                 player.throwWeapon();
+                ui.topLabelCol2.setText("Weapon: Punch");
                 exitThrow();
                 showItems();
                 break;
@@ -431,56 +427,51 @@ public class Story {
         }
     }
 
-    public void room4_2() {
-        nextRow = 4;
-        nextColumn = 2;
-
-        playerX = player.getCurrentRoom_().getCoordinate().getColumn();
-        playerY = player.getCurrentRoom_().getCoordinate().getRow();
-
-        if (hasCo) {
-            System.out.println("You Win");
-        }
-        else {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(game.room4_2);
-            updatePos();
-            map();
-        }
-    }
-
-    public void room(int nextRow, int nextColumn) {
+    private void room(int nextRow, int nextColumn) {
         this.nextRow = nextRow;
         this.nextColumn = nextColumn;
         Coordinate coords = new Coordinate(nextRow, nextColumn);
-        Room room = building.getRoom(coords.toString());
-        nextRoom = room;
-        //player.setCurrentRoom(nextRoom);
+        nextRoom = building.getRoom(coords.toString());
 
-        if (room.getAlien() != null) {
-            vm.showFightScreen();
-            fightAlien(room.getAlien());
-        } else if (!room.getItems().isEmpty()) {
-            if (!room.getIconPath().equals(ui.checkIconPath)) checkRoom();
-            showItems();
+        if (!nextRoom.isDark()) {
+            if (nextRoom == startRoom) {
+                if (hasCo) {
+                    game.nextPosition0 = "Extraction";
+                    ui.mainTextArea.setText(ending.nextDialogue());
+                    vm.showDialogScreen();
+                }
+                else proceed();
+            } else if (nextRoom == coRoom) {
+                checkRoom();
+                hasCo = true;
+                vm.showMessage("You found the Co", 2000, Color.GREEN);
+                proceed();
+            } else if (nextRoom.getAlien() != null) {
+                vm.showFightScreen();
+                fightAlien(nextRoom.getAlien());
+            } else if (!nextRoom.getItems().isEmpty()) {
+                if (!nextRoom.getIconPath().equals(ui.checkIconPath)) checkRoom();
+                showItems();
+            } else {
+                if (!nextRoom.getIconPath().equals(ui.checkIconPath)) checkRoom();
+                proceed();
+            }
         } else {
-            if (!room.getIconPath().equals(ui.checkIconPath)) checkRoom();
-            proceed();
+            ui.mainTextArea.setText(nextRoom.getDescription() + "\nUnfortunately is too dark to see, use the Torch");
+            ui.setUnenableButtons();
+            ui.itemButton2.setEnabled(true);
         }
-        /*if (room.getIconPath().equals(ui.checkIconPath)) {
-            ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
-            ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
-            player.setCurrentRoom(room);
-            updatePos();
-            map();
-        } else if (room.getAlien() != null) {
-            nextRoom = room;
-            vm.showTextScreen();
-            fightAlien(room.getAlien());
-        } else {
+    }
 
-        }*/
+    public void lightOn() {
+        if (player.findItem("Torch") != null) {
+            vm.showMessage("You don't have the Torch", 2000, Color.RED);
+            map();
+        }
+        else {
+            nextRoom.setDark(false);
+            room(nextRow, nextColumn);
+        }
     }
 
     public void fightAlien(Alien alien) {

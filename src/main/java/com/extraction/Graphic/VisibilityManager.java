@@ -102,7 +102,8 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
-    public void showGameOverScreen() {
+    public void showEndScreen(String end) {
+        ui.titleLabel.setText(end);
         // Shown
         ui.titlePanel.setVisible(true);
         // Hide
@@ -117,9 +118,9 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
-    public void showMessage(String message, int timerTime) {
+    public void showMessage(String message, int timerTime, Color borderColor) {
         ui.messageLabel.setText(message); // Imposta il messaggio
-        ui.messageLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        ui.messageLabel.setBorder(BorderFactory.createLineBorder(borderColor));
 
         // Crea un timer per far scomparire automaticamente il messaggio dopo 3 secondi
         Timer timer = new Timer(timerTime, new ActionListener() {
@@ -131,4 +132,6 @@ public class VisibilityManager {
         timer.setRepeats(false); // Imposta il timer per eseguire una sola volta
         timer.restart(); // Avvia il timer
     }
+
+
 }

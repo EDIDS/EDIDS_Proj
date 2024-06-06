@@ -1,5 +1,6 @@
 package com.extraction.player;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
@@ -29,6 +30,12 @@ public class Player {
     private UI ui_;
     private VisibilityManager vm_;
 
+
+    /**
+     * Constructor for Player class with UI and VisibilityManager parameters.
+     * @param ui User Interface for the game.
+     * @param vm Visibility Manager for the game.
+     */
     public Player(UI ui, VisibilityManager vm) {
         name_ = NO_NAME;
         health_ = FULL_HEALTH;
@@ -37,6 +44,11 @@ public class Player {
         vm_ = vm;
     }
 
+    /**
+     * Constructor for Player class with UI and VisibilityManager parameters.
+     * @param ui User Interface for the game.
+     * @param vm Visibility Manager for the game.
+     */
     public Player(String name, UI ui, VisibilityManager vm) {
         name_ = name;
         health_ = FULL_HEALTH;
@@ -124,37 +136,69 @@ public class Player {
         }
     }
 
+    /**
+     * Removes the player's weapon.
+     * This method will set the player's weapon to null.
+     */
     public void throwWeapon() {
         Weapon weapon_ = getWeapon();
         this.weapon = null;
     }
 
+    /**
+     * Removes the player's shield.
+     * This method will set the player's shield to null and return the removed shield.
+     * @return the removed shield.
+     */
     public Shield throwShield() {
         Shield shield_ = getShield();
         this.shield = null;
         return shield_;
     }
 
+    /**
+     * Checks if the player has a weapon.
+     * @return true if the player has a weapon, false otherwise.
+     */
     public boolean hasWeapon() {
         return weapon != null;
     }
 
+    /**
+     * Checks if the player has a shield.
+     * @return true if the player has a shield, false otherwise.
+     */
     public boolean hasShield() {
         return shield != null;
     }
 
+
+    /**
+     * Calculates the attack damage of the player.
+     * @return the attack damage.
+     */
     public int attack() {
         if (this.hasWeapon()) return weapon.calculateDamage();
 
         return BASE_ATTACK_DAMAGE;
     }
 
+
+    /**
+     * Calculates the damage after defense.
+     * @param damage the initial damage.
+     * @return the damage after defense.
+     */
     public int defend(int damage) {
         if (this.hasShield()) return damage - shield.getDefense();
 
         return damage;
     }
 
+    /**
+     * Heals the player to full health if a MedKit is found in the bag.
+     * @return true if the player was healed, false otherwise.
+     */
     public boolean heal() {
         MedKit medKit = (MedKit) this.findItem("MedKit");
         if (medKit != null) {
@@ -163,29 +207,46 @@ public class Player {
             throwItem(medKit);
             return true;
         }
-        vm_.showMessage("No MedKit Found", 3000);
-        System.out.println("No medKit found");
+        vm_.showMessage("No MedKit Found", 2000, Color.ORANGE);
         return false;
     }
 
+    /**
+     * Reduces the player's health by the given damage.
+     * @param damage the damage to be taken.
+     */
     public void takeDamage(int damage) {
         if (damage < 0) return;
         health_ = health_ - damage;
-    } // end of method damageDealt(int damage)
+    }
 
+    /**
+     * Adds an item to the player's bag if the total weight is under the maximum weight.
+     * @param item the item to be added.
+     */
     public void addItem(Item item){
         double newWeight = currentWeight_ + item.getWeight();
         if (newWeight <= MAX_WEIGHT) {
             if(item instanceof Weapon) {
+                if(weapon != null) {
+                    Weapon oldWeapon = weapon;
+                    this.throwItem(oldWeapon);
+                    vm_.showMessage("You dropped your current weapon", 2000, Color.ORANGE);
+                }
                 this.setWeapon((Weapon) item);
             }
             bag_.add(item);
             currentWeight_ = newWeight;
         } else {
-            System.out.println("You have reached the maximum weight of " + MAX_WEIGHT);
+            vm_.showMessage("You have reached the maximum weight of " + MAX_WEIGHT, 2000, Color.ORANGE);
         }
     }
 
+    /**
+     * Removes an item from the player's bag.
+     * @param itemToThrow the item to be removed.
+     * @return the removed item if it was found and is throwable, null otherwise.
+     */
     public Item throwItem(Item itemToThrow) {
         Item item = this.findItem(itemToThrow);
             if (item != null && item.isThrowable()) {
@@ -198,6 +259,11 @@ public class Player {
         return null;
     }
 
+    /**
+     * Removes an item from the player's bag.
+     * @param itemToThrow the name of the item to be removed.
+     * @return the removed item if it was found and is throwable, null otherwise.
+     */
     public Item throwItem(String itemToThrow) {
         Item item = this.findItem(itemToThrow);
         if (item != null && item.isThrowable()) {
@@ -209,6 +275,11 @@ public class Player {
         return null;
     }
 
+    /**
+     * Finds an item in the player's bag.
+     * @param itemToFind the item to be found.
+     * @return the found item if it was in the bag, null otherwise.
+     */
     public Item findItem(Item itemToFind) {
         for (Item item : bag_) {
             if (item == itemToFind)
@@ -217,6 +288,11 @@ public class Player {
         return null;
     }
 
+    /**
+     * Finds an item in the player's bag.
+     * @param itemToFind the item to be found.
+     * @return the found item if it was in the bag, null otherwise.
+     */
     public Item findItem(String itemToFind) {
         for (Item item : bag_) {
             if (item.getName().equals(itemToFind))
@@ -225,6 +301,10 @@ public class Player {
         return null;
     }
 
+    /**
+     * Detonates a TNT from the player's bag.
+     * @return the damage of the explosion if a TNT was found, 0 otherwise.
+     */
     public int detonateTNT() {
         TNT tnt = (TNT) this.findItem("TNT");
         if (tnt != null) {
@@ -232,15 +312,21 @@ public class Player {
             throwItem(tnt);
             return explosion;
         }
-        vm_.showMessage("No TNT Found", 3000);
-        System.out.println("No tnt found");
+        vm_.showMessage("No TNT Found", 2000, Color.ORANGE);
         return 0;
     }
 
+    /**
+     * Gets the player's data.
+     * @return a string containing the player's name and health.
+     */
     public String getData() {
         return name_ + " " + health_;
     }
 
+    /**
+     * Resets the player's health to full health.
+     */
     public void reset() {
         health_ = FULL_HEALTH;
     }

@@ -43,8 +43,7 @@ public class Fight {
         Timer timer = new Timer(TIMER, e -> {
             if (player.getHealth() <= 0) {
                 ui.mainTextArea.setText("You have been defeated by the " + alien.getName() + "!");
-                vm.showGameOverScreen();
-                ui.titleLabel.setText("GAME OVER");
+                vm.showEndScreen("GAME OVER");
             }
             ui.setMyTurnButton();
             ui.mainTextArea.setText(displayStatus() + "\n\nYour turn! \nMake a choice");

@@ -89,7 +89,7 @@ public class UI {
     // Home GUI
     public void homeScreen() throws IOException {
         window = new JFrame();
-        window.setTitle("EDIDS_Proj2");
+        window.setTitle("EDIDS_Proj");
         window.setLayout(new BorderLayout());
         window.setSize(800, 650);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,7 +121,7 @@ public class UI {
 
     private void createMenu() {
         exit = new JMenuItem("Exit");
-        save = new JMenuItem("Save");
+        save = new JMenuItem("Save & Exit");
         exit.setActionCommand("Exit");
         save.setActionCommand("Save");
 
@@ -385,7 +385,7 @@ public class UI {
     private void createItemsPanel() {
         //Items Panel
         itemsPanel = new JPanel();
-        LayoutManager mgr = new GridLayout(1, 4, 10, 0);
+        LayoutManager mgr = new GridLayout(1, 3, 10, 0);
         itemsPanel.setLayout(mgr);
         itemsPanel.setBounds(120, 400, 545, 40);  // -15
         itemsPanel.setBackground(background);
@@ -398,9 +398,6 @@ public class UI {
 
         itemButton3 = createButton("TNT", actionFont, bHandler, "TNT");
         itemsPanel.add(itemButton3, gbc);
-
-        itemButton4 = createButton("Item4", actionFont, bHandler, "");
-        itemsPanel.add(itemButton4, gbc);
     }
 
     private void createExitItemsButtonPanel() {
@@ -447,7 +444,6 @@ public class UI {
         itemButton1.setEnabled(true);
         itemButton2.setEnabled(true);
         itemButton3.setEnabled(true);
-        itemButton4.setEnabled(true);
     }
 
     public void setAlienTurnButton() {
@@ -458,7 +454,6 @@ public class UI {
         itemButton1.setEnabled(false);
         itemButton2.setEnabled(false);
         itemButton3.setEnabled(false);
-        itemButton4.setEnabled(false);
     }
 
     public void setEnableButtons() {
@@ -469,7 +464,6 @@ public class UI {
         itemButton1.setEnabled(true);
         itemButton2.setEnabled(true);
         itemButton3.setEnabled(true);
-        itemButton4.setEnabled(true);
     }
 
     public void setUnenableButtons() {
@@ -480,7 +474,6 @@ public class UI {
         itemButton1.setEnabled(false);
         itemButton2.setEnabled(false);
         itemButton3.setEnabled(false);
-        itemButton4.setEnabled(false);
     }
 
     private void createDialogButtonsPanel() {
