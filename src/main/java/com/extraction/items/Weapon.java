@@ -2,6 +2,11 @@ package com.extraction.items;
 
 import java.util.Random;
 
+/**
+ * The Weapon class represents a weapon item in the game.
+ * It extends the Item class and sets the name to "Weapon", the weight to a value depending on the type of weapon, and throwable to true.
+ * It also has a type, minimum damage, and maximum damage.
+ */
 public class Weapon extends Item {
 
     /** An array of possible weapon types. */
@@ -11,11 +16,15 @@ public class Weapon extends Item {
             "USPSWORM"
     };
 
-    public static final int REVOLVER_WEIGHT = 5;
-    public static final int AK47_WEIGHT = 10;
-    public static final int USPSWORM_WEIGHT = 15;
+    public static final int REVOLVER_WEIGHT = 10;
+    public static final int AK47_WEIGHT = 15;
+    public static final int USPSWORM_WEIGHT = 20;
 
-    /** Returns the weight of this type's weapon. */
+    /**
+     * Returns the weight of this type's weapon.
+     * @param type The type of the weapon.
+     * @return The weight of the weapon type.
+     */
     public static double type_weight(String type) {
         return switch (type) {
             case "REVOLVER" -> REVOLVER_WEIGHT;
@@ -29,6 +38,12 @@ public class Weapon extends Item {
     public int minDamage_;
     public int maxDamage_;
 
+    /**
+     * Constructs a new Weapon.
+     * The name is set to "Weapon", the weight is set to the weight of the type, and throwable is set to true.
+     * The type, minimum damage, and maximum damage are set depending on the type of weapon.
+     * @param type The type of the weapon.
+     */
     public Weapon(String type) {
         super("Weapon", type_weight(type), true);
         for (String weaponType : WEAPON_NAMES) {
@@ -59,8 +74,17 @@ public class Weapon extends Item {
         }
     }
 
+    /**
+     * Returns the type of the weapon.
+     * @return The type of the weapon.
+     */
     public String getType() { return type_; }
 
+    /**
+     * Calculates the damage of the weapon.
+     * The damage is calculated randomly, it can be the minimum damage, the maximum damage, or the average of both.
+     * @return The calculated damage of the weapon.
+     */
     public int calculateDamage() {
         Random rand = new Random();
         int roll = rand.nextInt(3) + 1;
@@ -70,5 +94,4 @@ public class Weapon extends Item {
         return maxDamage_;
 
     }
-
 }

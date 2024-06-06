@@ -5,13 +5,24 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The VisibilityManager class manages the visibility of various UI components in the game.
+ * It provides methods to show and hide different screens in the game.
+ */
 public class VisibilityManager {
     UI ui;
 
+    /**
+     * Constructs a new VisibilityManager with the given UI.
+     * @param ui The UI instance.
+     */
     public VisibilityManager(UI ui) {
         this.ui = ui;
     }
 
+    /**
+     * Shows the home screen and hides all other screens.
+     */
     public void showHomeScreen() {
         // Shown
         ui.titlePanel.setVisible(true);
@@ -27,6 +38,9 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
+    /**
+     * Shows the load screen and hides all other screens.
+     */
     public void showLoadScreen() {
         // Shown
         ui.loadPanel.setVisible(true);
@@ -42,6 +56,9 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
+    /**
+     * Shows the map screen and hides all other screens.
+     */
     public void showMapScreen() {
         // Shown
         ui.topPanel.setVisible(true);
@@ -57,6 +74,9 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
+    /**
+     * Shows the dialog screen and hides all other screens.
+     */
     public void showDialogScreen() {
         // Shown
         ui.topPanel.setVisible(true);
@@ -72,6 +92,9 @@ public class VisibilityManager {
         ui.actionPanel.setVisible(false);
     }
 
+    /**
+     * Shows the text screen and hides all other screens.
+     */
     public void showTextScreen() {
         // Shown
         ui.topPanel.setVisible(true);
@@ -87,6 +110,9 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
+    /**
+     * Shows the fight screen and hides all other screens.
+     */
     public void showFightScreen() {
         // Shown
         ui.topPanel.setVisible(true);
@@ -102,6 +128,10 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
+    /**
+     * Shows the end screen and hides all other screens.
+     * @param end The end message to display.
+     */
     public void showEndScreen(String end) {
         ui.titleLabel.setText(end);
         // Shown
@@ -118,19 +148,24 @@ public class VisibilityManager {
         ui.dialogBPanel.setVisible(false);
     }
 
+    /**
+     * Shows a message for a specified amount of time.
+     * @param message The message to display.
+     * @param timerTime The time in milliseconds to display the message.
+     * @param borderColor The border color of the message.
+     */
     public void showMessage(String message, int timerTime, Color borderColor) {
-        ui.messageLabel.setText(message); // Imposta il messaggio
+        ui.messageLabel.setText(message);
         ui.messageLabel.setBorder(BorderFactory.createLineBorder(borderColor));
 
-        // Crea un timer per far scomparire automaticamente il messaggio dopo 3 secondi
         Timer timer = new Timer(timerTime, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ui.messageLabel.setText(""); // Cancella il messaggio
+                ui.messageLabel.setText("");
                 ui.messageLabel.setBorder(null);
             }
         });
-        timer.setRepeats(false); // Imposta il timer per eseguire una sola volta
-        timer.restart(); // Avvia il timer
+        timer.setRepeats(false);
+        timer.restart();
     }
 
 

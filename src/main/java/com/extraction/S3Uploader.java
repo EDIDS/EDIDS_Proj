@@ -18,11 +18,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The S3Uploader class is responsible for uploading files to an Amazon S3 bucket.
+ * It also provides functionality to save the game state, download all games, and generate a list of games.
+ */
 public class S3Uploader {
     private String bucketName;
     private AmazonS3 s3Client;
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+    /**
+     * Constructs a new S3Uploader with the given AWS profile, region, and bucket name.
+     * @param profile The AWS profile.
+     * @param region The AWS region.
+     * @param bucketName The name of the S3 bucket.
+     * @throws IOException If an I/O error occurs reading from the file or a malformed or unmappable byte sequence is read.
+     */
     public S3Uploader(String profile, String region, String bucketName) throws IOException {
         Map<String, String> awsCredentials = AwsConfigReader.readAwsCredentials(profile);
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(awsCredentials.get("aws_access_key_id"), awsCredentials.get("aws_secret_access_key"));
@@ -33,6 +44,10 @@ public class S3Uploader {
         this.bucketName = bucketName;
     }
 
+    /**
+     * Uploads all files in a directory to the S3 bucket.
+     * @param directoryPath The path of the directory.
+     */
     public void uploadDirectory(String directoryPath) {
         File dir = new File(directoryPath);
         File[] files = dir.listFiles();
@@ -44,6 +59,13 @@ public class S3Uploader {
         }
     }
 
+    /**
+     * Uploads a file to the S3 bucket.
+     * This method uses the Amazon S3 client to put the file into the bucket.
+     * If an AmazonServiceException occurs, it will print the error message.
+     *
+     * @param file The file to be uploaded.
+     */
     private void uploadFile(File file) {
         try {
             s3Client.putObject(new PutObjectRequest(bucketName, file.getName(), file));
@@ -53,6 +75,11 @@ public class S3Uploader {
         }
     }
 
+    /**
+     * Saves the game state to the S3 bucket.
+     * @param player The player data.
+     * @param building The building data.
+     */
     public void saveGame(Player player, Building building){
         try {
             File directory = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states");
@@ -87,6 +114,9 @@ public class S3Uploader {
         }
     }
 
+    /**
+     * Downloads all games from the S3 bucket.
+     */
     public void downloadAllGames() {
         String bucketName = "edidsgamesave";
         String localDirectoryPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/";
@@ -102,7 +132,6 @@ public class S3Uploader {
         do {
             result = s3Client.listObjectsV2(req);
             if (result.getObjectSummaries().isEmpty()) {
-                /*@TODO - stampa la mancata presenza di salvataggi a schermo*/
                 break;
             }
 
@@ -127,14 +156,15 @@ public class S3Uploader {
                     }
                 }
             }
-
-            // If there are more than maxKeys keys in the bucket, get a continuation token
-            // and list the next objects.
             String token = result.getNextContinuationToken();
             req.setContinuationToken(token);
         } while (result.isTruncated());
     }
 
+    /**
+     * Gets the maximum save number from the S3 bucket.
+     * @return The maximum save number.
+     */
     public int getMaxSaveNumberFromS3() {
         String bucketName = "edidsgamesave";
         //String prefix = "com/extraction/states/save";
@@ -149,20 +179,14 @@ public class S3Uploader {
             for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
                 String fileName = objectSummary.getKey();
 
-                // Check if the file is a save file
                 if (fileName.startsWith("save") && fileName.endsWith(".json")) {
-                    // Extract the save number from the file name
                     int saveNumber = Integer.parseInt(fileName.substring(4, fileName.length() - 5));
 
-                    // Update the max save number if necessary
                     if (saveNumber > maxSaveNumber) {
                         maxSaveNumber = saveNumber;
                     }
                 }
             }
-
-            // If there are more than maxKeys keys in the bucket, get a continuation token
-            // and list the next objects.
             String token = result.getNextContinuationToken();
             req.setContinuationToken(token);
         } while (result.isTruncated());
@@ -173,6 +197,9 @@ public class S3Uploader {
         return newSaveNumber;
     }
 
+    /**
+     * Generates a list of games and uploads it to the S3 bucket.
+     */
     private void generateGameList() {
         ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName);
         ListObjectsV2Result result;
@@ -211,6 +238,10 @@ public class S3Uploader {
         gameListFile.delete();
     }
 
+    /**
+     * Deletes a file from the S3 bucket.
+     * @param fileName The name of the file to delete.
+     */
     private void deleteFile(String fileName) {
         try {
             s3Client.deleteObject(new DeleteObjectRequest(bucketName, fileName));

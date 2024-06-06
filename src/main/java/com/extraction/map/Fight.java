@@ -8,6 +8,10 @@ import com.extraction.Graphic.Story;
 
 import javax.swing.*;
 
+/**
+ * The Fight class represents a fight between the player and an alien in the game.
+ * It contains methods for the player's turn, the alien's turn, and various actions the player can take during their turn.
+ */
 public class Fight {
     Player player;
     Alien alien;
@@ -19,6 +23,14 @@ public class Fight {
 
     volatile Boolean selected = false;
 
+    /**
+     * Constructs a new Fight with the given player, alien, UI, VisibilityManager, and Story.
+     * @param player The player involved in the fight.
+     * @param alien The alien involved in the fight.
+     * @param ui The UI for the game.
+     * @param vm The VisibilityManager for the game.
+     * @param story The Story for the game.
+     */
     public Fight(Player player, Alien alien, UI ui, VisibilityManager vm, Story story) {
         this.player = player;
         this.alien = alien;
@@ -27,6 +39,9 @@ public class Fight {
         this.story = story;
     }
 
+    /**
+     * Starts a fight between the player and the alien.
+     */
     public void fight() {
         ui.mainTextArea.setText("You have encountered a " + alien.getName() + "!");
 
@@ -38,6 +53,9 @@ public class Fight {
         playerTurn();
     }
 
+    /**
+     * Handles the player's turn in the fight.
+     */
     public void playerTurn() {
         ui.setUnenableButtons();
         Timer timer = new Timer(TIMER, e -> {
@@ -52,6 +70,9 @@ public class Fight {
         timer.start();
     }
 
+    /**
+     * Handles the alien's turn in the fight.
+     */
     public void alienTurn() {
         ui.setUnenableButtons();
         Timer timer = new Timer(TIMER, e -> {
@@ -69,6 +90,9 @@ public class Fight {
         timer.start();
     }
 
+    /**
+     * Handles the player's attack action during their turn.
+     */
     public void attack() {
         int playerDamage = player.attack();
         alien.takeDamage(playerDamage);
@@ -77,7 +101,9 @@ public class Fight {
         alienTurn();
     }
 
-
+    /**
+     * Handles the player's run action during their turn.
+     */
     public void run() {
         ui.mainTextArea.setText("You try to run away from the " + alien.getName() + "!");
         double escapeChance = alien.getEscapeChance();
@@ -92,6 +118,9 @@ public class Fight {
         }
     }
 
+    /**
+     * Handles the player's heal action during their turn.
+     */
     public void heal() {
         ui.mainTextArea.setText("You try to heal yourself!");
         if (player.heal()) {
@@ -101,6 +130,9 @@ public class Fight {
             playerTurn();
     }
 
+    /**
+     * Handles the player's TNT action during their turn.
+     */
     public void tnt() {
         int tntDamage = player.detonateTNT();
         if(tntDamage == 0){
@@ -113,6 +145,9 @@ public class Fight {
         }
     }
 
+    /**
+     * Handles the player's defend action during their turn.
+     */
     public void defend() {
         ui.mainTextArea.setText("You defend against the " + alien.getName() + "!");
         int damage = alien.attack();
@@ -130,6 +165,9 @@ public class Fight {
         playerTurn();
     }
 
+    /**
+     * Handles the player's elude action during their turn.
+     */
     public void elude() {
         ui.mainTextArea.setText("You try to elude the " + alien.getName() + "'s attack!");
         double eludeChance = alien.getEludeChance();
@@ -145,6 +183,10 @@ public class Fight {
         playerTurn();
     }
 
+    /**
+     * Displays the current status of the fight.
+     * @return A string representing the current status of the fight.
+     */
     public String displayStatus() {
         return alien.getName() + "'s Health: " + alien.getHealth();
     }

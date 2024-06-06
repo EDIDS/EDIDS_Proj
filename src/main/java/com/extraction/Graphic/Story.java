@@ -14,13 +14,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Story class represents the narrative of the game.
+ * It manages the game state, player actions, and game progression.
+ */
 public class Story {
     Game game;
     UI ui;
     VisibilityManager vm;
     Player player;
-    IntroductionDialog introduction;
-    EndingDialog ending;
+    IntroductionDialogue introduction;
+    EndingDialogue ending;
 
     int playerX;
     int playerY;
@@ -35,6 +39,14 @@ public class Story {
 
     Building building;
 
+    /**
+     * Constructs a new Story with the given parameters.
+     * @param game The game instance.
+     * @param ui The UI instance.
+     * @param vm The VisibilityManager instance.
+     * @param building The Building instance.
+     * @param player The Player instance.
+     */
     public Story(Game game, UI ui, VisibilityManager vm, Building building, Player player) {
         this.game = game;
         this.ui = ui;
@@ -43,6 +55,9 @@ public class Story {
         this.player = player;
     }
 
+    /**
+     * Sets up the default game state.
+     */
     public void defaultSetup() {
         startRoom.setIconPath(ui.exitIconPath);
         ui.setIcon(
@@ -56,16 +71,23 @@ public class Story {
         if (weapon == null) ui.topLabelCol2.setText("Weapon: Punch");
         else ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
 
-        introduction = new IntroductionDialog();
+        introduction = new IntroductionDialogue();
         ui.mainTextArea.setText(introduction.nextDialogue());
 
-        ending = new EndingDialog();
+        ending = new EndingDialogue();
 
         ui.setEnableButtons();
 
         game.nextPosition0 = "Introduction";
     }
 
+    /**
+     * Sets the next positions for the player based on the available directions.
+     * @param next1 The next position in the north direction.
+     * @param next2 The next position in the east direction.
+     * @param next3 The next position in the south direction.
+     * @param next4 The next position in the west direction.
+     */
     private void setNextPositions(String next1, String next2, String next3, String next4) {
         game.nextPosition1 = next1;
         game.nextPosition2 = next2;
@@ -73,6 +95,10 @@ public class Story {
         game.nextPosition4 = next4;
     }
 
+    /**
+     * Selects the next position based on the given position string.
+     * @param nextPosition The position string.
+     */
     public void selectPosition(String nextPosition) {
         switch (nextPosition) {
             case "Null":
@@ -162,6 +188,9 @@ public class Story {
         }
     }
 
+    /**
+     * Displays the game map.
+     */
     public void map() {
         vm.showMapScreen();
         updatePlayerPos();
@@ -187,11 +216,17 @@ public class Story {
         );
     }
 
+    /**
+     * Updates the player's position on the map.
+     */
     private void updatePlayerPos() {
         playerX = player.getCurrentRoom_().getCoordinate().getColumn();
         playerY = player.getCurrentRoom_().getCoordinate().getRow();
     }
 
+    /**
+     * Proceeds to the next room.
+     */
     private void proceed() {
         ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
         ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
@@ -203,12 +238,18 @@ public class Story {
         map();
     }
 
+    /**
+     * Checks the current room.
+     */
     public void checkRoom() {
         Room room = building.getRoom(new Coordinate(nextRow, nextColumn).toString());
         room.setIconPath(ui.checkIconPath);
         room.setAlien(null);
     }
 
+    /**
+     * Shows the items in the current room.
+     */
     private void showItems() {
         vm.showTextScreen();
         ui.exitItemButton.setEnabled(true);
@@ -259,6 +300,9 @@ public class Story {
         }
     }
 
+    /**
+     * Exits the item selection screen.
+     */
     public void exitItems() {
         ui.actionButton1.removeActionListener(actionListener1);
         ui.actionButton2.removeActionListener(actionListener2);
@@ -280,6 +324,12 @@ public class Story {
         proceed();
     }
 
+    /**
+     * Adds an ActionListener to a button for a specific item.
+     * @param b The button to add the ActionListener to.
+     * @param item The item associated with the ActionListener.
+     * @return The ActionListener that was added to the button.
+     */
     private ActionListener addListener(JButton b, String item) {
         return e -> {
             b.setEnabled(false);
@@ -287,6 +337,9 @@ public class Story {
         };
     }
 
+    /**
+     * Throws the items in the current room.
+     */
     public void throwItems() {
         ui.setEnableButtons();
         vm.showTextScreen();
@@ -313,10 +366,6 @@ public class Story {
 
         String item1, item2, item3, item4;
         try {
-//            ui.actionButton1.setText("");
-//            ui.actionButton2.setText("");
-//            ui.actionButton3.setText("");
-//            ui.actionButton4.setText("");
             ui.setUnenableButtons();
 
             item1 = items.get(0).getName();
@@ -351,6 +400,9 @@ public class Story {
         }
     }
 
+    /**
+     * Exits the item throwing screen.
+     */
     private void exitThrow() {
         ui.actionButton1.removeActionListener(actionListener1);
         ui.actionButton2.removeActionListener(actionListener2);
@@ -358,6 +410,12 @@ public class Story {
         ui.actionButton4.removeActionListener(actionListener4);
     }
 
+    /**
+     * Gets a string representation of the items in a list.
+     * @param items The list of items.
+     * @param str The StringBuilder to append the string representation to.
+     * @return The StringBuilder with the appended string representation.
+     */
     public StringBuilder getItems(List<Item> items, StringBuilder str) {
         for (Item item : items) {
             if (item instanceof Weapon) str.append("- ").append(((Weapon) item).getType()).append("\n");
@@ -366,6 +424,10 @@ public class Story {
         return str;
     }
 
+    /**
+     * Executes an action based on the given item string.
+     * @param item The item string.
+     */
     private void execute(String item) {
         switch (item) {
             case "MedKit":
@@ -461,6 +523,11 @@ public class Story {
         }
     }
 
+    /**
+     * Moves to the room at the given coordinates.
+     * @param nextRow The row of the room.
+     * @param nextColumn The column of the room.
+     */
     private void room(int nextRow, int nextColumn) {
         this.nextRow = nextRow;
         this.nextColumn = nextColumn;
@@ -507,6 +574,12 @@ public class Story {
         }
     }
 
+    /**
+     * Displays a dialog with the given text, button text, and action command.
+     * @param text The dialog text.
+     * @param buttonText The button text.
+     * @param actionCommand The action command.
+     */
     private void showDialog(String text, String buttonText, String actionCommand) {
         ui.mainTextArea.setText(text);
         ui.dialogButton.setText(buttonText);
@@ -514,6 +587,9 @@ public class Story {
         vm.showDialogScreen();
     }
 
+    /**
+     * Turns on the light in the current room.
+     */
     public void lightOn() {
         if (player.findItem("Torch") == null) {
             vm.showMessage("You don't have the Torch", 2000, Color.RED);
@@ -525,6 +601,10 @@ public class Story {
         }
     }
 
+    /**
+     * Fights the alien in the current room.
+     * @param alien The alien to fight.
+     */
     public void fightAlien(Alien alien) {
         fight = new Fight(player, alien, ui, vm, this);
         setNextPositions("Attack", "Leave", "Defend", "Elude");

@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Game class is the main class for the game. It sets up the game, creates the UI, and handles user actions.
+ */
 public class Game {
     ButtonsHandler bHandler = new ButtonsHandler();
     UI ui = new UI(bHandler);
@@ -37,6 +40,10 @@ public class Game {
 
     Room room4_2, room4_1, room3_1, room2_1, room2_0, room1_0, room2_2, room1_2, room0_2, room2_3, room1_3, room2_4, room3_4;
 
+    /**
+     * This is the constructor for the Game class. It sets up the game and starts the game loop.
+     * @throws IOException If an I/O error occurs.
+     */
     public Game() throws IOException {
         ui.homeScreen();
         ui.gameScreen();
@@ -44,6 +51,9 @@ public class Game {
         newGame();
     }
 
+    /**
+     * This method is called to start a new game. It resets the game state and starts a new game.
+     */
     public void newGame() {
         player = new Player(ui, vm);
         building = new Building();
@@ -111,6 +121,8 @@ public class Game {
 
         room3_4.addItem(key2);
 
+        room2_3.setDark(true);
+
         story.startRoom = room4_2;
         player.setCurrentRoom(story.startRoom);
 
@@ -126,6 +138,10 @@ public class Game {
         vm.showHomeScreen();
     }
 
+    /**
+     * This method is called to load a game. It loads the game state from a file and resumes the game.
+     * @param game The name of the game to load.
+     */
     public void loadGame(String game) {
 
     }
@@ -134,8 +150,15 @@ public class Game {
         new Game();
     }
 
+    /**
+     * ButtonsHandler is an inner class that implements ActionListener. It handles all button click events.
+     */
     protected class ButtonsHandler implements ActionListener {
         @Override
+        /**
+         * This method is called whenever a button is clicked. It handles the button click event.
+         * @param e The event that occurred.
+         */
         public void actionPerformed(ActionEvent e) {
             String buttonClicked = e.getActionCommand();
 
@@ -223,7 +246,16 @@ public class Game {
             }
         }
     }
+
+    /**
+     * loadHandler is an inner class that implements ActionListener. It handles all load game events.
+     */
     protected class loadHandler implements ActionListener {
+
+        /**
+         * This method is called whenever a load game event occurs. It handles the load game event.
+         * @param e The event that occurred.
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             loadGame(e.getActionCommand());
