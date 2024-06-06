@@ -10,7 +10,6 @@ import com.extraction.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +92,19 @@ public class Story {
                     vm.showEndScreen("YOU WIN");
                 }
                 break;
+            case "Map":
+                map();
+                break;
+            case "Proceed":
+                proceed();
+                break;
+            case "Fight":
+                vm.showFightScreen();
+                fightAlien(nextRoom.getAlien());
+                break;
+            case "ShowItems":
+                showItems();
+                break;
             case "Attack":
                 fight.attack();
                 break;
@@ -104,15 +116,6 @@ public class Story {
                 break;
             case "Elude":
                 fight.elude();
-                break;
-            case "ShowItems":
-                showItems();
-                break;
-            case "Map":
-                map();
-                break;
-            case "Proceed":
-                proceed();
                 break;
             case "Room4_2":
                 room(4, 2);
@@ -290,6 +293,10 @@ public class Story {
         exitThrow();
         ui.exitItemButton.setEnabled(false);
         ui.throwButton.setEnabled(false);
+        ui.actionButton1.setText("");
+        ui.actionButton2.setText("");
+        ui.actionButton3.setText("");
+        ui.actionButton4.setText("");
         List<Item> items = new ArrayList<>(player.getBag());
         items.removeIf(item -> item.getName().equals("Torch") || item.getName().equals("Key"));
         if (items.isEmpty()) {
@@ -306,10 +313,10 @@ public class Story {
 
         String item1, item2, item3, item4;
         try {
-            ui.actionButton1.setText("");
-            ui.actionButton2.setText("");
-            ui.actionButton3.setText("");
-            ui.actionButton4.setText("");
+//            ui.actionButton1.setText("");
+//            ui.actionButton2.setText("");
+//            ui.actionButton3.setText("");
+//            ui.actionButton4.setText("");
             ui.setUnenableButtons();
 
             item1 = items.get(0).getName();
@@ -463,46 +470,44 @@ public class Story {
         if (!nextRoom.isDark()) {
             if (nextRoom == startRoom) {
                 if (hasCo) {
-                    game.nextPosition0 = "Extraction";
-                    ui.mainTextArea.setText(ending.nextDialogue());
-                    vm.showDialogScreen();
+                    showDialog(ending.nextDialogue(), "Continue", "Extraction");
                 }
                 else {
-                    showRoomInfo(nextRoom.getDescription() + "\nNOME COMPAGNEROS needs your help!",
+                    showDialog("Location: " + nextRoom.getDescription() + "\nNOME COMPAGNEROS needs your help!",
                             "Back", "Proceed");
                 }
             } else if (nextRoom == coRoom) {
                 if (player.getKeys() == 2) {
                     checkRoom();
                     hasCo = true;
-                    showRoomInfo(nextRoom.getDescription() + "\nYou found NOME COMPAGNEROS, it's time to go back home!",
+                    showDialog("Location: " + nextRoom.getDescription() + "\nYou found NOME COMPAGNEROS, it's time to go back home!",
                             "Back", "Proceed");
-                    vm.showMessage("You found the Co.", 2000, Color.GREEN);
+                    vm.showMessage("You found the Co.", 2000, Color.ORANGE);
                 } else if (player.getKeys() == 1) {
-                    vm.showMessage("You have just one Key, needed another one.", 2000, Color.GREEN);
+                    vm.showMessage("You have just one Key, needed another one.", 2500, Color.ORANGE);
                 } else {
-                    vm.showMessage("You don't have the two Keys.", 2000, Color.GREEN);
+                    vm.showMessage("You don't have the two Keys.", 2000, Color.ORANGE);
                 }
 
             } else if (nextRoom.getAlien() != null) {
-                showRoomInfo(nextRoom.getDescription() + "\nThere is something strange.\nWhat is it!",
+                showDialog("Location: " + nextRoom.getDescription() + "\nThere is something strange.\nWhat is it!",
                         "Go Closer", "Fight");
-                vm.showFightScreen();
-                fightAlien(nextRoom.getAlien());
             } else if (!nextRoom.getItems().isEmpty()) {
                 if (!nextRoom.getIconPath().equals(ui.checkIconPath)) checkRoom();
-                showItems();
+                showDialog("Location: " + nextRoom.getDescription() + "\nOh there are some objects in the Room.",
+                        "Watch", "ShowItems");
             } else {
                 if (!nextRoom.getIconPath().equals(ui.checkIconPath)) checkRoom();
-                proceed();
+                showDialog("Location: " + nextRoom.getDescription() + "\nNothing interesting here.",
+                        "Go Ahead", "Proceed");
             }
         } else {
-            showRoomInfo(nextRoom.getDescription() + "\nUnfortunately is too dark to see, use the Torch.",
+            showDialog("Location: " + nextRoom.getDescription() + "\nUnfortunately is too dark to see, use the Torch.",
                     "Use Torch", "Torch");
         }
     }
 
-    private void showRoomInfo(String text, String buttonText, String actionCommand) {
+    private void showDialog(String text, String buttonText, String actionCommand) {
         ui.mainTextArea.setText(text);
         ui.dialogButton.setText(buttonText);
         game.nextPosition0 = actionCommand;
@@ -523,6 +528,7 @@ public class Story {
     public void fightAlien(Alien alien) {
         fight = new Fight(player, alien, ui, vm, this);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
+        ui.dialogButton.setText("Continue");
         game.nextPosition0 = "Room" + nextRow + "_" + nextColumn;
         fight.fight();
     }
