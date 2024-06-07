@@ -75,7 +75,7 @@ public class VisibilityManager {
 
     public void showEndScreen(String end) {
         everythingNotVisible();
-        ui.titleLabel.setText(end);
+        ui.setTitleLabel(end);
         // Shown
         ui.titlePanel.setVisible(true);
     }

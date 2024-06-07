@@ -7,27 +7,27 @@ import java.io.File;
 import java.io.IOException;
 
 public class UI {
-    JFrame window;
-    GridBagConstraints gbc = new GridBagConstraints();
-    Color background = Color.BLACK;
-    Game.ButtonsHandler bHandler;
-    Game.loadHandler lHandler;
-    Font textFont = new Font("Serif", Font.BOLD, 20);
+    private JFrame window;
+    private final GridBagConstraints gbc = new GridBagConstraints();
+    private final Color background = Color.BLACK;
+    private final Game.ButtonsHandler bHandler;
+    private Game.loadHandler lHandler;
+    private final Font textFont = new Font("Serif", Font.BOLD, 20);
 
-    JMenuBar menuBar;
-    JMenu menu;
-    JMenuItem exit, save;
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private JMenuItem exit, save;
 
-    JPanel bodyPanel;
+    private JPanel bodyPanel;
 
     JPanel titlePanel;
-    JLabel titleLabel;
-    String title = "Extraction";
-    Font titleFont = new Font("Serif", Font.BOLD, 70);
+    private JLabel titleLabel;
+    private String title = "Extraction";
+    private Font titleFont = new Font("Serif", Font.BOLD, 70);
 
     JPanel startPanel;
-    JButton startButton;
-    Font startFont = new Font("Serif", Font.BOLD, 40);
+    private JButton startButton;
+    private Font startFont = new Font("Serif", Font.BOLD, 40);
 
     JButton loadButton;
     Font loadFont = new Font("Serif", Font.BOLD, 40);
@@ -74,7 +74,7 @@ public class UI {
     }
 
     // Home GUI
-    public void homeScreen() throws IOException {
+    public void homeScreen(String gameTitle) {
         window = new JFrame();
         window.setTitle("EDIDS_Proj");
         window.setLayout(new BorderLayout());
@@ -82,13 +82,14 @@ public class UI {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(background);
         window.setLocationRelativeTo(null);
+        this.title = gameTitle;
 
         bodyPanel = new JPanel();
         bodyPanel.setLayout(null);
         bodyPanel.setBackground(background);
 
         createMenu();
-        createTitlePanel();
+        createTitlePanel(gameTitle);
         createStartPanel();
         createLoadPanel();
 
@@ -122,7 +123,7 @@ public class UI {
         menuBar.add(menu);
     }
 
-    private void createTitlePanel() {
+    private void createTitlePanel(String title) {
         // Title Panel
         titlePanel = new JPanel();
         titlePanel.setLayout(new GridBagLayout());
@@ -134,6 +135,14 @@ public class UI {
         titleLabel.setFont(titleFont);
 
         titlePanel.add(titleLabel, gbc);
+    }
+
+    public void setTitleLabel(String text) {
+        titleLabel.setText(text);
+    }
+
+    public void resetTitle() {
+        titleLabel.setText(title);
     }
 
     private void createStartPanel() {
@@ -254,7 +263,7 @@ public class UI {
     }
 
     public void setCol1(String text) {
-
+        topLabelCol1.setText(text);
     }
 
     public void newMap() {

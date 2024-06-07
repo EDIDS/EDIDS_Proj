@@ -37,7 +37,7 @@ public class Room {
 
     public void removeItem(String itemToThrow){
         Item item = this.findItem(itemToThrow);
-        if (item != null && item.isThrowable()) items.remove(item);
+        if (item != null /*&& item.isThrowable()*/) items.remove(item);
     }
 
     public Item findItem(String itemToFind){

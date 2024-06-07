@@ -38,7 +38,7 @@ public class Game {
     Room room4_2, room4_1, room3_1, room2_1, room2_0, room1_0, room2_2, room1_2, room0_2, room2_3, room1_3, room2_4, room3_4;
 
     public Game() throws IOException {
-        ui.homeScreen();
+        ui.homeScreen("Extraction");
         ui.gameScreen();
 
         newGame();
@@ -91,8 +91,9 @@ public class Game {
         Weapon ak47 = new Weapon("AK47");
         Weapon uspsworm = new Weapon("USPSWORM");
 
-        room4_1.setAlien(runner);
+        //room4_1.setAlien(runner);
         room4_1.addItem(revolver);
+        room4_1.addItem(key1);
 
         room2_1.addItem(shield);
 
@@ -144,7 +145,7 @@ public class Game {
             switch (buttonClicked) {
                 case "Exit":
                     ui.resetActionButtons();
-                    ui.titleLabel.setText(ui.title);
+                    ui.resetTitle();
                     newGame();
                     break;
                 case "Save":

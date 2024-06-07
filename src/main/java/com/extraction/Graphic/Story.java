@@ -25,7 +25,7 @@ public class Story {
     int playerX;
     int playerY;
     int nextColumn, nextRow;
-    Room nextRoom;
+    private Room nextRoom;
     Room startRoom;
     Room coRoom;
     boolean hasCo = false;
@@ -319,6 +319,7 @@ public class Story {
         return str;
     }
 
+    // Fix Max Weight - Se la raggiungo non adda ma rimuove dalla stanza
     private void execute(String item) {
         switch (item) {
             case "MedKit":
@@ -435,7 +436,7 @@ public class Story {
                     hasCo = true;
                     showDialog("Location:\n" + nextRoom.getDescription() + "\n\nYou found NOME COMPAGNEROS, it's time to go back home!",
                             "Back", "Proceed");
-                    vm.showMessage("You found the Co.", 2000, Color.ORANGE);
+                    vm.showMessage("You found the Co.", 2000, Color.GREEN);
                 } else if (player.getKeys() == 1) {
                     vm.showMessage("You have just one Key, needed another one.", 2500, Color.ORANGE);
                 } else {
