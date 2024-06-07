@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
 public class UI {
     private JFrame window;
@@ -267,11 +266,11 @@ public class UI {
     }
 
     public void setCol2(String text) {
-        topLabelCol1.setText("Weapon: " + text);
+        topLabelCol2.setText("Weapon: " + text);
     }
 
     public void setCol3(String text) {
-        topLabelCol1.setText("Score: " + text);
+        topLabelCol3.setText("Score: " + text);
     }
 
     public void newMap() {
