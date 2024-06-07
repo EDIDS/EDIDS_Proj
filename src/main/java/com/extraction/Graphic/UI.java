@@ -1,9 +1,6 @@
 package com.extraction.Graphic;
 
-import com.extraction.S3Uploader;
-
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,18 +8,15 @@ import java.io.IOException;
 
 public class UI {
     JFrame window;
-    Container con;
     GridBagConstraints gbc = new GridBagConstraints();
-    String position = "";
     Color background = Color.BLACK;
     Game.ButtonsHandler bHandler;
     Game.loadHandler lHandler;
+    Font textFont = new Font("Serif", Font.BOLD, 20);
 
-    JToolBar toolbar;
-    JMenuBar mb;
+    JMenuBar menuBar;
     JMenu menu;
-    JMenuItem exit,save;
-    JTextArea ta;
+    JMenuItem exit, save;
 
     JPanel bodyPanel;
 
@@ -40,14 +34,11 @@ public class UI {
 
     JScrollPane scroll;
     JPanel loadPanel;
-    JList<JLabel> list;
-    DefaultListModel<JLabel> listModel;
 
     JPanel topPanel;
-    JLabel[] topLabel;
-    public JLabel topLabelCol1;
+    JLabel topLabelCol1;
     JLabel topLabelCol2;
-    Font topFont = new Font("Serif", Font.BOLD, 20);
+    JLabel topLabelCol3;
 
     JPanel mapSpacePanel;
     JPanel mapPanel;
@@ -58,23 +49,19 @@ public class UI {
 
     JPanel mainTextPanel;
     public JTextArea mainTextArea;
-    Font mainTextFont = new Font("Serif", Font.BOLD, 20);
 
     JPanel itemsPanel;
     JButton itemButton1;
     JButton itemButton2;
-    JButton itemButton3;
-    JButton itemButton4;
 
     JPanel actionPanel;
     public JButton actionButton1;
     public JButton actionButton2;
     public JButton actionButton3;
     public JButton actionButton4;
-    Font actionFont = new Font("Serif", Font.BOLD, 20);
 
-    JPanel exitItemBPanel;
-    JButton exitItemButton;
+    JPanel exitRoomBPanel;
+    JButton exitRoomButton;
     JButton throwButton;
 
     JPanel dialogBPanel;
@@ -99,8 +86,6 @@ public class UI {
         bodyPanel = new JPanel();
         bodyPanel.setLayout(null);
         bodyPanel.setBackground(background);
-        //con = window.getContentPane();
-        //con.setLayout(null);
 
         createMenu();
         createTitlePanel();
@@ -108,8 +93,7 @@ public class UI {
         createLoadPanel();
 
         // Initial Frame
-        window.add(mb, BorderLayout.NORTH);
-        //window.setJMenuBar(mb);
+        window.add(menuBar, BorderLayout.NORTH);
         window.add(bodyPanel, BorderLayout.CENTER);
 
         bodyPanel.add(titlePanel);
@@ -120,42 +104,29 @@ public class UI {
     }
 
     private void createMenu() {
+        menuBar = new JMenuBar();
+        menu = new JMenu("Menu");
+
         exit = new JMenuItem("Exit");
         save = new JMenuItem("Save & Exit");
+
         exit.setActionCommand("Exit");
         save.setActionCommand("Save");
 
         exit.addActionListener(bHandler);
         save.addActionListener(bHandler);
 
-        mb = new JMenuBar();
-        menu = new JMenu("Menu");
-
         menu.add(exit);
         menu.add(save);
 
-        mb.add(menu);
-
-        ta = new JTextArea();
-        ta.setBounds(5,5,360,320);
+        menuBar.add(menu);
     }
-
-    /*private void actionPerformed(ActionEvent e) {
-        if(e.getSource()== exit)
-            ta.cut();
-        if(e.getSource()==paste)
-            ta.paste();
-        if(e.getSource()==copy)
-            ta.copy();
-        if(e.getSource()==selectAll)
-            ta.selectAll();
-    }*/
 
     private void createTitlePanel() {
         // Title Panel
         titlePanel = new JPanel();
         titlePanel.setLayout(new GridBagLayout());
-        titlePanel.setBounds(20, 70, 745, 150);  // -15
+        titlePanel.setBounds(20, 70, 745, 150);  // -15 rispetto alla larghezza pagina
         titlePanel.setBackground(background);
 
         titleLabel = new JLabel(title);
@@ -168,8 +139,7 @@ public class UI {
     private void createStartPanel() {
         // Start Button Panel
         startPanel = new JPanel();
-        //startPanel.setLayout(new GridBagLayout());
-        LayoutManager mgr = new GridLayout(2, 2, 20, 20);
+        LayoutManager mgr = new GridLayout(2, 1, 20, 20);
         startPanel.setLayout(mgr);
         startPanel.setBounds(220, 290, 345, 150);  // -15
         startPanel.setBackground(background);
@@ -181,7 +151,7 @@ public class UI {
         startPanel.add(loadButton, gbc);
     }
 
-    public void createLoadPanel() throws IOException {
+    public void createLoadPanel() {
         loadPanel = new JPanel();
         loadPanel.setBounds(50, 50, 685, 500);
         loadPanel.setLayout(new BoxLayout(loadPanel, BoxLayout.Y_AXIS));
@@ -199,7 +169,7 @@ public class UI {
         loadPanel.add(scroll);
     }
 
-    private void fillLoadList(JPanel panel) throws IOException {
+    private void fillLoadList(JPanel panel) {
         /*for (int i = 0; i < 15; i++) {
             JPanel p = new JPanel();
             p.setLayout(new GridBagLayout());
@@ -240,7 +210,7 @@ public class UI {
         createMapPanel();
         createMainTextPanel();
         createItemsPanel();
-        createExitItemsButtonPanel();
+        createExitRoomButtonPanel();
         createActionButtonsPanel();
         createDialogButtonsPanel();
         createMessageLabel();
@@ -249,30 +219,38 @@ public class UI {
         bodyPanel.add(mapSpacePanel);
         bodyPanel.add(mainTextPanel);
         bodyPanel.add(itemsPanel);
-        bodyPanel.add(exitItemBPanel);
+        bodyPanel.add(exitRoomBPanel);
         bodyPanel.add(actionPanel);
         bodyPanel.add(dialogBPanel);
+
         window.add(messageLabel, BorderLayout.SOUTH);
     }
 
     private void createTopBarPanel() {
         // Top Bar Panel
         topPanel = new JPanel();
-        topPanel.setLayout(new GridLayout(1, 2));
+        LayoutManager mgr = new GridLayout(1, 3, 5, 0);
+        topPanel.setLayout(mgr);
         topPanel.setBounds(20, 10, 745, 50);  // -15
         topPanel.setBackground(background);
 
         topLabelCol1 = new JLabel();
         topLabelCol1.setForeground(Color.WHITE);
-        topLabelCol1.setFont(topFont);
+        topLabelCol1.setFont(textFont);
 
         topPanel.add(topLabelCol1);
 
         topLabelCol2 = new JLabel();
         topLabelCol2.setForeground(Color.WHITE);
-        topLabelCol2.setFont(topFont);
+        topLabelCol2.setFont(textFont);
 
         topPanel.add(topLabelCol2);
+
+        topLabelCol3 = new JLabel();
+        topLabelCol3.setForeground(Color.WHITE);
+        topLabelCol3.setFont(textFont);
+
+        topPanel.add(topLabelCol3);
     }
 
     public void newMap() {
@@ -298,7 +276,7 @@ public class UI {
         // Populate the grid with buttons (or panels)
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                grid[i][j] = createRoom((i + ", " + j), topFont);
+                grid[i][j] = createRoom((i + ", " + j), textFont);
                 mapPanel.add(grid[i][j]);
             }
         }
@@ -359,11 +337,6 @@ public class UI {
 
     }
 
-    private void movePlayer(int fromRow, int fromCol, int toRow, int toCol, String fromIconPath) {
-        setIcon(fromRow, fromCol, fromIconPath);
-        setIcon(toRow, toCol, playerIconPath);
-    }
-
     private void createMainTextPanel() {
         // Main Text Panel
         mainTextPanel = new JPanel();
@@ -376,7 +349,7 @@ public class UI {
         mainTextArea.setBounds(20, 50, 700, 250);  // -15
         mainTextArea.setBackground(background);
         mainTextArea.setForeground(Color.WHITE);
-        mainTextArea.setFont(mainTextFont);
+        mainTextArea.setFont(textFont);
         mainTextArea.setLineWrap(true);
 
         mainTextPanel.add(mainTextArea);
@@ -385,34 +358,31 @@ public class UI {
     private void createItemsPanel() {
         //Items Panel
         itemsPanel = new JPanel();
-        LayoutManager mgr = new GridLayout(1, 3, 10, 0);
+        LayoutManager mgr = new GridLayout(1, 2, 10, 0);
         itemsPanel.setLayout(mgr);
         itemsPanel.setBounds(120, 400, 545, 40);  // -15
         itemsPanel.setBackground(background);
 
-        itemButton1 = createButton("MedKit", actionFont, bHandler, "MedKit");
+        itemButton1 = createButton("MedKit", textFont, bHandler, "MedKit");
         itemsPanel.add(itemButton1, gbc);
 
-        itemButton2 = createButton("Torcia", actionFont, bHandler, "Torcia");
+        itemButton2 = createButton("TNT", textFont, bHandler, "TNT");
         itemsPanel.add(itemButton2, gbc);
-
-        itemButton3 = createButton("TNT", actionFont, bHandler, "TNT");
-        itemsPanel.add(itemButton3, gbc);
     }
 
-    private void createExitItemsButtonPanel() {
+    private void createExitRoomButtonPanel() {
         //Exit Items Button Panel
-        exitItemBPanel = new JPanel();
+        exitRoomBPanel = new JPanel();
         LayoutManager mgr = new GridLayout(1, 2, 10, 10);
-        exitItemBPanel.setLayout(mgr);
-        exitItemBPanel.setBounds(270, 400, 245, 40);  // -15
-        exitItemBPanel.setBackground(background);
+        exitRoomBPanel.setLayout(mgr);
+        exitRoomBPanel.setBounds(270, 400, 245, 40);  // -15
+        exitRoomBPanel.setBackground(background);
 
-        exitItemButton = createButton("Exit", actionFont, bHandler, "ExitItems");
-        throwButton = createButton("Throw", actionFont, bHandler, "ThrowItems");
+        exitRoomButton = createButton("Exit", textFont, bHandler, "ExitItems");
+        throwButton = createButton("Throw", textFont, bHandler, "ThrowItems");
 
-        exitItemBPanel.add(exitItemButton, gbc);
-        exitItemBPanel.add(throwButton, gbc);
+        exitRoomBPanel.add(exitRoomButton, gbc);
+        exitRoomBPanel.add(throwButton, gbc);
     }
 
     private void createActionButtonsPanel() {
@@ -423,16 +393,16 @@ public class UI {
         actionPanel.setBounds(20, 450, 745, 90);  // -15
         actionPanel.setBackground(background);
 
-        actionButton1 = createButton("NORTH", actionFont, bHandler, "TopLeft");
+        actionButton1 = createButton("NORTH", textFont, bHandler, "TopLeft");
         actionPanel.add(actionButton1, gbc);
 
-        actionButton2 = createButton("EAST", actionFont, bHandler, "TopRight");
+        actionButton2 = createButton("EAST", textFont, bHandler, "TopRight");
         actionPanel.add(actionButton2, gbc);
 
-        actionButton3 = createButton("SOUTH", actionFont, bHandler, "BottomLeft");
+        actionButton3 = createButton("SOUTH", textFont, bHandler, "BottomLeft");
         actionPanel.add(actionButton3, gbc);
 
-        actionButton4 = createButton("WEST", actionFont, bHandler, "BottomRight");
+        actionButton4 = createButton("WEST", textFont, bHandler, "BottomRight");
         actionPanel.add(actionButton4, gbc);
     }
 
@@ -443,7 +413,6 @@ public class UI {
         actionButton4.setEnabled(false);
         itemButton1.setEnabled(true);
         itemButton2.setEnabled(true);
-        itemButton3.setEnabled(true);
     }
 
     public void setAlienTurnButton() {
@@ -453,7 +422,6 @@ public class UI {
         actionButton4.setEnabled(true);
         itemButton1.setEnabled(false);
         itemButton2.setEnabled(false);
-        itemButton3.setEnabled(false);
     }
 
     public void setEnableButtons() {
@@ -463,7 +431,6 @@ public class UI {
         actionButton4.setEnabled(true);
         itemButton1.setEnabled(true);
         itemButton2.setEnabled(true);
-        itemButton3.setEnabled(true);
     }
 
     public void setUnenableButtons() {
@@ -473,7 +440,6 @@ public class UI {
         actionButton4.setEnabled(false);
         itemButton1.setEnabled(false);
         itemButton2.setEnabled(false);
-        itemButton3.setEnabled(false);
     }
 
     private void createDialogButtonsPanel() {
@@ -484,7 +450,7 @@ public class UI {
         dialogBPanel.setBounds(20, 450, 745, 90);  // -15
         dialogBPanel.setBackground(background);
 
-        dialogButton = createButton("Continue...", actionFont, bHandler, "NextDialog");
+        dialogButton = createButton("Continue...", textFont, bHandler, "NextDialog");
         dialogBPanel.add(dialogButton, gbc);
     }
 

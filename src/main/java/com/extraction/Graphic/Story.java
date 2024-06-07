@@ -102,6 +102,11 @@ public class Story {
                 vm.showFightScreen();
                 fightAlien(nextRoom.getAlien());
                 break;
+            case "Torch":
+                ui.dialogButton.setText("Continue...");
+                ui.dialogButton.setActionCommand("NextDialog");
+                lightOn();
+                break;
             case "ShowItems":
                 showItems();
                 break;
@@ -211,7 +216,7 @@ public class Story {
 
     private void showItems() {
         vm.showTextScreen();
-        ui.exitItemButton.setEnabled(true);
+        ui.exitRoomButton.setEnabled(true);
         ui.throwButton.setEnabled(true);
         List<Item> items = nextRoom.getItems();
         if (items.isEmpty()) proceed();
@@ -291,7 +296,7 @@ public class Story {
         ui.setEnableButtons();
         vm.showTextScreen();
         exitThrow();
-        ui.exitItemButton.setEnabled(false);
+        ui.exitRoomButton.setEnabled(false);
         ui.throwButton.setEnabled(false);
         ui.actionButton1.setText("");
         ui.actionButton2.setText("");
@@ -473,14 +478,14 @@ public class Story {
                     showDialog(ending.nextDialogue(), "Continue", "Extraction");
                 }
                 else {
-                    showDialog("Location: " + nextRoom.getDescription() + "\nNOME COMPAGNEROS needs your help!",
+                    showDialog("Location:\n" + nextRoom.getDescription() + "\n\nNOME COMPAGNEROS needs your help!",
                             "Back", "Proceed");
                 }
             } else if (nextRoom == coRoom) {
                 if (player.getKeys() == 2) {
                     checkRoom();
                     hasCo = true;
-                    showDialog("Location: " + nextRoom.getDescription() + "\nYou found NOME COMPAGNEROS, it's time to go back home!",
+                    showDialog("Location:\n" + nextRoom.getDescription() + "\n\nYou found NOME COMPAGNEROS, it's time to go back home!",
                             "Back", "Proceed");
                     vm.showMessage("You found the Co.", 2000, Color.ORANGE);
                 } else if (player.getKeys() == 1) {
@@ -490,19 +495,19 @@ public class Story {
                 }
 
             } else if (nextRoom.getAlien() != null) {
-                showDialog("Location: " + nextRoom.getDescription() + "\nThere is something strange.\nWhat is it!",
+                showDialog("Location:\n" + nextRoom.getDescription() + "\n\nThere is something strange.\nWhat is it!",
                         "Go Closer", "Fight");
             } else if (!nextRoom.getItems().isEmpty()) {
                 if (!nextRoom.getIconPath().equals(ui.checkIconPath)) checkRoom();
-                showDialog("Location: " + nextRoom.getDescription() + "\nOh there are some objects in the Room.",
+                showDialog("Location:\n" + nextRoom.getDescription() + "\n\nOh there are some objects in the Room.",
                         "Watch", "ShowItems");
             } else {
                 if (!nextRoom.getIconPath().equals(ui.checkIconPath)) checkRoom();
-                showDialog("Location: " + nextRoom.getDescription() + "\nNothing interesting here.",
+                showDialog("Location:\n" + nextRoom.getDescription() + "\n\nNothing interesting here.",
                         "Go Ahead", "Proceed");
             }
         } else {
-            showDialog("Location: " + nextRoom.getDescription() + "\nUnfortunately is too dark to see, use the Torch.",
+            showDialog("Location:\n" + nextRoom.getDescription() + "\n\nUnfortunately is too dark to see, use the Torch.",
                     "Use Torch", "Torch");
         }
     }

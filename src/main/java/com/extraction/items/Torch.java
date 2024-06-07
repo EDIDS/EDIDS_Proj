@@ -1,7 +1,7 @@
 package com.extraction.items;
 
 public class Torch extends Item {
-    public static final int TORCH_WEIGHT = 5;
+    public static final int TORCH_WEIGHT = 10;
     private boolean isOn;
 
     public Torch() {

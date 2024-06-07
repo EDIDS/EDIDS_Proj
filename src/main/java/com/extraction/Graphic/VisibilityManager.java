@@ -12,110 +12,72 @@ public class VisibilityManager {
         this.ui = ui;
     }
 
-    public void showHomeScreen() {
-        // Shown
-        ui.titlePanel.setVisible(true);
-        ui.startPanel.setVisible(true);
-        // Hide
+    private void everythingNotVisible() {
+        ui.titlePanel.setVisible(false);
+        ui.startPanel.setVisible(false);
         ui.loadPanel.setVisible(false);
         ui.topPanel.setVisible(false);
         ui.mapSpacePanel.setVisible(false);
         ui.mainTextPanel.setVisible(false);
         ui.itemsPanel.setVisible(false);
-        ui.exitItemBPanel.setVisible(false);
+        ui.exitRoomBPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
         ui.dialogBPanel.setVisible(false);
+    }
+
+    public void showHomeScreen() {
+        everythingNotVisible();
+        // Shown
+        ui.titlePanel.setVisible(true);
+        ui.startPanel.setVisible(true);
     }
 
     public void showLoadScreen() {
+        everythingNotVisible();
         // Shown
         ui.loadPanel.setVisible(true);
-        // Hide
-        ui.titlePanel.setVisible(false);
-        ui.startPanel.setVisible(false);
-        ui.topPanel.setVisible(false);
-        ui.mapSpacePanel.setVisible(false);
-        ui.mainTextPanel.setVisible(false);
-        ui.itemsPanel.setVisible(false);
-        ui.exitItemBPanel.setVisible(false);
-        ui.actionPanel.setVisible(false);
-        ui.dialogBPanel.setVisible(false);
     }
 
     public void showMapScreen() {
+        everythingNotVisible();
         // Shown
         ui.topPanel.setVisible(true);
         ui.mapSpacePanel.setVisible(true);
         ui.actionPanel.setVisible(true);
-        // Hide
-        ui.loadPanel.setVisible(false);
-        ui.mainTextPanel.setVisible(false);
-        ui.itemsPanel.setVisible(false);
-        ui.titlePanel.setVisible(false);
-        ui.startPanel.setVisible(false);
-        ui.exitItemBPanel.setVisible(false);
-        ui.dialogBPanel.setVisible(false);
+
     }
 
     public void showDialogScreen() {
+        everythingNotVisible();
         // Shown
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);
         ui.dialogBPanel.setVisible(true);
-        // Hide
-        ui.loadPanel.setVisible(false);
-        ui.mapSpacePanel.setVisible(false);
-        ui.itemsPanel.setVisible(false);
-        ui.titlePanel.setVisible(false);
-        ui.startPanel.setVisible(false);
-        ui.exitItemBPanel.setVisible(false);
-        ui.actionPanel.setVisible(false);
     }
 
     public void showTextScreen() {
+        everythingNotVisible();
         // Shown
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);
-        ui.exitItemBPanel.setVisible(true);
+        ui.exitRoomBPanel.setVisible(true);
         ui.actionPanel.setVisible(true);
-        // Hide
-        ui.loadPanel.setVisible(false);
-        ui.mapSpacePanel.setVisible(false);
-        ui.itemsPanel.setVisible(false);
-        ui.titlePanel.setVisible(false);
-        ui.startPanel.setVisible(false);
-        ui.dialogBPanel.setVisible(false);
     }
 
     public void showFightScreen() {
+        everythingNotVisible();
         // Shown
         ui.topPanel.setVisible(true);
         ui.mainTextPanel.setVisible(true);
         ui.itemsPanel.setVisible(true);
         ui.actionPanel.setVisible(true);
-        // Hide
-        ui.loadPanel.setVisible(false);
-        ui.mapSpacePanel.setVisible(false);
-        ui.titlePanel.setVisible(false);
-        ui.startPanel.setVisible(false);
-        ui.exitItemBPanel.setVisible(false);
-        ui.dialogBPanel.setVisible(false);
     }
 
     public void showEndScreen(String end) {
+        everythingNotVisible();
         ui.titleLabel.setText(end);
         // Shown
         ui.titlePanel.setVisible(true);
-        // Hide
-        ui.startPanel.setVisible(false);
-        ui.loadPanel.setVisible(false);
-        ui.topPanel.setVisible(false);
-        ui.mapSpacePanel.setVisible(false);
-        ui.mainTextPanel.setVisible(false);
-        ui.itemsPanel.setVisible(false);
-        ui.actionPanel.setVisible(false);
-        ui.exitItemBPanel.setVisible(false);
-        ui.dialogBPanel.setVisible(false);
     }
 
     public void showMessage(String message, int timerTime, Color borderColor) {
@@ -132,6 +94,4 @@ public class VisibilityManager {
         timer.setRepeats(false); // Imposta il timer per eseguire una sola volta
         timer.restart(); // Avvia il timer
     }
-
-
 }

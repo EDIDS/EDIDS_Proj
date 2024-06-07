@@ -11,9 +11,9 @@ public class Weapon extends Item {
             "USPSWORM"
     };
 
-    public static final int REVOLVER_WEIGHT = 5;
-    public static final int AK47_WEIGHT = 10;
-    public static final int USPSWORM_WEIGHT = 15;
+    public static final int REVOLVER_WEIGHT = 10;
+    public static final int AK47_WEIGHT = 15;
+    public static final int USPSWORM_WEIGHT = 20;
 
     /** Returns the weight of this type's weapon. */
     public static double type_weight(String type) {

@@ -12,7 +12,7 @@ import com.extraction.map.Room;
 public class Player {
 
     public static final int FULL_HEALTH = 100;
-    public static final int BASE_ATTACK_DAMAGE = 100;
+    public static final int BASE_ATTACK_DAMAGE = 25;
     public static final String NO_NAME = "";
     public static final int MAX_WEIGHT = 100;
 

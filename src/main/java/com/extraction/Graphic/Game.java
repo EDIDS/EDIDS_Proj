@@ -111,6 +111,8 @@ public class Game {
 
         room3_4.addItem(key2);
 
+        room2_3.setDark(true);
+
         story.startRoom = room4_2;
         player.setCurrentRoom(story.startRoom);
 
@@ -173,11 +175,6 @@ public class Game {
                     break;
                 case "MedKit":
                     story.fight.heal();
-                    break;
-                case "Torch":
-                    ui.dialogButton.setText("Continue...");
-                    ui.dialogButton.setActionCommand("NextDialog");
-                    story.lightOn();
                     break;
                 case "TNT":
                     story.fight.tnt();
