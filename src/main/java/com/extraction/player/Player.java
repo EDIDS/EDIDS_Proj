@@ -174,17 +174,7 @@ public class Player {
      * @param newWeapon The new weapon for the player.
      */
     public void setWeapon(Weapon newWeapon) {
-        double newWeight = currentWeight_ + newWeapon.getWeight();
-        if (this.hasWeapon()) {
-            Weapon oldWeapon = getWeapon();
-            newWeight -= oldWeapon.getWeight();
-        }
-        if(newWeight <= MAX_WEIGHT) {
-            this.weapon = newWeapon;
-            this.currentWeight_ = newWeight;
-        } else {
-            System.out.println("You have reached the maximum weight of " + MAX_WEIGHT);
-        }
+        this.weapon = newWeapon;
     }
 
     /**
@@ -192,33 +182,22 @@ public class Player {
      * @param newShield The new shield for the player.
      */
     public void setShield(Shield newShield) {
-        double newWeight = currentWeight_ + newShield.getWeight();
-        if (!this.hasShield()) {
-            if (newWeight <= MAX_WEIGHT) {
-                this.shield = newShield;
-                this.currentWeight_ = newWeight;
-            } else {
-                System.out.println("You have reached the maximum weight of " + MAX_WEIGHT);
-            }
-        } else {
-            System.out.println("You already have a shield");
-        }
+        this.shield = newShield;
     }
-
 
     /**
      * Removes the player's weapon.
      * This method will set the player's weapon to null.
      */
-    public void throwWeapon() {
+    private void throwWeapon() {
         this.weapon = null;
     }
 
     /**
      * Removes the player's shield.
-     * This method will set the player's shield to null and return the removed shield.
+     * This method will set the player's shield to null.
      */
-    public void throwShield() {
+    private void throwShield() {
         this.shield = null;
     }
 
@@ -298,6 +277,13 @@ public class Player {
                 }
                 this.setWeapon((Weapon) item);
             }
+            if(item instanceof Shield) {
+                if(shield != null) {
+                    vm_.showMessage("You already have a shield", 2000, Color.ORANGE);
+                    return;
+                }
+                this.setShield((Shield) item);
+            }
             if(item instanceof Key) this.numKeys++;
             bag_.add(item);
             currentWeight_ = newWeight;
@@ -315,10 +301,10 @@ public class Player {
         Item item = this.findItem(itemToThrow);
             if (item != null && item.isThrowable()) {
                 if(itemToThrow instanceof Weapon) this.throwWeapon();
+                if(itemToThrow instanceof Shield) this.throwShield();
                 if(itemToThrow instanceof Key) this.numKeys--;
                 bag_.remove(item);
                 currentWeight_ -= item.getWeight();
-                if(itemToThrow instanceof Weapon) throwWeapon();
                 return item;
             }
         return null;
@@ -333,6 +319,7 @@ public class Player {
         Item item = this.findItem(itemToThrow);
         if (item != null && item.isThrowable()) {
             if(item instanceof Weapon) this.throwWeapon();
+            if(item instanceof Shield) this.throwShield();
             if(item instanceof Key) this.numKeys--;
             bag_.remove(item);
             currentWeight_ -= item.getWeight();

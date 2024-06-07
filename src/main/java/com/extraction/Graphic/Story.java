@@ -384,97 +384,104 @@ public class Story {
      * Executes an action based on the given item string.
      * @param item The item string.
      */
-    // Fix Max Weight - Se la raggiungo non adda ma rimuove dalla stanza
     private void execute(String item) {
         switch (item) {
             case "MedKit":
-                MedKit med = new MedKit();
+                MedKit med = (MedKit)nextRoom.findItem("MedKit");
                 player.addItem(med);
-                nextRoom.removeItem("MedKit");
+                if (player.findItem(med) != null)
+                    nextRoom.removeItem(med);
                 break;
             case "TNT":
-                TNT tnt = new TNT();
+                TNT tnt = (TNT)nextRoom.findItem("TNT");
                 player.addItem(tnt);
-                nextRoom.removeItem("TNT");
+                if (player.findItem(tnt) != null)
+                    nextRoom.removeItem(tnt);
                 break;
             case "Shield":
-                Shield shield = new Shield();
+                Shield shield = (Shield)nextRoom.findItem("Shield");
                 player.addItem(shield);
-                nextRoom.removeItem("Shield");
+                if (player.getShield() == shield)
+                    nextRoom.removeItem(shield);
                 break;
             case "Key":
-                Key key = new Key();
+                Key key = (Key)nextRoom.findItem("Key");
                 player.addItem(key);
-                nextRoom.removeItem("Key");
+                if (player.findItem(key) != null)
+                    nextRoom.removeItem(key);
                 break;
             case "Torch":
-                Torch torch = new Torch();
+                Torch torch = (Torch)nextRoom.findItem("Torch");
                 player.addItem(torch);
-                nextRoom.removeItem("Torch");
+                if (player.findItem(torch) != null)
+                    nextRoom.removeItem(torch);
                 break;
             case "REVOLVER":
-                Weapon revolver = new Weapon("REVOLVER");
+                Weapon revolver = (Weapon)nextRoom.findItem("Weapon");
+                if (!revolver.getType().equals("REVOLVER")) return;
+                Weapon oldWeapon = player.getWeapon();
                 player.addItem(revolver);
-                ui.setCol2(player.getWeapon().getType());
-                nextRoom.removeItem("Weapon");
+                if (player.getWeapon() == revolver) {
+                    ui.setCol2(player.getWeapon().getType());
+                    nextRoom.removeItem(revolver);
+                    if (oldWeapon != null)
+                        nextRoom.addItem(oldWeapon);
+                }
                 break;
             case "USPSWORM":
-                Weapon usp = new Weapon("USPSWORM");
+                Weapon usp = (Weapon)nextRoom.findItem("Weapon");
+                if (!usp.getType().equals("USPSWORM")) return;
+                Weapon oldWeapon_ = player.getWeapon();
                 player.addItem(usp);
-                ui.setCol2(player.getWeapon().getType());
-                nextRoom.removeItem("Weapon");
+                if (player.getWeapon() == usp) {
+                    ui.setCol2(player.getWeapon().getType());
+                    nextRoom.removeItem(usp);
+                    if (oldWeapon_ != null)
+                        nextRoom.addItem(oldWeapon_);
+                }
                 break;
             case "AK47":
-                Weapon ak = new Weapon("AK47");
+                Weapon ak = (Weapon)nextRoom.findItem("Weapon");
+                if (!ak.getType().equals("AK47")) return;
+                Weapon oldWeapon__ = player.getWeapon();
                 player.addItem(ak);
-                ui.setCol2(player.getWeapon().getType());
-                nextRoom.removeItem("Weapon");
+                if (player.getWeapon() == ak) {
+                    ui.setCol2(player.getWeapon().getType());
+                    nextRoom.removeItem(ak);
+                    if (oldWeapon__ != null)
+                        nextRoom.addItem(oldWeapon__);
+                }
                 break;
             case "RemoveMedKit":
-                player.throwItem("MedKit");
-                if (nextRoom.getItems().isEmpty()) {
-                    exitItems();
-                } else {
-                    exitThrow();
-                    showItems();
-                }
+                Item med_re = player.throwItem("MedKit");
+                exitThrow();
+                nextRoom.addItem(med_re);
+                showItems();
                 break;
             case "RemoveTNT":
-                player.throwItem("TNT");
-                if (nextRoom.getItems().isEmpty()) {
-                    exitItems();
-                } else {
-                    exitThrow();
-                    showItems();
-                }
+                Item tnt_re = player.throwItem("TNT");
+                exitThrow();
+                nextRoom.addItem(tnt_re);
+                showItems();
                 break;
             case "RemoveShield":
-                player.throwItem("Shield");
-                if (nextRoom.getItems().isEmpty()) {
-                    exitItems();
-                } else {
-                    exitThrow();
-                    showItems();
-                }
+                Item shield_re = player.throwItem("Shield");
+                exitThrow();
+                nextRoom.addItem(shield_re);
+                showItems();
                 break;
             case "RemoveTorch":
-                player.throwItem("Torch");
-                if (nextRoom.getItems().isEmpty()) {
-                    exitItems();
-                } else {
-                    exitThrow();
-                    showItems();
-                }
+                Item torch_re = player.throwItem("Torch");
+                exitThrow();
+                nextRoom.addItem(torch_re);
+                showItems();
                 break;
             case "RemoveWeapon":
-                player.throwItem("Weapon");
+                Item weapon_re = player.throwItem("Weapon");
                 ui.setCol2("Punch");
-                if (nextRoom.getItems().isEmpty()) {
-                    exitItems();
-                } else {
-                    exitThrow();
-                    showItems();
-                }
+                exitThrow();
+                nextRoom.addItem(weapon_re);
+                showItems();
                 break;
             default:
         }
