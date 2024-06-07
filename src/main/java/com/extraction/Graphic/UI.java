@@ -21,7 +21,7 @@ public class UI {
     JPanel bodyPanel;
 
     JPanel titlePanel;
-    public JLabel titleLabel;
+    JLabel titleLabel;
     String title = "Extraction";
     Font titleFont = new Font("Serif", Font.BOLD, 70);
 
@@ -251,6 +251,10 @@ public class UI {
         topLabelCol3.setFont(textFont);
 
         topPanel.add(topLabelCol3);
+    }
+
+    public void setCol1(String text) {
+
     }
 
     public void newMap() {

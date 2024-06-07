@@ -95,6 +95,7 @@ public class Fight {
     public void heal() {
         ui.mainTextArea.setText("You try to heal yourself!");
         if (player.heal()) {
+            ui.setCol1("HP: " + player.getHealth());
             ui.mainTextArea.setText("You successfully heal yourself!");
             alienTurn();
         } else
@@ -118,7 +119,7 @@ public class Fight {
         int damage = alien.attack();
         int reducedDamage = player.defend(damage);
         player.takeDamage(reducedDamage);
-        ui.topLabelCol1.setText("HP: " + player.getHealth());
+        ui.setCol1("HP: " + player.getHealth());
         if(!player.hasShield()) {
             ui.mainTextArea.setText("You don't have a shield!");
             Timer timer = new Timer(TIMER, e -> {
@@ -139,7 +140,7 @@ public class Fight {
             ui.mainTextArea.setText("You failed to elude the " + alien.getName() + "'s attack!");
             int harm = alien.attack();
             player.takeDamage(harm);
-            ui.topLabelCol1.setText("HP: " + player.getHealth());
+            ui.setCol1("HP: " + player.getHealth());
             ui.mainTextArea.setText("The " + alien.getName() + " deals " + harm + " damage to you!");
         }
         playerTurn();

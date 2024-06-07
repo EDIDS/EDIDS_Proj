@@ -25,7 +25,6 @@ public class Player {
     private Shield shield;
     private int score_;
     private int numKeys;
-    private final UI ui_;
     private final VisibilityManager vm_;
 
 
@@ -38,7 +37,6 @@ public class Player {
         name_ = NO_NAME;
         health_ = FULL_HEALTH;
         bag_ = new ArrayList<Item>();
-        ui_ = ui;
         vm_ = vm;
     }
 
@@ -51,7 +49,6 @@ public class Player {
         name_ = name;
         health_ = FULL_HEALTH;
         bag_ = new ArrayList<Item>();
-        ui_ = ui;
         vm_ = vm;
     }
 
@@ -199,7 +196,6 @@ public class Player {
         MedKit medKit = (MedKit) this.findItem("MedKit");
         if (medKit != null) {
             setHealth(FULL_HEALTH);
-            ui_.topLabelCol1.setText("HP: " + this.getHealth());
             throwItem(medKit);
             return true;
         }
@@ -213,7 +209,7 @@ public class Player {
      */
     public void takeDamage(int damage) {
         if (damage < 0) return;
-        health_ = health_ - damage;
+        setHealth(health_ - damage);
     }
 
     /**
