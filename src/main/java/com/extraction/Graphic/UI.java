@@ -65,7 +65,7 @@ public class UI {
     private JButton throwButton;
 
     JPanel dialogBPanel;
-    JButton dialogButton;
+    private JButton dialogButton;
 
     JLabel messageLabel;
 
@@ -533,6 +533,10 @@ public class UI {
 
         dialogButton = createButton("Continue...", textFont, bHandler, "NextDialog");
         dialogBPanel.add(dialogButton, gbc);
+    }
+
+    public void setDialogBText(String text) {
+        dialogButton.setText(text);
     }
 
     private JButton createButton(String initialLabel, Font font, ActionListener handler, String command) {

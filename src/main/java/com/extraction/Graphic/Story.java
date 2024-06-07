@@ -104,8 +104,8 @@ public class Story {
                 fightAlien(nextRoom.getAlien());
                 break;
             case "Torch":
-                ui.dialogButton.setText("Continue...");
-                ui.dialogButton.setActionCommand("NextDialog");
+                ui.setDialogBText("Continue...");
+                ui.setDialogBText("NextDialog");
                 lightOn();
                 break;
             case "ShowItems":
@@ -461,7 +461,7 @@ public class Story {
 
     private void showDialog(String text, String buttonText, String actionCommand) {
         ui.mainTextArea.setText(text);
-        ui.dialogButton.setText(buttonText);
+        ui.setDialogBText(buttonText);
         game.nextPosition0 = actionCommand;
         vm.showDialogScreen();
     }
@@ -480,7 +480,7 @@ public class Story {
     public void fightAlien(Alien alien) {
         fight = new Fight(player, alien, ui, vm, this);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
-        ui.dialogButton.setText("Continue");
+        ui.setDialogBText("Continue");
         game.nextPosition0 = "Room" + nextRow + "_" + nextColumn;
         fight.fight();
     }
