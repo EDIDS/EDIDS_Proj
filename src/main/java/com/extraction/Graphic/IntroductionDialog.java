@@ -4,12 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The IntroductionDialog class represents the dialog shown at the beginning of the game.
+ * It manages a list of dialogues that are displayed in sequence.
+ */
 public class IntroductionDialog {
 
     private List<String> dialogues;
     Iterator<String> iterator;
 
-
+    /**
+     * Constructs a new IntroductionDialog.
+     * Initializes the dialogues list and its iterator.
+     */
     public IntroductionDialog() {
         dialogues = new ArrayList<>();
         initializeDialogues();
@@ -17,6 +24,9 @@ public class IntroductionDialog {
 
     }
 
+    /**
+     * Initializes the dialogues list with the introduction dialogues of the game.
+     */
     public void initializeDialogues() {
         dialogues.add("""
                     You are an operator of the Rainbow team,\s
@@ -63,10 +73,18 @@ public class IntroductionDialog {
                     """);
     }
 
+    /**
+     * Returns an iterator for the dialogues list.
+     * @return An Iterator for the dialogues list.
+     */
     public Iterator<String> getDialogueIterator() {
         return iterator;
     }
 
+    /**
+     * Returns the next dialogue in the sequence.
+     * @return The next dialogue in the sequence.
+     */
     public String nextDialogue() {
         return iterator.next();
     }

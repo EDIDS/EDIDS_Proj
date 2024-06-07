@@ -1,7 +1,10 @@
-package com.stanga.demovulcu.utils;
+package com.extraction.utils;
 
-import androidx.annotation.NonNull;
 
+import com.extraction.aliens.Alien;
+import com.extraction.items.Item;
+import com.extraction.map.Coordinate;
+import com.extraction.map.Room;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -12,10 +15,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.stanga.demovulcu.alien.Alien;
-import com.stanga.demovulcu.item.Item;
-import com.stanga.demovulcu.location.Coordinate;
-import com.stanga.demovulcu.location.Room;
 
 import java.lang.reflect.Type;
 
@@ -35,7 +34,7 @@ public class RoomTypeAdapter implements JsonSerializer<Room>, JsonDeserializer<R
     }
 
     @Override
-    public JsonElement serialize(@NonNull Room room, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(Room room, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("coordinate", room.getCoordinate().toStringSimplified());
         jsonObject.addProperty("title", room.getTitle());
@@ -55,7 +54,7 @@ public class RoomTypeAdapter implements JsonSerializer<Room>, JsonDeserializer<R
     }
 
     @Override
-    public Room deserialize(@NonNull JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Room deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
 
         Coordinate coordinate = Coordinate.fromString(jsonObject.get("coordinate").getAsString());

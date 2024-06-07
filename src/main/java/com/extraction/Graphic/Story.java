@@ -14,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Story class represents the narrative of the game.
+ * It manages the game state, player actions, and game progression.
+ */
 public class Story {
     Game game;
     UI ui;
@@ -35,6 +39,14 @@ public class Story {
 
     Building building;
 
+    /**
+     * Constructs a new Story with the given parameters.
+     * @param game The game instance.
+     * @param ui The UI instance.
+     * @param vm The VisibilityManager instance.
+     * @param building The Building instance.
+     * @param player The Player instance.
+     */
     public Story(Game game, UI ui, VisibilityManager vm, Building building, Player player) {
         this.game = game;
         this.ui = ui;
@@ -43,6 +55,9 @@ public class Story {
         this.player = player;
     }
 
+    /**
+     * Sets up the default game state.
+     */
     public void defaultSetup() {
         startRoom.setIconPath(ui.exitIconPath);
         ui.setIcon(
@@ -51,10 +66,11 @@ public class Story {
                 ui.playerIconPath
         );
         updatePlayerPos();
-        ui.topLabelCol1.setText("HP: " + player.getHealth());
+        ui.setCol1(player.getHealth() + "");
         Weapon weapon = player.getWeapon();
-        if (weapon == null) ui.topLabelCol2.setText("Weapon: Punch");
-        else ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
+        if (weapon == null) ui.setCol2("Punch");
+        else ui.setCol2(player.getWeapon().getType());
+        ui.setCol3(player.getScore() + "");
 
         introduction = new IntroductionDialog();
         ui.mainTextArea.setText(introduction.nextDialogue());
@@ -62,10 +78,18 @@ public class Story {
         ending = new EndingDialog();
 
         ui.setEnableButtons();
+        // Set DialogButton Text when starting new game
 
         game.nextPosition0 = "Introduction";
     }
 
+    /**
+     * Sets the next positions for the player based on the available directions.
+     * @param next1 The next position in the north direction.
+     * @param next2 The next position in the east direction.
+     * @param next3 The next position in the south direction.
+     * @param next4 The next position in the west direction.
+     */
     private void setNextPositions(String next1, String next2, String next3, String next4) {
         game.nextPosition1 = next1;
         game.nextPosition2 = next2;
@@ -73,6 +97,10 @@ public class Story {
         game.nextPosition4 = next4;
     }
 
+    /**
+     * Selects the next position based on the given position string.
+     * @param nextPosition The position string.
+     */
     public void selectPosition(String nextPosition) {
         switch (nextPosition) {
             case "Null":
@@ -101,6 +129,11 @@ public class Story {
             case "Fight":
                 vm.showFightScreen();
                 fightAlien(nextRoom.getAlien());
+                break;
+            case "Torch":
+                ui.setDialogBText("Continue...");
+                ui.setDialogBText("NextDialog");
+                lightOn();
                 break;
             case "ShowItems":
                 showItems();
@@ -162,14 +195,14 @@ public class Story {
         }
     }
 
+    /**
+     * Displays the game map.
+     */
     public void map() {
         vm.showMapScreen();
         updatePlayerPos();
 
-        ui.actionButton1.setText("NORTH");
-        ui.actionButton2.setText("EAST");
-        ui.actionButton3.setText("SOUTH");
-        ui.actionButton4.setText("WEST");
+        ui.setActionBText("NORTH", "EAST", "SOUTH", "WEST");
 
         setNextPositions(
                 building.getAvailableDirections(player.getCurrentRoom_()).contains("North") ?
@@ -187,11 +220,17 @@ public class Story {
         );
     }
 
+    /**
+     * Updates the player's position on the map.
+     */
     private void updatePlayerPos() {
         playerX = player.getCurrentRoom_().getCoordinate().getColumn();
         playerY = player.getCurrentRoom_().getCoordinate().getRow();
     }
 
+    /**
+     * Proceeds to the next room.
+     */
     private void proceed() {
         ui.setIcon(playerY, playerX, player.getCurrentRoom_().getIconPath());
         ui.setIcon(nextRow, nextColumn, ui.playerIconPath);
@@ -203,16 +242,21 @@ public class Story {
         map();
     }
 
+    /**
+     * Checks the current room.
+     */
     public void checkRoom() {
         Room room = building.getRoom(new Coordinate(nextRow, nextColumn).toString());
         room.setIconPath(ui.checkIconPath);
         room.setAlien(null);
     }
 
+    /**
+     * Shows the items in the current room.
+     */
     private void showItems() {
         vm.showTextScreen();
-        ui.exitItemButton.setEnabled(true);
-        ui.throwButton.setEnabled(true);
+        ui.enableForShow();
         List<Item> items = nextRoom.getItems();
         if (items.isEmpty()) proceed();
         StringBuilder str = new StringBuilder("You found:\n");
@@ -221,65 +265,46 @@ public class Story {
 
         String item1, item2, item3, item4;
         try {
-            ui.actionButton1.setText("");
-            ui.actionButton2.setText("");
-            ui.actionButton3.setText("");
-            ui.actionButton4.setText("");
+            ui.setActionBText("", "", "", "");
             ui.setUnenableButtons();
 
             item1 = items.get(0) instanceof Weapon ? ((Weapon) items.get(0)).getType() : items.get(0).getName();
-            ui.actionButton1.setText(item1);
-            ui.actionButton1.setEnabled(true);
-            ui.actionButton1.removeActionListener(ui.bHandler);
-            actionListener1 = addListener(ui.actionButton1, item1);
-            ui.actionButton1.addActionListener(actionListener1);
+            actionListener1 = addListener(ui.getActionButton1(), item1);
+            ui.setActionButtons(ui.getActionButton1(), item1, actionListener1);
 
             item2 = items.get(1) instanceof Weapon ? ((Weapon) items.get(1)).getType() : items.get(1).getName();
-            ui.actionButton2.setText(item2);
-            ui.actionButton2.setEnabled(true);
-            ui.actionButton2.removeActionListener(game.bHandler);
-            actionListener2 = addListener(ui.actionButton2, item2);
-            ui.actionButton2.addActionListener(actionListener2);
+            actionListener2 = addListener(ui.getActionButton2(), item2);
+            ui.setActionButtons(ui.getActionButton2(), item2, actionListener2);
 
             item3 = items.get(2) instanceof Weapon ? ((Weapon) items.get(2)).getType() : items.get(2).getName();
-            ui.actionButton3.setText(item3);
-            ui.actionButton3.setEnabled(true);
-            ui.actionButton3.removeActionListener(game.bHandler);
-            actionListener3 = addListener(ui.actionButton3, item3);
-            ui.actionButton3.addActionListener(actionListener3);
+            actionListener3 = addListener(ui.getActionButton3(), item3);
+            ui.setActionButtons(ui.getActionButton3(), item3, actionListener3);
 
             item4 = items.get(3) instanceof Weapon ? ((Weapon) items.get(3)).getType() : items.get(3).getName();
-            ui.actionButton4.setText(item4);
-            ui.actionButton4.setEnabled(true);
-            ui.actionButton4.removeActionListener(game.bHandler);
-            actionListener4 = addListener(ui.actionButton4, item4);
-            ui.actionButton4.addActionListener(actionListener4);
+            actionListener4 = addListener(ui.getActionButton4(), item4);
+            ui.setActionButtons(ui.getActionButton4(), item4, actionListener4);
 
         } catch (Exception ignore) {
         }
     }
 
+    /**
+     * Exits the item selection screen.
+     */
     public void exitItems() {
-        ui.actionButton1.removeActionListener(actionListener1);
-        ui.actionButton2.removeActionListener(actionListener2);
-        ui.actionButton3.removeActionListener(actionListener3);
-        ui.actionButton4.removeActionListener(actionListener4);
-
-        ui.actionButton1.removeActionListener(ui.bHandler);
-        ui.actionButton2.removeActionListener(ui.bHandler);
-        ui.actionButton3.removeActionListener(ui.bHandler);
-        ui.actionButton4.removeActionListener(ui.bHandler);
-
-        ui.actionButton1.addActionListener(ui.bHandler);
-        ui.actionButton2.addActionListener(ui.bHandler);
-        ui.actionButton3.addActionListener(ui.bHandler);
-        ui.actionButton4.addActionListener(ui.bHandler);
+        ui.resetActionButtons();
 
         ui.setEnableButtons();
 
         proceed();
     }
 
+    /**
+     * Adds an ActionListener to a button for a specific item.
+     * @param b The button to add the ActionListener to.
+     * @param item The item associated with the ActionListener.
+     * @return The ActionListener that was added to the button.
+     */
     private ActionListener addListener(JButton b, String item) {
         return e -> {
             b.setEnabled(false);
@@ -287,16 +312,15 @@ public class Story {
         };
     }
 
+    /**
+     * Throws the items in the current room.
+     */
     public void throwItems() {
         ui.setEnableButtons();
         vm.showTextScreen();
         exitThrow();
-        ui.exitItemButton.setEnabled(false);
-        ui.throwButton.setEnabled(false);
-        ui.actionButton1.setText("");
-        ui.actionButton2.setText("");
-        ui.actionButton3.setText("");
-        ui.actionButton4.setText("");
+        ui.enableForThrow();
+        ui.setActionBText("", "", "", "");
         List<Item> items = new ArrayList<>(player.getBag());
         items.removeIf(item -> item.getName().equals("Torch") || item.getName().equals("Key"));
         if (items.isEmpty()) {
@@ -313,51 +337,41 @@ public class Story {
 
         String item1, item2, item3, item4;
         try {
-//            ui.actionButton1.setText("");
-//            ui.actionButton2.setText("");
-//            ui.actionButton3.setText("");
-//            ui.actionButton4.setText("");
             ui.setUnenableButtons();
 
             item1 = items.get(0).getName();
-            ui.actionButton1.setText(item1);
-            ui.actionButton1.setEnabled(true);
-            ui.actionButton1.removeActionListener(ui.bHandler);
-            actionListener1 = addListener(ui.actionButton1, "Remove" + item1);
-            ui.actionButton1.addActionListener(actionListener1);
+            actionListener1 = addListener(ui.getActionButton1(), "Remove" + item1);
+            ui.setActionButtons(ui.getActionButton1(), item1, actionListener1);
 
             item2 = items.get(1).getName();
-            ui.actionButton2.setText(item2);
-            ui.actionButton2.setEnabled(true);
-            ui.actionButton2.removeActionListener(game.bHandler);
-            actionListener2 = addListener(ui.actionButton2, "Remove" + item2);
-            ui.actionButton2.addActionListener(actionListener2);
+            actionListener2 = addListener(ui.getActionButton2(), "Remove" + item2);
+            ui.setActionButtons(ui.getActionButton2(), item2, actionListener2);
 
             item3 = items.get(2).getName();
-            ui.actionButton3.setText(item3);
-            ui.actionButton3.setEnabled(true);
-            ui.actionButton3.removeActionListener(game.bHandler);
-            actionListener3 = addListener(ui.actionButton3, "Remove" + item3);
-            ui.actionButton3.addActionListener(actionListener3);
+            actionListener3 = addListener(ui.getActionButton3(), "Remove" + item3);
+            ui.setActionButtons(ui.getActionButton3(), item3, actionListener3);
 
             item4 = items.get(3).getName();
-            ui.actionButton4.setText(item4);
-            ui.actionButton4.setEnabled(true);
-            ui.actionButton4.removeActionListener(game.bHandler);
-            actionListener4 = addListener(ui.actionButton4, "Remove" + item4);
-            ui.actionButton4.addActionListener(actionListener4);
+            actionListener4 = addListener(ui.getActionButton4(), "Remove" + item4);
+            ui.setActionButtons(ui.getActionButton4(), item4, actionListener4);
 
         } catch (Exception ignore) {
         }
     }
 
+    /**
+     * Exits the item throwing screen.
+     */
     private void exitThrow() {
-        ui.actionButton1.removeActionListener(actionListener1);
-        ui.actionButton2.removeActionListener(actionListener2);
-        ui.actionButton3.removeActionListener(actionListener3);
-        ui.actionButton4.removeActionListener(actionListener4);
+        ui.resetActionButtons();
     }
 
+    /**
+     * Gets a string representation of the items in a list.
+     * @param items The list of items.
+     * @param str The StringBuilder to append the string representation to.
+     * @return The StringBuilder with the appended string representation.
+     */
     public StringBuilder getItems(List<Item> items, StringBuilder str) {
         for (Item item : items) {
             if (item instanceof Weapon) str.append("- ").append(((Weapon) item).getType()).append("\n");
@@ -366,6 +380,11 @@ public class Story {
         return str;
     }
 
+    /**
+     * Executes an action based on the given item string.
+     * @param item The item string.
+     */
+    // Fix Max Weight - Se la raggiungo non adda ma rimuove dalla stanza
     private void execute(String item) {
         switch (item) {
             case "MedKit":
@@ -396,19 +415,19 @@ public class Story {
             case "REVOLVER":
                 Weapon revolver = new Weapon("REVOLVER");
                 player.addItem(revolver);
-                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
+                ui.setCol2(player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
                 break;
             case "USPSWORM":
                 Weapon usp = new Weapon("USPSWORM");
                 player.addItem(usp);
-                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
+                ui.setCol2(player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
                 break;
             case "AK47":
                 Weapon ak = new Weapon("AK47");
                 player.addItem(ak);
-                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
+                ui.setCol2(player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
                 break;
             case "RemoveMedKit":
@@ -449,7 +468,7 @@ public class Story {
                 break;
             case "RemoveWeapon":
                 player.throwItem("Weapon");
-                ui.topLabelCol2.setText("Weapon: Punch");
+                ui.setCol2("Punch");
                 if (nextRoom.getItems().isEmpty()) {
                     exitItems();
                 } else {
@@ -461,6 +480,11 @@ public class Story {
         }
     }
 
+    /**
+     * Moves to the room at the given coordinates.
+     * @param nextRow The row of the room.
+     * @param nextColumn The column of the room.
+     */
     private void room(int nextRow, int nextColumn) {
         this.nextRow = nextRow;
         this.nextColumn = nextColumn;
@@ -473,16 +497,16 @@ public class Story {
                     showDialog(ending.nextDialogue(), "Continue", "Extraction");
                 }
                 else {
-                    showDialog("Location: " + nextRoom.getDescription() + "\nNOME COMPAGNEROS needs your help!",
+                    showDialog("Location:\n" + nextRoom.getDescription() + "\n\nNOME COMPAGNEROS needs your help!",
                             "Back", "Proceed");
                 }
             } else if (nextRoom == coRoom) {
                 if (player.getKeys() == 2) {
                     checkRoom();
                     hasCo = true;
-                    showDialog("Location: " + nextRoom.getDescription() + "\nYou found NOME COMPAGNEROS, it's time to go back home!",
+                    showDialog("Location:\n" + nextRoom.getDescription() + "\n\nYou found NOME COMPAGNEROS, it's time to go back home!",
                             "Back", "Proceed");
-                    vm.showMessage("You found the Co.", 2000, Color.ORANGE);
+                    vm.showMessage("You found the Co.", 2000, Color.GREEN);
                 } else if (player.getKeys() == 1) {
                     vm.showMessage("You have just one Key, needed another one.", 2500, Color.ORANGE);
                 } else {
@@ -490,30 +514,39 @@ public class Story {
                 }
 
             } else if (nextRoom.getAlien() != null) {
-                showDialog("Location: " + nextRoom.getDescription() + "\nThere is something strange.\nWhat is it!",
+                showDialog("Location:\n" + nextRoom.getDescription() + "\n\nThere is something strange.\nWhat is it!",
                         "Go Closer", "Fight");
             } else if (!nextRoom.getItems().isEmpty()) {
                 if (!nextRoom.getIconPath().equals(ui.checkIconPath)) checkRoom();
-                showDialog("Location: " + nextRoom.getDescription() + "\nOh there are some objects in the Room.",
+                showDialog("Location:\n" + nextRoom.getDescription() + "\n\nOh there are some objects in the Room.",
                         "Watch", "ShowItems");
             } else {
                 if (!nextRoom.getIconPath().equals(ui.checkIconPath)) checkRoom();
-                showDialog("Location: " + nextRoom.getDescription() + "\nNothing interesting here.",
+                showDialog("Location:\n" + nextRoom.getDescription() + "\n\nNothing interesting here.",
                         "Go Ahead", "Proceed");
             }
         } else {
-            showDialog("Location: " + nextRoom.getDescription() + "\nUnfortunately is too dark to see, use the Torch.",
+            showDialog("Location:\n" + nextRoom.getDescription() + "\n\nUnfortunately is too dark to see, use the Torch.",
                     "Use Torch", "Torch");
         }
     }
 
+    /**
+     * Displays a dialog with the given text, button text, and action command.
+     * @param text The dialog text.
+     * @param buttonText The button text.
+     * @param actionCommand The action command.
+     */
     private void showDialog(String text, String buttonText, String actionCommand) {
         ui.mainTextArea.setText(text);
-        ui.dialogButton.setText(buttonText);
+        ui.setDialogBText(buttonText);
         game.nextPosition0 = actionCommand;
         vm.showDialogScreen();
     }
 
+    /**
+     * Turns on the light in the current room.
+     */
     public void lightOn() {
         if (player.findItem("Torch") == null) {
             vm.showMessage("You don't have the Torch", 2000, Color.RED);
@@ -525,10 +558,14 @@ public class Story {
         }
     }
 
+    /**
+     * Fights the alien in the current room.
+     * @param alien The alien to fight.
+     */
     public void fightAlien(Alien alien) {
         fight = new Fight(player, alien, ui, vm, this);
         setNextPositions("Attack", "Leave", "Defend", "Elude");
-        ui.dialogButton.setText("Continue");
+        ui.setDialogBText("Continue");
         game.nextPosition0 = "Room" + nextRow + "_" + nextColumn;
         fight.fight();
     }

@@ -1,43 +1,55 @@
 package com.extraction;
 
 import com.extraction.map.Building;
-import com.extraction.player.PlayerData;
+import com.extraction.player.Player;
 
+/**
+ * The GameSave class represents a saved state of the game.
+ * It contains the player's data, the building, and the title of the game.
+ */
 public class GameSave {
     Building building;
-    PlayerData playerdata;
-    String title;
+    Player playerdata;
 
-    public GameSave(PlayerData playerdata, Building building, String title) {
+    /**
+     * Constructs a new GameSave with the given player data, building, and title.
+     * @param playerdata The player's data.
+     * @param building The building.
+     */
+    public GameSave(Player playerdata, Building building) {
         this.playerdata = playerdata;
         this.building = building;
-        this.title = title;
     }
 
+    /**
+     * Gets the building.
+     * @return The building.
+     */
     public Building getBuilding() {
         return building;
     }
 
-    public PlayerData getPlayer() {
+    /**
+     * Gets the player's data.
+     * @return The player's data.
+     */
+    public Player getPlayer() {
         return playerdata;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
+    /**
+     * Sets the building.
+     * @param building The new building.
+     */
     public void setBuilding(Building building) {
         this.building = building;
     }
 
-    public void setPlayer(PlayerData player) {
+    /**
+     * Sets the player's data.
+     * @param player The new player's data.
+     */
+    public void setPlayer(Player player) {
         this.playerdata = player;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-
-
 }

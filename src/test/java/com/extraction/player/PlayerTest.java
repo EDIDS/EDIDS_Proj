@@ -1,7 +1,6 @@
 package com.extraction.player;
 
 import com.extraction.items.*;
-import com.extraction.Graphic.UI;
 import com.extraction.Graphic.VisibilityManager;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
@@ -16,13 +15,11 @@ import static com.extraction.player.Player.*;
 class PlayerTest {
 
     Player player;
-    UI ui;
     VisibilityManager vm;
 
     @BeforeEach
     void setUp() {
-        vm = new VisibilityManager(ui);
-        player = new Player(ui,vm);
+        player = new Player(vm);
     }
 
     @Test
@@ -33,12 +30,12 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "0", " "} )
     void testNamedPlayerName(String name) {
-        Player named = new Player(name, ui, vm);
+        Player named = new Player(name, vm);
         assertEquals(named.getName(), name);
     }
 
     @Test
-    void testSetWeapon_ThrowWeapon() {
+    void testSetWeapon_throwWeapon() {
         // test setWeapon()
         Weapon weapon = new Weapon("REVOLVER");
         player.setWeapon(weapon);
@@ -80,13 +77,13 @@ class PlayerTest {
         assertEquals(BASE_ATTACK_DAMAGE, attack);
         player.setWeapon(new Weapon("REVOLVER"));
         attack = player.attack();
-        assertTrue(attack >= 20 && attack <= 40);
+        assertTrue(attack >= 10 && attack <= 30);
         player.setWeapon(new Weapon("AK47"));
         attack = player.attack();
-        assertTrue(attack >= 40 && attack <= 60);
+        assertTrue(attack >= 30 && attack <= 50);
         player.setWeapon(new Weapon("USPSWORM"));
         attack = player.attack();
-        assertTrue(attack >= 30 && attack <= 50);
+        assertTrue(attack >= 20 && attack <= 40);
     }
 
     @Test
@@ -110,7 +107,7 @@ class PlayerTest {
 
     @Test
     void testThrowItem() {
-        Key key = new Key();
+        Key key = new Key("code");
         Item item = player.throwItem(key);
         assertNull(item);
         player.addItem(key);

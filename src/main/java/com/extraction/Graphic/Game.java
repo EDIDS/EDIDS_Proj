@@ -8,6 +8,8 @@ import com.extraction.map.Coordinate;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
 import com.extraction.items.*;
+import com.extraction.utils.BuildingTypeAdapter;
+import com.extraction.utils.GameSaveTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -25,6 +27,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Game class is the main class for the game. It sets up the game, creates the UI, and handles user actions.
+ */
 public class Game {
     ButtonsHandler bHandler = new ButtonsHandler();
     UI ui = new UI(bHandler);
@@ -37,15 +42,22 @@ public class Game {
 
     Room room4_2, room4_1, room3_1, room2_1, room2_0, room1_0, room2_2, room1_2, room0_2, room2_3, room1_3, room2_4, room3_4;
 
+    /**
+     * This is the constructor for the Game class. It sets up the game and starts the game loop.
+     * @throws IOException If an I/O error occurs.
+     */
     public Game() throws IOException {
-        ui.homeScreen();
+        ui.homeScreen("Extraction");
         ui.gameScreen();
 
         newGame();
     }
 
+    /**
+     * This method is called to start a new game. It resets the game state and starts a new game.
+     */
     public void newGame() {
-        player = new Player(ui, vm);
+        player = new Player(vm);
         building = new Building();
         story = new Story(this, ui, vm, building, player);
 
@@ -91,8 +103,9 @@ public class Game {
         Weapon ak47 = new Weapon("AK47");
         Weapon uspsworm = new Weapon("USPSWORM");
 
-        room4_1.setAlien(runner);
+        //room4_1.setAlien(runner);
         room4_1.addItem(revolver);
+        room4_1.addItem(key1);
 
         room2_1.addItem(shield);
 
@@ -111,6 +124,8 @@ public class Game {
 
         room3_4.addItem(key2);
 
+        room2_3.setDark(true);
+
         story.startRoom = room4_2;
         player.setCurrentRoom(story.startRoom);
 
@@ -126,6 +141,10 @@ public class Game {
         vm.showHomeScreen();
     }
 
+    /**
+     * This method is called to load a game. It loads the game state from a file and resumes the game.
+     * @param game The name of the game to load.
+     */
     public void loadGame(String game) {
 
     }
@@ -134,15 +153,22 @@ public class Game {
         new Game();
     }
 
+    /**
+     * ButtonsHandler is an inner class that implements ActionListener. It handles all button click events.
+     */
     protected class ButtonsHandler implements ActionListener {
         @Override
+        /**
+         * This method is called whenever a button is clicked. It handles the button click event.
+         * @param e The event that occurred.
+         */
         public void actionPerformed(ActionEvent e) {
             String buttonClicked = e.getActionCommand();
 
             switch (buttonClicked) {
                 case "Exit":
-                    story.exitItems();
-                    ui.titleLabel.setText(ui.title);
+                    ui.resetActionButtons();
+                    ui.resetTitle();
                     newGame();
                     break;
                 case "Save":
@@ -174,11 +200,6 @@ public class Game {
                 case "MedKit":
                     story.fight.heal();
                     break;
-                case "Torch":
-                    ui.dialogButton.setText("Continue...");
-                    ui.dialogButton.setActionCommand("NextDialog");
-                    story.lightOn();
-                    break;
                 case "TNT":
                     story.fight.tnt();
                     break;
@@ -207,23 +228,30 @@ public class Game {
                     JButton button = (JButton) e.getSource();
                     String filename = button.getText();
 
-
-                    Gson gson = new GsonBuilder().registerTypeAdapter(Alien.class, new AlienTypeAdapter()).setPrettyPrinting().create();
+                    Gson gson = new GsonBuilder().registerTypeAdapter(GameSave.class, new GameSaveTypeAdapter()).create();
                     try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + filename)) {
-                        GameSave gameData = new GameSave(null, null, null);
+                        GameSave gameData = new GameSave(null, null);
                         gameData = gson.fromJson(reader, gameData.getClass());
                         System.out.println("Game loaded");
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
 
-
                 default:
 
             }
         }
     }
+
+    /**
+     * loadHandler is an inner class that implements ActionListener. It handles all load game events.
+     */
     protected class loadHandler implements ActionListener {
+
+        /**
+         * This method is called whenever a load game event occurs. It handles the load game event.
+         * @param e The event that occurred.
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             loadGame(e.getActionCommand());
