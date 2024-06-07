@@ -143,7 +143,7 @@ public class Game {
 
             switch (buttonClicked) {
                 case "Exit":
-                    story.exitItems();
+                    ui.resetActionButtons();
                     ui.titleLabel.setText(ui.title);
                     newGame();
                     break;

@@ -62,6 +62,7 @@ public class Story {
         ending = new EndingDialog();
 
         ui.setEnableButtons();
+        // Set DialogButton Text when starting new game
 
         game.nextPosition0 = "Introduction";
     }
@@ -171,10 +172,7 @@ public class Story {
         vm.showMapScreen();
         updatePlayerPos();
 
-        ui.actionButton1.setText("NORTH");
-        ui.actionButton2.setText("EAST");
-        ui.actionButton3.setText("SOUTH");
-        ui.actionButton4.setText("WEST");
+        ui.setActionBText("NORTH", "EAST", "SOUTH", "WEST");
 
         setNextPositions(
                 building.getAvailableDirections(player.getCurrentRoom_()).contains("North") ?
@@ -226,59 +224,31 @@ public class Story {
 
         String item1, item2, item3, item4;
         try {
-            ui.actionButton1.setText("");
-            ui.actionButton2.setText("");
-            ui.actionButton3.setText("");
-            ui.actionButton4.setText("");
+            ui.setActionBText("", "", "", "");
             ui.setUnenableButtons();
 
             item1 = items.get(0) instanceof Weapon ? ((Weapon) items.get(0)).getType() : items.get(0).getName();
-            ui.actionButton1.setText(item1);
-            ui.actionButton1.setEnabled(true);
-            ui.actionButton1.removeActionListener(ui.bHandler);
-            actionListener1 = addListener(ui.actionButton1, item1);
-            ui.actionButton1.addActionListener(actionListener1);
+            actionListener1 = addListener(ui.getActionButton1(), item1);
+            ui.setActionButtons(ui.getActionButton1(), item1, actionListener1);
 
             item2 = items.get(1) instanceof Weapon ? ((Weapon) items.get(1)).getType() : items.get(1).getName();
-            ui.actionButton2.setText(item2);
-            ui.actionButton2.setEnabled(true);
-            ui.actionButton2.removeActionListener(game.bHandler);
-            actionListener2 = addListener(ui.actionButton2, item2);
-            ui.actionButton2.addActionListener(actionListener2);
+            actionListener2 = addListener(ui.getActionButton2(), item2);
+            ui.setActionButtons(ui.getActionButton2(), item2, actionListener2);
 
             item3 = items.get(2) instanceof Weapon ? ((Weapon) items.get(2)).getType() : items.get(2).getName();
-            ui.actionButton3.setText(item3);
-            ui.actionButton3.setEnabled(true);
-            ui.actionButton3.removeActionListener(game.bHandler);
-            actionListener3 = addListener(ui.actionButton3, item3);
-            ui.actionButton3.addActionListener(actionListener3);
+            actionListener3 = addListener(ui.getActionButton3(), item3);
+            ui.setActionButtons(ui.getActionButton3(), item3, actionListener3);
 
             item4 = items.get(3) instanceof Weapon ? ((Weapon) items.get(3)).getType() : items.get(3).getName();
-            ui.actionButton4.setText(item4);
-            ui.actionButton4.setEnabled(true);
-            ui.actionButton4.removeActionListener(game.bHandler);
-            actionListener4 = addListener(ui.actionButton4, item4);
-            ui.actionButton4.addActionListener(actionListener4);
+            actionListener4 = addListener(ui.getActionButton4(), item4);
+            ui.setActionButtons(ui.getActionButton4(), item4, actionListener4);
 
         } catch (Exception ignore) {
         }
     }
 
     public void exitItems() {
-        ui.actionButton1.removeActionListener(actionListener1);
-        ui.actionButton2.removeActionListener(actionListener2);
-        ui.actionButton3.removeActionListener(actionListener3);
-        ui.actionButton4.removeActionListener(actionListener4);
-
-        ui.actionButton1.removeActionListener(ui.bHandler);
-        ui.actionButton2.removeActionListener(ui.bHandler);
-        ui.actionButton3.removeActionListener(ui.bHandler);
-        ui.actionButton4.removeActionListener(ui.bHandler);
-
-        ui.actionButton1.addActionListener(ui.bHandler);
-        ui.actionButton2.addActionListener(ui.bHandler);
-        ui.actionButton3.addActionListener(ui.bHandler);
-        ui.actionButton4.addActionListener(ui.bHandler);
+        ui.resetActionButtons();
 
         ui.setEnableButtons();
 
@@ -298,10 +268,7 @@ public class Story {
         exitThrow();
         ui.exitRoomButton.setEnabled(false);
         ui.throwButton.setEnabled(false);
-        ui.actionButton1.setText("");
-        ui.actionButton2.setText("");
-        ui.actionButton3.setText("");
-        ui.actionButton4.setText("");
+        ui.setActionBText("", "", "", "");
         List<Item> items = new ArrayList<>(player.getBag());
         items.removeIf(item -> item.getName().equals("Torch") || item.getName().equals("Key"));
         if (items.isEmpty()) {
@@ -318,49 +285,30 @@ public class Story {
 
         String item1, item2, item3, item4;
         try {
-//            ui.actionButton1.setText("");
-//            ui.actionButton2.setText("");
-//            ui.actionButton3.setText("");
-//            ui.actionButton4.setText("");
             ui.setUnenableButtons();
 
             item1 = items.get(0).getName();
-            ui.actionButton1.setText(item1);
-            ui.actionButton1.setEnabled(true);
-            ui.actionButton1.removeActionListener(ui.bHandler);
-            actionListener1 = addListener(ui.actionButton1, "Remove" + item1);
-            ui.actionButton1.addActionListener(actionListener1);
+            actionListener1 = addListener(ui.getActionButton1(), "Remove" + item1);
+            ui.setActionButtons(ui.getActionButton1(), item1, actionListener1);
 
             item2 = items.get(1).getName();
-            ui.actionButton2.setText(item2);
-            ui.actionButton2.setEnabled(true);
-            ui.actionButton2.removeActionListener(game.bHandler);
-            actionListener2 = addListener(ui.actionButton2, "Remove" + item2);
-            ui.actionButton2.addActionListener(actionListener2);
+            actionListener2 = addListener(ui.getActionButton2(), "Remove" + item2);
+            ui.setActionButtons(ui.getActionButton2(), item2, actionListener2);
 
             item3 = items.get(2).getName();
-            ui.actionButton3.setText(item3);
-            ui.actionButton3.setEnabled(true);
-            ui.actionButton3.removeActionListener(game.bHandler);
-            actionListener3 = addListener(ui.actionButton3, "Remove" + item3);
-            ui.actionButton3.addActionListener(actionListener3);
+            actionListener3 = addListener(ui.getActionButton3(), "Remove" + item3);
+            ui.setActionButtons(ui.getActionButton3(), item3, actionListener3);
 
             item4 = items.get(3).getName();
-            ui.actionButton4.setText(item4);
-            ui.actionButton4.setEnabled(true);
-            ui.actionButton4.removeActionListener(game.bHandler);
-            actionListener4 = addListener(ui.actionButton4, "Remove" + item4);
-            ui.actionButton4.addActionListener(actionListener4);
+            actionListener4 = addListener(ui.getActionButton4(), "Remove" + item4);
+            ui.setActionButtons(ui.getActionButton4(), item4, actionListener4);
 
         } catch (Exception ignore) {
         }
     }
 
     private void exitThrow() {
-        ui.actionButton1.removeActionListener(actionListener1);
-        ui.actionButton2.removeActionListener(actionListener2);
-        ui.actionButton3.removeActionListener(actionListener3);
-        ui.actionButton4.removeActionListener(actionListener4);
+        ui.resetActionButtons();
     }
 
     public StringBuilder getItems(List<Item> items, StringBuilder str) {

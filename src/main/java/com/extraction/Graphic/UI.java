@@ -55,10 +55,10 @@ public class UI {
     JButton itemButton2;
 
     JPanel actionPanel;
-    public JButton actionButton1;
-    public JButton actionButton2;
-    public JButton actionButton3;
-    public JButton actionButton4;
+    private JButton actionButton1;
+    private JButton actionButton2;
+    private JButton actionButton3;
+    private JButton actionButton4;
 
     JPanel exitRoomBPanel;
     JButton exitRoomButton;
@@ -303,7 +303,7 @@ public class UI {
         mapSpacePanel.add(mapPanel);
     }
 
-    private JPanel createRoom (String text, Font font) {
+    private JPanel createRoom(String text, Font font) {
         JPanel room = new JPanel();
         room.setLayout(new GridBagLayout());
         room.setBackground(Color.LIGHT_GRAY);
@@ -408,6 +408,56 @@ public class UI {
 
         actionButton4 = createButton("WEST", textFont, bHandler, "BottomRight");
         actionPanel.add(actionButton4, gbc);
+    }
+
+    public void resetActionButtons() {
+        for (ActionListener al : actionButton1.getActionListeners()) {
+            actionButton1.removeActionListener(al);
+        }
+        for (ActionListener al : actionButton2.getActionListeners()) {
+            actionButton2.removeActionListener(al);
+        }
+        for (ActionListener al : actionButton3.getActionListeners()) {
+            actionButton3.removeActionListener(al);
+        }
+        for (ActionListener al : actionButton4.getActionListeners()) {
+            actionButton4.removeActionListener(al);
+        }
+
+        actionButton1.addActionListener(bHandler);
+        actionButton2.addActionListener(bHandler);
+        actionButton3.addActionListener(bHandler);
+        actionButton4.addActionListener(bHandler);
+    }
+
+    public void setActionBText(String text1, String text2, String text3, String text4) {
+        actionButton1.setText(text1);
+        actionButton2.setText(text2);
+        actionButton3.setText(text3);
+        actionButton4.setText(text4);
+    }
+
+    public void setActionButtons(JButton button, String text, ActionListener al) {
+        button.setText(text);
+        button.setEnabled(true);
+        button.removeActionListener(bHandler);
+        button.addActionListener(al);
+    }
+
+    public JButton getActionButton1() {
+        return actionButton1;
+    }
+
+    public JButton getActionButton2() {
+        return actionButton2;
+    }
+
+    public JButton getActionButton3() {
+        return actionButton3;
+    }
+
+    public JButton getActionButton4() {
+        return actionButton4;
     }
 
     public void setMyTurnButton() {

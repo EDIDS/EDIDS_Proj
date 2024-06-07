@@ -30,10 +30,7 @@ public class Fight {
     public void fight() {
         ui.mainTextArea.setText("You have encountered a " + alien.getName() + "!");
 
-        ui.actionButton1.setText("Attack");
-        ui.actionButton2.setText("Leave");
-        ui.actionButton3.setText("Shield");
-        ui.actionButton4.setText("Elude");
+        ui.setActionBText("Attack", "Leave", "Shield", "Elude");
 
         playerTurn();
     }
