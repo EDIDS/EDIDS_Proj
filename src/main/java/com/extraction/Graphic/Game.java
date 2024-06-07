@@ -8,6 +8,8 @@ import com.extraction.map.Coordinate;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
 import com.extraction.items.*;
+import com.extraction.utils.BuildingTypeAdapter;
+import com.extraction.utils.GameSaveTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -226,16 +228,14 @@ public class Game {
                     JButton button = (JButton) e.getSource();
                     String filename = button.getText();
 
-
-                    Gson gson = new GsonBuilder().registerTypeAdapter(Alien.class, new AlienTypeAdapter()).setPrettyPrinting().create();
+                    Gson gson = new GsonBuilder().registerTypeAdapter(GameSave.class, new GameSaveTypeAdapter()).create();
                     try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + filename)) {
-                        GameSave gameData = new GameSave(null, null, null);
+                        GameSave gameData = new GameSave(null, null);
                         gameData = gson.fromJson(reader, gameData.getClass());
                         System.out.println("Game loaded");
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-
 
                 default:
 

@@ -60,6 +60,13 @@ public class Coordinate {
         this.row = row;
     }
 
+    public static Coordinate fromString(String coordinateString) {
+        String[] parts = coordinateString.split(",");
+        int x = Integer.parseInt(parts[0].trim());
+        int y = Integer.parseInt(parts[1].trim());
+        return new Coordinate(x, y);
+    }
+
     /**
      * Checks if this coordinate is equal to another object.
      * The other object is considered equal if it is also a Coordinate and has the same row and column values.
@@ -86,6 +93,10 @@ public class Coordinate {
     @Override
     public String toString() {
         return "(" + row + ", " + column + ")";
+    }
+
+    public String toStringSimplified() {
+        return row + ", " + column;
     }
 }
 

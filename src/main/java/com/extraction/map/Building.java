@@ -82,4 +82,8 @@ public class Building {
 
         return availableDirections.toString();
     }
+
+    public Map<String, Room> getRoomsEntry() {
+        return rooms;
+    }
 }

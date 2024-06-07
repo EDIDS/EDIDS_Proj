@@ -24,12 +24,19 @@ public class Player {
     private List<Item> bag_;
     private double currentWeight_ = 0;
     private Room currentRoom_;
-    private Weapon weapon;
-    private Shield shield;
+    private Weapon weapon = null;
+    private Shield shield = null;
     private int score_ = 0;
     private int numKeys;
     private final VisibilityManager vm_;
 
+    public Player(String name, int health, Room currentRoom, VisibilityManager vm) {
+        name_ = name;
+        health_ = health;
+        bag_ = new ArrayList<>();
+        currentRoom_ = currentRoom;
+        vm_ = vm;
+    }
 
     /**
      * Constructor for Player class with VisibilityManager parameters.
