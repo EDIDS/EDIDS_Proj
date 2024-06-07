@@ -1,7 +1,7 @@
-package com.stanga.demovulcu.utils;
+package com.extraction.utils;
 
-import androidx.annotation.NonNull;
 
+import com.extraction.items.Item;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -9,15 +9,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.stanga.demovulcu.alien.Clicker;
-import com.stanga.demovulcu.item.Item;
 
 import java.lang.reflect.Type;
 
 public class ItemTypeAdapter implements JsonSerializer<Item>, JsonDeserializer<Item> {
 
     @Override
-    public JsonElement serialize(@NonNull Item item, Type typeOfItem, @NonNull JsonSerializationContext context) {
+    public JsonElement serialize(Item item, Type typeOfItem, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", item.getClass().getSimpleName());
         jsonObject.add("properties", context.serialize(item));
@@ -25,7 +23,7 @@ public class ItemTypeAdapter implements JsonSerializer<Item>, JsonDeserializer<I
     }
 
     @Override
-    public Item deserialize(@NonNull JsonElement json, Type typeOfT, @NonNull JsonDeserializationContext context) throws JsonParseException {
+    public Item deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
         JsonElement properties = jsonObject.get("properties");
@@ -38,9 +36,8 @@ public class ItemTypeAdapter implements JsonSerializer<Item>, JsonDeserializer<I
         }
     }
 
-    @NonNull
     private Class<? extends Item> getClassForType(String type) throws ClassNotFoundException {
-        String className = "com.stanga.demovulcu.item." + type;
+        String className = "com.extraction.items." + type;
         return Class.forName(className).asSubclass(Item.class);
     }
 }

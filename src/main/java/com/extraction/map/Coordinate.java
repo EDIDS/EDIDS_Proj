@@ -30,6 +30,13 @@ public class Coordinate {
         this.row = row;
     }
 
+    public static Coordinate fromString(String coordinateString) {
+        String[] parts = coordinateString.split(",");
+        int x = Integer.parseInt(parts[0].trim());
+        int y = Integer.parseInt(parts[1].trim());
+        return new Coordinate(x, y);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,6 +52,10 @@ public class Coordinate {
     @Override
     public String toString() {
         return "(" + row + ", " + column + ")";
+    }
+
+    public String toStringSimplified() {
+        return row + ", " + column;
     }
 }
 

@@ -1,43 +1,30 @@
 package com.extraction;
 
 import com.extraction.map.Building;
-import com.extraction.player.PlayerData;
+import com.extraction.player.Player;
 
 public class GameSave {
     Building building;
-    PlayerData playerdata;
-    String title;
+    Player playerdata;
 
-    public GameSave(PlayerData playerdata, Building building, String title) {
+    public GameSave(Player playerdata, Building building) {
         this.playerdata = playerdata;
         this.building = building;
-        this.title = title;
     }
 
     public Building getBuilding() {
         return building;
     }
 
-    public PlayerData getPlayer() {
+    public Player getPlayer() {
         return playerdata;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public void setBuilding(Building building) {
         this.building = building;
     }
 
-    public void setPlayer(PlayerData player) {
+    public void setPlayer(Player player) {
         this.playerdata = player;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-
-
 }

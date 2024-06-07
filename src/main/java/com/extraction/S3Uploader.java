@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.model.*;
 import com.extraction.map.Building;
 import com.extraction.player.Player;
 import com.extraction.player.PlayerData;
+import com.extraction.utils.GameSaveTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,7 +22,7 @@ import java.util.Map;
 public class S3Uploader {
     private String bucketName;
     private AmazonS3 s3Client;
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private Gson gson = new GsonBuilder().registerTypeAdapter(GameSave.class, new GameSaveTypeAdapter()).setPrettyPrinting().create();
 
     public S3Uploader(String profile, String region, String bucketName) throws IOException {
         Map<String, String> awsCredentials = AwsConfigReader.readAwsCredentials(profile);
@@ -71,7 +72,7 @@ public class S3Uploader {
 
             // Create a map to hold both Player and Building objects
 
-            GameSave gameSave = new GameSave(new PlayerData(player), building, "save" + newSaveNumber);
+            GameSave gameSave = new GameSave(player, building);
 
 
             // Convert the map to JSON and write it to the file

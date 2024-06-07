@@ -21,19 +21,29 @@ public class Player {
     private List<Item> bag_;
     private double currentWeight_ = 0;
     private Room currentRoom_;
-    private Weapon weapon;
-    private Shield shield;
+    private Weapon weapon = null;
+    private Shield shield = null;
     private int score_;
     private int numKeys;
     private final UI ui_;
     private final VisibilityManager vm_;
 
+    public Player(String name, int health, Room currentRoom, UI ui, VisibilityManager vm) {
+        name_ = name;
+        health_ = health;
+        bag_ = new ArrayList<Item>();
+        currentRoom_ = currentRoom;
+        ui_ = ui;
+        vm_ = vm;
+
+    }
 
     /**
      * Constructor for Player class with UI and VisibilityManager parameters.
      * @param ui User Interface for the game.
      * @param vm Visibility Manager for the game.
      */
+
     public Player(UI ui, VisibilityManager vm) {
         name_ = NO_NAME;
         health_ = FULL_HEALTH;
