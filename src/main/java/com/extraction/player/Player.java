@@ -8,6 +8,10 @@ import com.extraction.Graphic.VisibilityManager;
 import com.extraction.items.*;
 import com.extraction.map.Room;
 
+/**
+ * The Player class represents a player in the game.
+ * It contains the player's health, name, bag of items, current weight, current room, weapon, shield, score, number of keys, UI, and VisibilityManager.
+ */
 public class Player {
 
     public static final int FULL_HEALTH = 100;
@@ -50,58 +54,118 @@ public class Player {
     }
 
     /**
-     * Getter e setter (per json)
+     * Gets the player's health.
+     * @return The player's health.
      */
-
     public int getHealth() { return health_; }
 
+    /**
+     * Sets the player's health.
+     * @param health The new health for the player.
+     */
     public void setHealth(int health) {
         health_ = health;
     }
 
+    /**
+     * Gets the player's name.
+     * @return The player's name.
+     */
     public String getName() { return name_; }
 
+    /**
+     * Sets the player's name.
+     * @param name_ The new name for the player.
+     */
     public void setName(String name_)
     {
         this.name_ = name_;
     }
 
+    /**
+     * Gets the player's bag of items.
+     * @return The player's bag of items.
+     */
     public List<Item> getBag() {
         return bag_;
     }
 
+    /**
+     * Sets the player's bag of items.
+     * @param bag The new bag of items for the player.
+     */
     public void setBag(List<Item> bag) {
         this.bag_ = bag;
     }
 
+    /**
+     * Gets the player's current weight.
+     * @return The player's current weight.
+     */
     public double getCurrentWeight_() { return currentWeight_; }
 
+    /**
+     * Sets the player's current weight.
+     * @param currentWeight The new current weight for the player.
+     */
     public void setCurrentWeight_(double currentWeight) {
         currentWeight_ = currentWeight;
     }
 
+    /**
+     * Gets the player's current room.
+     * @return The player's current room.
+     */
     public Room getCurrentRoom_() {
         return currentRoom_;
     }
 
+    /**
+     * Sets the player's current room.
+     * @param currentRoom The new current room for the player.
+     */
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom_ = currentRoom;
     }
 
+    /**
+     * Gets the player's score.
+     * @return The player's score.
+     */
     public int getScore() {
         return score_;
     }
 
+    /**
+     * Sets the player's score.
+     * @param score The new score for the player.
+     */
     public void setScore(int score) {
         score_ = score;
     }
 
+    /**
+     * Gets the player's weapon.
+     * @return The player's weapon.
+     */
     public Weapon getWeapon() { return weapon; }
 
+    /**
+     * Gets the player's shield.
+     * @return The player's shield.
+     */
     public Shield getShield() { return shield; }
 
+    /**
+     * Gets the player's number of keys.
+     * @return The player's number of keys.
+     */
     public int getKeys() { return numKeys; }
 
+    /**
+     * Sets the player's weapon.
+     * @param newWeapon The new weapon for the player.
+     */
     public void setWeapon(Weapon newWeapon) {
         double newWeight = currentWeight_ + newWeapon.getWeight();
         if (this.hasWeapon()) {
@@ -116,6 +180,10 @@ public class Player {
         }
     }
 
+    /**
+     * Sets the player's shield.
+     * @param newShield The new shield for the player.
+     */
     public void setShield(Shield newShield) {
         double newWeight = currentWeight_ + newShield.getWeight();
         if (!this.hasShield()) {

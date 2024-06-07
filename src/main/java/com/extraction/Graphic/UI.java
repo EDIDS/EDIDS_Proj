@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+/**
+ * The UI class represents the user interface of the game.
+ * It manages the game window, panels, buttons, and other UI components.
+ */
 public class UI {
     private JFrame window;
     private final GridBagConstraints gbc = new GridBagConstraints();
@@ -68,11 +72,18 @@ public class UI {
 
     private JLabel messageLabel;
 
+    /**
+     * Constructs a new UI with the given ButtonsHandler.
+     * @param bHandler The ButtonsHandler instance.
+     */
     protected UI(Game.ButtonsHandler bHandler) {
         this.bHandler = bHandler;
     }
 
     // Home GUI
+    /**
+     * Sets up the home screen of the game.
+     */
     public void homeScreen(String gameTitle) {
         window = new JFrame();
         window.setTitle("EDIDS_Proj");
@@ -103,6 +114,9 @@ public class UI {
         window.setVisible(true);
     }
 
+    /**
+     * Creates a menu for the game.
+     */
     private void createMenu() {
         menuBar = new JMenuBar();
         menu = new JMenu("Menu");
@@ -122,6 +136,9 @@ public class UI {
         menuBar.add(menu);
     }
 
+    /**
+     * Creates a menu for the game.
+     */
     private void createTitlePanel(String title) {
         // Title Panel
         titlePanel = new JPanel();
@@ -144,6 +161,9 @@ public class UI {
         titleLabel.setText(title);
     }
 
+    /**
+     * Creates a start panel for the game.
+     */
     private void createStartPanel() {
         // Start Button Panel
         startPanel = new JPanel();
@@ -159,6 +179,9 @@ public class UI {
         startPanel.add(loadButton, gbc);
     }
 
+    /**
+     * Creates a load panel for the game.
+     */
     public void createLoadPanel() {
         loadPanel = new JPanel();
         loadPanel.setBounds(50, 50, 685, 500);
@@ -177,6 +200,10 @@ public class UI {
         loadPanel.add(scroll);
     }
 
+    /**
+     * Fills the load list with saved games.
+     * @param panel The panel to add the saved games to.
+     */
     private void fillLoadList(JPanel panel) {
         /*for (int i = 0; i < 15; i++) {
             JPanel p = new JPanel();
@@ -213,6 +240,9 @@ public class UI {
     }
 
     // Game GUI
+    /**
+     * Sets up the game screen of the game.
+     */
     public void gameScreen() {
         createTopBarPanel();
         createMapPanel();
@@ -230,10 +260,12 @@ public class UI {
         bodyPanel.add(exitRoomBPanel);
         bodyPanel.add(actionPanel);
         bodyPanel.add(dialogBPanel);
-
         window.add(messageLabel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Creates a top bar panel for the game.
+     */
     private void createTopBarPanel() {
         // Top Bar Panel
         topPanel = new JPanel();
@@ -273,12 +305,18 @@ public class UI {
         topLabelCol3.setText("Score: " + text);
     }
 
+    /**
+     * Creates a new map for the game.
+     */
     public void newMap() {
         bodyPanel.remove(mapSpacePanel);
         createMapPanel();
         bodyPanel.add(mapSpacePanel);
     }
 
+    /**
+     * Creates a map panel for the game.
+     */
     private void createMapPanel() {
         mapSpacePanel = new JPanel();
         mapSpacePanel.setLayout(new GridBagLayout());
@@ -319,7 +357,13 @@ public class UI {
         mapSpacePanel.add(mapPanel);
     }
 
-    private JPanel createRoom(String text, Font font) {
+    /**
+     * Creates a room for the game map.
+     * @param text The text to display in the room.
+     * @param font The font to use for the text.
+     * @return The created room.
+     */
+    private JPanel createRoom (String text, Font font) {
         JPanel room = new JPanel();
         room.setLayout(new GridBagLayout());
         room.setBackground(Color.LIGHT_GRAY);
@@ -338,6 +382,12 @@ public class UI {
         return room;
     }
 
+    /**
+     * Sets the icon for a room on the map.
+     * @param row The row of the room.
+     * @param col The column of the room.
+     * @param iconPath The path of the icon.
+     */
     public void setIcon(int row, int col, String iconPath) {
         try {
             //ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource(iconPath));
@@ -357,6 +407,9 @@ public class UI {
 
     }
 
+    /**
+     * Creates a main text panel for the game.
+     */
     private void createMainTextPanel() {
         // Main Text Panel
         mainTextPanel = new JPanel();
@@ -375,6 +428,9 @@ public class UI {
         mainTextPanel.add(mainTextArea);
     }
 
+    /**
+     * Creates an items panel for the game.
+     */
     private void createItemsPanel() {
         //Items Panel
         itemsPanel = new JPanel();
@@ -390,6 +446,9 @@ public class UI {
         itemsPanel.add(itemButton2, gbc);
     }
 
+    /**
+     * Creates an exit items button panel for the game.
+     */
     private void createExitRoomButtonPanel() {
         //Exit Items Button Panel
         exitRoomBPanel = new JPanel();
@@ -415,6 +474,9 @@ public class UI {
         throwButton.setEnabled(false);
     }
 
+    /**
+     * Creates an action buttons panel for the game.
+     */
     private void createActionButtonsPanel() {
         //Action Buttons Panel
         actionPanel = new JPanel();
@@ -486,6 +548,9 @@ public class UI {
         return actionButton4;
     }
 
+    /**
+     * Sets the buttons for the player's turn.
+     */
     public void setMyTurnButton() {
         actionButton1.setEnabled(true);
         actionButton2.setEnabled(true);
@@ -495,6 +560,9 @@ public class UI {
         itemButton2.setEnabled(true);
     }
 
+    /**
+     * Sets the buttons for the alien's turn.
+     */
     public void setAlienTurnButton() {
         actionButton1.setEnabled(false);
         actionButton2.setEnabled(false);
@@ -504,6 +572,9 @@ public class UI {
         itemButton2.setEnabled(false);
     }
 
+    /**
+     * Enables all buttons.
+     */
     public void setEnableButtons() {
         actionButton1.setEnabled(true);
         actionButton2.setEnabled(true);
@@ -513,6 +584,9 @@ public class UI {
         itemButton2.setEnabled(true);
     }
 
+    /**
+     * Disables all buttons.
+     */
     public void setUnenableButtons() {
         actionButton1.setEnabled(false);
         actionButton2.setEnabled(false);
@@ -522,6 +596,9 @@ public class UI {
         itemButton2.setEnabled(false);
     }
 
+    /**
+     * Creates a dialog buttons panel for the game.
+     */
     private void createDialogButtonsPanel() {
         //Dialog Button Panel
         dialogBPanel = new JPanel();
@@ -538,6 +615,14 @@ public class UI {
         dialogButton.setText(text);
     }
 
+    /**
+     * Creates a button for the game.
+     * @param initialLabel The initial label for the button.
+     * @param font The font to use for the button.
+     * @param handler The action listener for the button.
+     * @param command The action command for the button.
+     * @return The created button.
+     */
     private JButton createButton(String initialLabel, Font font, ActionListener handler, String command) {
         JButton button = new JButton(initialLabel);
         button.setBackground(background);
@@ -550,6 +635,9 @@ public class UI {
         return button;
     }
 
+    /**
+     * Creates a message label for the game.
+     */
     private void createMessageLabel() {
         messageLabel = new JLabel();
         messageLabel.setFont(new Font("Arial", Font.PLAIN, 18));
