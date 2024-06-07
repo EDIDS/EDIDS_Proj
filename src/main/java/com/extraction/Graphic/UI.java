@@ -27,22 +27,22 @@ public class UI {
 
     JPanel startPanel;
     private JButton startButton;
-    private Font startFont = new Font("Serif", Font.BOLD, 40);
+    private final Font startFont = new Font("Serif", Font.BOLD, 40);
 
-    JButton loadButton;
-    Font loadFont = new Font("Serif", Font.BOLD, 40);
+    private JButton loadButton;
+    private final Font loadFont = new Font("Serif", Font.BOLD, 40);
 
-    JScrollPane scroll;
+    private JScrollPane scroll;
     JPanel loadPanel;
 
     JPanel topPanel;
-    JLabel topLabelCol1;
-    JLabel topLabelCol2;
-    JLabel topLabelCol3;
+    private JLabel topLabelCol1;
+    private JLabel topLabelCol2;
+    private JLabel topLabelCol3;
 
     JPanel mapSpacePanel;
-    JPanel mapPanel;
-    JPanel[][] grid;
+    private JPanel mapPanel;
+    private JPanel[][] grid;
     String playerIconPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/Graphic/imgs/user.png";
     String checkIconPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/Graphic/imgs/check-mark.png";
     String exitIconPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/Graphic/imgs/logout.png";
@@ -51,8 +51,8 @@ public class UI {
     public JTextArea mainTextArea;
 
     JPanel itemsPanel;
-    JButton itemButton1;
-    JButton itemButton2;
+    private JButton itemButton1;
+    private JButton itemButton2;
 
     JPanel actionPanel;
     private JButton actionButton1;
@@ -263,7 +263,15 @@ public class UI {
     }
 
     public void setCol1(String text) {
-        topLabelCol1.setText(text);
+        topLabelCol1.setText("HP: " + text);
+    }
+
+    public void setCol2(String text) {
+        topLabelCol1.setText("Weapon: " + text);
+    }
+
+    public void setCol3(String text) {
+        topLabelCol1.setText("Score: " + text);
     }
 
     public void newMap() {

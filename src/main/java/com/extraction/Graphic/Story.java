@@ -51,10 +51,10 @@ public class Story {
                 ui.playerIconPath
         );
         updatePlayerPos();
-        ui.topLabelCol1.setText("HP: " + player.getHealth());
+        ui.setCol1(player.getHealth() + "");
         Weapon weapon = player.getWeapon();
-        if (weapon == null) ui.topLabelCol2.setText("Weapon: Punch");
-        else ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
+        if (weapon == null) ui.setCol2("Punch");
+        else ui.setCol2(player.getWeapon().getType());
 
         introduction = new IntroductionDialog();
         ui.mainTextArea.setText(introduction.nextDialogue());
@@ -350,19 +350,19 @@ public class Story {
             case "REVOLVER":
                 Weapon revolver = new Weapon("REVOLVER");
                 player.addItem(revolver);
-                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
+                ui.setCol2(player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
                 break;
             case "USPSWORM":
                 Weapon usp = new Weapon("USPSWORM");
                 player.addItem(usp);
-                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
+                ui.setCol2(player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
                 break;
             case "AK47":
                 Weapon ak = new Weapon("AK47");
                 player.addItem(ak);
-                ui.topLabelCol2.setText("Weapon: " + player.getWeapon().getType());
+                ui.setCol2(player.getWeapon().getType());
                 nextRoom.removeItem("Weapon");
                 break;
             case "RemoveMedKit":
@@ -403,7 +403,7 @@ public class Story {
                 break;
             case "RemoveWeapon":
                 player.throwItem("Weapon");
-                ui.topLabelCol2.setText("Weapon: Punch");
+                ui.setCol2("Punch");
                 if (nextRoom.getItems().isEmpty()) {
                     exitItems();
                 } else {
