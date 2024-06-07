@@ -41,7 +41,7 @@ public class PlayerTypeAdapter implements JsonSerializer<Player>, JsonDeserializ
         int score = jsonObject.get("score").getAsInt();
         //andrebbe fatta una verifica ma ce ne sbattiamo
 
-        Player player = new Player(name, health, currentRoom, null, null);
+        Player player = new Player(name, health, currentRoom, null);
         player.setBag(bag);
         player.setCurrentWeight_(currentWeight);
         player.setScore(score);

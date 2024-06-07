@@ -28,7 +28,7 @@ public class VisibilityManager {
         ui.mapSpacePanel.setVisible(false);
         ui.mainTextPanel.setVisible(false);
         ui.itemsPanel.setVisible(false);
-        ui.exitItemBPanel.setVisible(false);
+        ui.exitRoomBPanel.setVisible(false);
         ui.actionPanel.setVisible(false);
         ui.dialogBPanel.setVisible(false);
     }
