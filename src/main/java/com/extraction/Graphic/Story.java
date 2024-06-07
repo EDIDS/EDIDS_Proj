@@ -55,6 +55,7 @@ public class Story {
         Weapon weapon = player.getWeapon();
         if (weapon == null) ui.setCol2("Punch");
         else ui.setCol2(player.getWeapon().getType());
+        ui.setCol3(player.getScore() + "");
 
         introduction = new IntroductionDialog();
         ui.mainTextArea.setText(introduction.nextDialogue());

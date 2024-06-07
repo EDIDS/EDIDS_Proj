@@ -67,7 +67,7 @@ public class UI {
     JPanel dialogBPanel;
     private JButton dialogButton;
 
-    JLabel messageLabel;
+    private JLabel messageLabel;
 
     protected UI(Game.ButtonsHandler bHandler) {
         this.bHandler = bHandler;
@@ -556,5 +556,15 @@ public class UI {
         messageLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         messageLabel.setForeground(Color.WHITE);
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+    public void setMessageVisible(String message, Color borderColor) {
+        messageLabel.setText(message); // Imposta il messaggio
+        messageLabel.setBorder(BorderFactory.createLineBorder(borderColor));
+    }
+
+    public void setMessageNotVisible() {
+        messageLabel.setText(""); // Cancella il messaggio
+        messageLabel.setBorder(null);
     }
 }

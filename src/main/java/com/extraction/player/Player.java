@@ -22,7 +22,7 @@ public class Player {
     private Room currentRoom_;
     private Weapon weapon;
     private Shield shield;
-    private int score_;
+    private int score_ = 0;
     private int numKeys;
     private final VisibilityManager vm_;
 

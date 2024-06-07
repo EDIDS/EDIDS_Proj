@@ -81,14 +81,12 @@ public class VisibilityManager {
     }
 
     public void showMessage(String message, int timerTime, Color borderColor) {
-        ui.messageLabel.setText(message); // Imposta il messaggio
-        ui.messageLabel.setBorder(BorderFactory.createLineBorder(borderColor));
+        ui.setMessageVisible(message, borderColor);
 
         // Crea un timer per far scomparire automaticamente il messaggio dopo 3 secondi
         Timer timer = new Timer(timerTime, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ui.messageLabel.setText(""); // Cancella il messaggio
-                ui.messageLabel.setBorder(null);
+                ui.setMessageNotVisible();
             }
         });
         timer.setRepeats(false); // Imposta il timer per eseguire una sola volta
