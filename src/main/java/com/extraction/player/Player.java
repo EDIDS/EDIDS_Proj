@@ -1,10 +1,9 @@
 package com.extraction.player;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.extraction.Graphic.UI;
 import com.extraction.Graphic.VisibilityManager;
 import com.extraction.items.*;
 import com.extraction.map.Room;
@@ -29,26 +28,24 @@ public class Player {
 
 
     /**
-     * Constructor for Player class with UI and VisibilityManager parameters.
-     * @param ui User Interface for the game.
+     * Constructor for Player class with VisibilityManager parameters.
      * @param vm Visibility Manager for the game.
      */
-    public Player(UI ui, VisibilityManager vm) {
+    public Player(VisibilityManager vm) {
         name_ = NO_NAME;
         health_ = FULL_HEALTH;
-        bag_ = new ArrayList<Item>();
+        bag_ = new ArrayList<>();
         vm_ = vm;
     }
 
     /**
-     * Constructor for Player class with UI and VisibilityManager parameters.
-     * @param ui User Interface for the game.
+     * Constructor for Player class with VisibilityManager parameters.
      * @param vm Visibility Manager for the game.
      */
-    public Player(String name, UI ui, VisibilityManager vm) {
+    public Player(String name, VisibilityManager vm) {
         name_ = name;
         health_ = FULL_HEALTH;
-        bag_ = new ArrayList<Item>();
+        bag_ = new ArrayList<>();
         vm_ = vm;
     }
 
@@ -133,6 +130,7 @@ public class Player {
         }
     }
 
+
     /**
      * Removes the player's weapon.
      * This method will set the player's weapon to null.
@@ -165,9 +163,8 @@ public class Player {
         return shield != null;
     }
 
-
     /**
-     * Calculates the attack damage of the player.
+     * Calculates the attack player's damage.
      * @return the attack damage.
      */
     public int attack() {
@@ -175,7 +172,6 @@ public class Player {
 
         return BASE_ATTACK_DAMAGE;
     }
-
 
     /**
      * Calculates the damage after defense.
@@ -298,7 +294,7 @@ public class Player {
 
     /**
      * Detonates a TNT from the player's bag.
-     * @return the damage of the explosion if a TNT was found, 0 otherwise.
+     * @return the damage done by the explosion if a TNT was found, 0 otherwise.
      */
     public int detonateTNT() {
         TNT tnt = (TNT) this.findItem("TNT");

@@ -1,7 +1,6 @@
 package com.extraction.player;
 
 import com.extraction.items.*;
-import com.extraction.Graphic.UI;
 import com.extraction.Graphic.VisibilityManager;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
@@ -16,12 +15,11 @@ import static com.extraction.player.Player.*;
 class PlayerTest {
 
     Player player;
-    UI ui;
     VisibilityManager vm;
 
     @BeforeEach
     void setUp() {
-        player = new Player(ui,vm);
+        player = new Player(vm);
     }
 
     @Test
@@ -32,7 +30,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "0", " "} )
     void testNamedPlayerName(String name) {
-        Player named = new Player(name, ui, vm);
+        Player named = new Player(name, vm);
         assertEquals(named.getName(), name);
     }
 

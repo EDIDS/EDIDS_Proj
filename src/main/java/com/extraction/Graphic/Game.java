@@ -45,7 +45,7 @@ public class Game {
     }
 
     public void newGame() {
-        player = new Player(ui, vm);
+        player = new Player(vm);
         building = new Building();
         story = new Story(this, ui, vm, building, player);
 
