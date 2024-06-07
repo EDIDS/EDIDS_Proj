@@ -21,6 +21,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
+        vm = new VisibilityManager(ui);
         player = new Player(ui,vm);
     }
 
@@ -37,7 +38,7 @@ class PlayerTest {
     }
 
     @Test
-    void testSetWeapon_throwWeapon() {
+    void testSetWeapon_ThrowWeapon() {
         // test setWeapon()
         Weapon weapon = new Weapon("REVOLVER");
         player.setWeapon(weapon);
@@ -79,13 +80,13 @@ class PlayerTest {
         assertEquals(BASE_ATTACK_DAMAGE, attack);
         player.setWeapon(new Weapon("REVOLVER"));
         attack = player.attack();
-        assertTrue(attack >= 10 && attack <= 30);
+        assertTrue(attack >= 20 && attack <= 40);
         player.setWeapon(new Weapon("AK47"));
         attack = player.attack();
-        assertTrue(attack >= 30 && attack <= 50);
+        assertTrue(attack >= 40 && attack <= 60);
         player.setWeapon(new Weapon("USPSWORM"));
         attack = player.attack();
-        assertTrue(attack >= 20 && attack <= 40);
+        assertTrue(attack >= 30 && attack <= 50);
     }
 
     @Test

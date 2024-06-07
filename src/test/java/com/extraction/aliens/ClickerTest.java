@@ -18,16 +18,14 @@ class ClickerTest {
 
     @Test
     void TestAttributes() {
-        String name = clicker.getName();
-        assertEquals("Clicker", name);
-        int health = clicker.getHealth();
-        assertEquals(TIER2_HEALTH, health);
+        assertEquals("Clicker", clicker.getName());
+        assertEquals(TIER2_HEALTH, clicker.getHealth());
     }
 
     @RepeatedTest(100)
     void TestAttack() {
         int attack = clicker.attack();
-        assertTrue(attack > 0 && attack <= TIER1_MAXIMUM_ATTACK_DAMAGE);
+        assertTrue(attack > 0 && attack <= TIER2_MAXIMUM_ATTACK_DAMAGE);
     }
 
     @ParameterizedTest
@@ -43,6 +41,12 @@ class ClickerTest {
     @Test
     void TestGetEscapeChance() {
         double chance = clicker.getEscapeChance();
-        assertEquals(0.8, chance);
+        assertEquals(0.2, chance);
+    }
+
+    @Test
+    void TestGetEludeChance() {
+        double chance = clicker.getEludeChance();
+        assertEquals(0.3, chance);
     }
 }

@@ -1,5 +1,6 @@
 package com.extraction.items;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -17,18 +18,18 @@ class WeaponTest {
         weapon = new Weapon(type);
         switch (type) {
             case "REVOLVER":
-                assertEquals(weapon.minDamage_, 10);
-                assertEquals(weapon.maxDamage_, 30);
+                assertEquals(20, weapon.minDamage_);
+                assertEquals(40, weapon.maxDamage_);
 
                 break;
             case "AK47":
-                assertEquals(weapon.minDamage_, 30);
-                assertEquals(weapon.maxDamage_, 50);
+                assertEquals(40, weapon.minDamage_);
+                assertEquals(60, weapon.maxDamage_);
 
                 break;
             case "USPSWORM":
-                assertEquals(weapon.minDamage_, 20);
-                assertEquals(weapon.maxDamage_, 40);
+                assertEquals(30, weapon.minDamage_);
+                assertEquals(50, weapon.maxDamage_);
 
                 break;
         }
@@ -40,22 +41,35 @@ class WeaponTest {
         assertThrows(IllegalArgumentException.class, () -> {new Weapon(type);});
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"REVOLVER", "AK47", "USPSWORM"})
-    void testCalculateDamage(String type) {
-        weapon = new Weapon(type);
+    @RepeatedTest(100)
+    void testRevolverCalculateDamage() {
+        weapon = new Weapon("REVOLVER");
         int damage = weapon.calculateDamage();
-        assertTrue(damage >= weapon.minDamage_ && damage <= weapon.maxDamage_);
+        assertTrue(damage == weapon.minDamage_ || damage == weapon.maxDamage_ ||
+                damage == (weapon.maxDamage_+weapon.minDamage_)/2);
+    }
+
+    @RepeatedTest(100)
+    void testAk47CalculateDamage() {
+        weapon = new Weapon("AK47");
+        int damage = weapon.calculateDamage();
+        assertTrue(damage == weapon.minDamage_ || damage == weapon.maxDamage_ ||
+                damage == (weapon.maxDamage_+weapon.minDamage_)/2);
+    }
+
+    @RepeatedTest(100)
+    void testUspswormCalculateDamage() {
+        weapon = new Weapon("USPSWORM");
+        int damage = weapon.calculateDamage();
+        assertTrue(damage == weapon.minDamage_ || damage == weapon.maxDamage_ ||
+                damage == (weapon.maxDamage_+weapon.minDamage_)/2);
     }
 
     @Test
     void testTypeWeight() {
-        double revWeight = type_weight("REVOLVER");
-        assertEquals(revWeight, REVOLVER_WEIGHT);
-        double ak47Weight = type_weight("AK47");
-        assertEquals(ak47Weight, AK47_WEIGHT);
-        double upsWeight = type_weight("USPSWORM");
-        assertEquals(upsWeight, USPSWORM_WEIGHT);
+        assertEquals(REVOLVER_WEIGHT, type_weight("REVOLVER"));
+        assertEquals(AK47_WEIGHT, type_weight("AK47"));
+        assertEquals(USPSWORM_WEIGHT, type_weight("USPSWORM"));
     }
 
 }

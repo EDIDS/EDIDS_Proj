@@ -18,16 +18,14 @@ class RunnerTest {
 
     @Test
     void TestAttributes() {
-        String name = runner.getName();
-        assertEquals("Runner", name);
-        int health = runner.getHealth();
-        assertEquals(TIER1_HEALTH, health);
+        assertEquals("Runner", runner.getName());
+        assertEquals(TIER1_HEALTH, runner.getHealth());
     }
 
     @RepeatedTest(100)
     void TestAttack() {
         int attack = runner.attack();
-        assertTrue(attack > 0 && attack <= TIER2_MAXIMUM_ATTACK_DAMAGE);
+        assertTrue(attack > 0 && attack <= TIER1_MAXIMUM_ATTACK_DAMAGE);
     }
 
     @ParameterizedTest
@@ -43,6 +41,12 @@ class RunnerTest {
     @Test
     void TestGetEscapeChance() {
         double chance = runner.getEscapeChance();
-        assertEquals(0.6, chance);
+        assertEquals(0.3, chance);
+    }
+
+    @Test
+    void TestGetEludeChance() {
+        double chance = runner.getEludeChance();
+        assertEquals(0.4, chance);
     }
 }
