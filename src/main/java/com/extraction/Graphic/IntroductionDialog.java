@@ -8,7 +8,7 @@ import java.util.List;
  * The IntroductionDialog class represents the dialog shown at the beginning of the game.
  * It manages a list of dialogues that are displayed in sequence.
  */
-public class IntroductionDialogue {
+public class IntroductionDialog {
 
     private List<String> dialogues;
     Iterator<String> iterator;
@@ -17,7 +17,7 @@ public class IntroductionDialogue {
      * Constructs a new IntroductionDialog.
      * Initializes the dialogues list and its iterator.
      */
-    public IntroductionDialogue() {
+    public IntroductionDialog() {
         dialogues = new ArrayList<>();
         initializeDialogues();
         iterator = dialogues.iterator();

@@ -9,7 +9,7 @@ import java.util.Iterator;
  * It displays the final score and other game statistics to the user.
  * It manages a list of dialogues that are displayed in sequence.
  */
-public class EndingDialogue {
+public class EndingDialog {
 
     private List<String> dialogues;
     Iterator<String> iterator;
@@ -18,7 +18,7 @@ public class EndingDialogue {
      * Constructs a new EndingDialog.
      * Initializes the dialogues list and its iterator.
      */
-    public EndingDialogue() {
+    public EndingDialog() {
         dialogues = new ArrayList<>();
         initializeDialogues();
         iterator = dialogues.iterator();
