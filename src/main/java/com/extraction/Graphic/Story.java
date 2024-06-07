@@ -214,8 +214,7 @@ public class Story {
 
     private void showItems() {
         vm.showTextScreen();
-        ui.exitRoomButton.setEnabled(true);
-        ui.throwButton.setEnabled(true);
+        ui.enableForShow();
         List<Item> items = nextRoom.getItems();
         if (items.isEmpty()) proceed();
         StringBuilder str = new StringBuilder("You found:\n");
@@ -266,8 +265,7 @@ public class Story {
         ui.setEnableButtons();
         vm.showTextScreen();
         exitThrow();
-        ui.exitRoomButton.setEnabled(false);
-        ui.throwButton.setEnabled(false);
+        ui.enableForThrow();
         ui.setActionBText("", "", "", "");
         List<Item> items = new ArrayList<>(player.getBag());
         items.removeIf(item -> item.getName().equals("Torch") || item.getName().equals("Key"));

@@ -61,8 +61,8 @@ public class UI {
     private JButton actionButton4;
 
     JPanel exitRoomBPanel;
-    JButton exitRoomButton;
-    JButton throwButton;
+    private JButton exitRoomButton;
+    private JButton throwButton;
 
     JPanel dialogBPanel;
     JButton dialogButton;
@@ -404,6 +404,16 @@ public class UI {
 
         exitRoomBPanel.add(exitRoomButton, gbc);
         exitRoomBPanel.add(throwButton, gbc);
+    }
+
+    public void enableForShow() {
+        exitRoomButton.setEnabled(true);
+        throwButton.setEnabled(true);
+    }
+
+    public void enableForThrow() {
+        exitRoomButton.setEnabled(false);
+        throwButton.setEnabled(false);
     }
 
     private void createActionButtonsPanel() {
