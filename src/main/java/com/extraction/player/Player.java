@@ -30,6 +30,8 @@ public class Player {
     private int numKeys;
     private final VisibilityManager vm_;
 
+    private int rounds = 0;
+
     public Player(String name, int health, Room currentRoom, VisibilityManager vm) {
         name_ = name;
         health_ = health;
