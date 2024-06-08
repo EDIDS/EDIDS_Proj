@@ -1,16 +1,20 @@
 @startuml
 
 object Player {
-
 }
 
 object Profile {
-  name
-  health
-  attack
+    name
+    health
+    attack
 }
 
 object Game {
+}
+
+object GameState {
+    Building
+    Player
 }
 
 object Alien {
@@ -23,56 +27,71 @@ object AlienType {
 }
 
 object AlienList {
-}
-
-object Bag {
-  counter
-  weight
+    Clicker
+    Runner
+    Shambler
 }
 
 object Item {
-  weight
 }
 
-object Weapon {
-  damage
+object ItemType {
+    name
+    weight
+    throwable
 }
 
-object Medikit {
-  healingAmount
+object ItemList {
+    Key
+    MedKit
+    Shield
+    TNT
+    Torch
+    Weapon
 }
 
 object GameResult {
 }
 
 object Scorer {
-score
+    score
 }
 
 object Building {
 }
 
 object Room {
-  coordinate
-  accessibility
+    description
+    coordinate
+    accessibility
 }
 
-Player"1" -- "1"Game : starts
+object Fight {
+}
+
+object Loader {
+}
+
+object UI {
+}
+
 AlienType"1" -- "*"Alien : describes
 AlienList"1" -- "3"AlienType : contains
+ItemType"1" -- "*"Item : describes
+ItemList"1" -- "6"ItemType : contains
 Game"1" -- "*"Alien : spawns
 Game"1" -- "*"Item : spawns
-Weapon --|> Item
-Medikit --|> Item
 Game"1" -- "1"GameResult : generates
-Player"1" -- "1"Scorer : inspects
-Player"1" -- "1"Bag : holds
-Bag"1" -- "*"Item : contains
+Game"1" -- "1"Scorer : updates
+GameState"1" -- "1"Game : describes
+Player"1" -- "*"Item : holds
 Building"1" o-- "13"Room
 Room"1" -- "*"Item : detains
-Player"1" -- "1"Alien : fight
+Player"1" -- "1"Fight : fights
+Alien"1" -- "1"Fight : fights
 Profile"1" -- "1"Player : describes
 Room"1" --  "0..1"Alien : hosts
-Player"1" -- "1"Weapon : wields
+Loader"1" -- "1"GameState : saves
+UI"1" -- "1"Game : displays
 
 @enduml
