@@ -1,0 +1,94 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Game {
+    bHandler : ButtonsHandler
+    ui : UI
+    vm : VisibilityManager
+    building : Building
+    player : Player
+    story : Story
+    newGame()
+    loadGame()
+}
+
+class LoadHandler {
+    actionPerformed(e:ActionEvent)
+}
+
+class AlienTypeAdapter {
+    Serialize(alien:Alien, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class BuildingTypeAdapter {
+    Serialize(building:Building, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class GameSaveTypeAdapter {
+    Serialize(gameSave:GameSave, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class ItemTypeAdapter {
+    Serialize(item:Item, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class PlayerTypeAdapter {
+    Serialize(player:Player, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class RoomTypeAdapter {
+    Serialize(room:Room, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class AwsConfigReader {
+    readAwsCredentials(profile:String) : Map<String, String>
+}
+
+class GameSave {
+    building : Building
+    playerdata : Player
+}
+
+class S3Uploader {
+    bucketName : String
+    s3Client : AmazonS3
+    gson : Gson
+    uploadDirectory(directoryPath:String)
+    saveGame(player:Player, building:Building)
+    downloadAllGames()
+    getMaxSaveNumberFromS3() : int
+}
+
+S3Uploader"1" ..> "1"AwsConfigReader : uses
+S3Uploader ..> GameSave : uploads
+GameSave"1" --> "1"Building : saves
+GameSave"1" --> "1"Player : saves
+
+Game *-- LoadHandler : belongs to
+Game"1" --> "1"GameSave : loads
+Game"1" ..> S3Uploader : uses
+
+AlienTypeAdapter"1" <.. "1"RoomTypeAdapter : uses
+RoomTypeAdapter"1" <.. "1"BuildingTypeAdapter : uses
+RoomTypeAdapter"1" <.. "1"PlayerTypeAdapter : uses
+ItemTypeAdapter"1" <.. "1"RoomTypeAdapter :uses
+ItemTypeAdapter"1" <.. "1"PlayerTypeAdapter : uses
+PlayerTypeAdapter"1" <.. "1"GameSaveTypeAdapter : uses
+BuildingTypeAdapter"1" <.. "1"GameSaveTypeAdapter : uses
+GameSaveTypeAdapter"1" <.. "1"Game : uses
+GameSaveTypeAdapter"1" <-- "1"S3Uploader : uses
+
+AlienTypeAdapter ..> Alien : serializes
+RoomTypeAdapter ..> Room : serializes
+ItemTypeAdapter ..> Item : serializes
+PlayerTypeAdapter ..> Player : serializes
+BuildingTypeAdapter ..> Building : serializes
+GameSaveTypeAdapter ..> GameSave : serializes
+
+@enduml
