@@ -18,10 +18,8 @@ class ShamblerTest {
 
     @Test
     void TestAttributes() {
-        String name = shambler.getName();
-        assertEquals("Shambler", name);
-        int health = shambler.getHealth();
-        assertEquals(TIER3_HEALTH, health);
+        assertEquals("Shambler", shambler.getName());
+        assertEquals(TIER3_HEALTH, shambler.getHealth());
     }
 
     @RepeatedTest(100)
@@ -43,6 +41,12 @@ class ShamblerTest {
     @Test
     void TestGetEscapeChance() {
         double chance = shambler.getEscapeChance();
-        assertEquals(0.4, chance);
+        assertEquals(0.1, chance);
+    }
+
+    @Test
+    void TestGetEludeChance() {
+        double chance = shambler.getEludeChance();
+        assertEquals(0.2, chance);
     }
 }

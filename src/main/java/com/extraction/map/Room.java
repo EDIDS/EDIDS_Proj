@@ -71,6 +71,15 @@ public class Room {
     }
 
     /**
+     * Removes an item from the room.
+     * @param itemToThrow The item to be removed.
+     */
+    public void removeItem(Item itemToThrow){
+        Item item = this.findItem(itemToThrow);
+        if (item != null /*&& item.isThrowable()*/) items.remove(item);
+    }
+
+    /**
      * Finds an item in the room.
      * @param itemToFind The name of the item to find.
      * @return The item if found, null otherwise.
@@ -78,6 +87,19 @@ public class Room {
     public Item findItem(String itemToFind){
         for (Item item : items) {
             if (item.getName().equals(itemToFind))
+                return item;
+        }
+        return null;
+    }
+
+    /**
+     * Finds an item in the room.
+     * @param itemToFind The item to find.
+     * @return The item if found, null otherwise.
+     */
+    public Item findItem(Item itemToFind){
+        for (Item item : items) {
+            if (item == itemToFind)
                 return item;
         }
         return null;
