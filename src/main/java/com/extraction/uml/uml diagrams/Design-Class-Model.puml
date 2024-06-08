@@ -3,82 +3,246 @@
 title Design Class Model
 
 abstract class Alien  {
-  {abstract} attack() : int
-  {abstract} takeDamage(damage:int)
+    {abstract} attack() : int
+    {abstract} takeDamage(damage:int)
+    {abstract} getEscapeChance() : double
+    {abstract} getEludeChance() : double
 }
 
 class Clicker {
-  health_ : int
-  attack_ : int
-  attack() : int
-  takeDamage(damage:int)
+    name_ : String
+    health_ : int
+    attack_ : int
+    attack() : int
+    takeDamage(damage:int)
+    getEscapeChance() : double
+    getEludeChance() : double
 }
 
 class Runner {
-  health_ : int
-  attack_ : int
-  attack() : int
-  takeDamage(damage:int)
+    name_ : String
+    health_ : int
+    attack_ : int
+    attack() : int
+    takeDamage(damage:int)
+    getEscapeChance() : double
+    getEludeChance() : double
 }
 
 class Shambler {
-  health_ : int
-  attack_ : int
-  attack() : int
-  takeDamage(damage:int)
+    name_ : String
+    health_ : int
+    attack_ : int
+    attack() : int
+    takeDamage(damage:int)
+    getEscapeChance() : double
+    getEludeChance() : double
+}
+
+class Game {
+    bHandler : ButtonsHandler
+    ui : UI
+    vm : VisibilityManager
+    building : Building
+    player : Player
+    story : Story
+    newGame()
+    loadGame()
+}
+
+class ButtonsHandler {
+    actionPerformed(e:ActionEvent)
+}
+
+class LoadHandler {
+    actionPerformed(e:ActionEvent)
+}
+
+class Story {
+    game : Game
+    ui : UI
+    vm : VisibilityManager
+    player : Player
+    building : Building
+    defaultSetup()
+    setNextPosition(next1:String, next2:String, next3:String, next4:String)
+    selectPosition(nextPosition:String)
+    map()
+    updatePlayerPos()
+    proceed()
+    checkRoom()
+    showItems()
+    exitItems()
+    throwItems()
+    exitThrow()
+    getItems() : StringBuilder
+    execute(item:String)
+    room(nextRow:int, nextColumn:int)
+    showDialog(text:String, buttonText:String, actionCommand:String)
+    lightOn()
+    fightAlien(alien:Alien)
+}
+
+class EndingDialog {
+    dialogues : List<String>
+    iterator : Iterator<String>
+    initializeDialogues()
+    nextDialogue() : String
+}
+
+class IntroductionDialog {
+    dialogues : List<String>
+    iterator : Iterator<String>
+    initializeDialogues()
+    nextDialogue() : String
+}
+
+class UI {
+    bHandler : ButtonsHandler
+    homeScreen(gameTitle:String)
+    gameScreen()
+    newMap()
+}
+
+class VisibilityManager {
+    ui : UI
+    everythingNotVisible()
+    showHomeScreen()
+    showLoadScreen()
+    showMapScreen()
+    showDialogScreen()
+    showTextScreen()
+    showFightScreen()
+    showEndScreen()
+    showMessage()
 }
 
 class Item {
-  name : ItemName
-  weight : double
-  getWeight() : double
 }
 
-class Weapon {
-  type_ : WeaponType
-  minDamage_ : int
-  maxDamage_ : int
-  calculateDamage() : int
+class Key {
+    name : String
+    weight : double
+    throwable : boolean
 }
 
 class Medikit{
-  healingAmount_ : int
-  getHealingAmount() : int
+    name : String
+    weight : double
+    throwable : boolean
+}
+
+class Shield {
+    name : String
+    weight : double
+    throwable : boolean
+    getDefense() : int
+}
+
+class TNT {
+    name : String
+    weight : double
+    throwable : boolean
+    getDamage() : int
+}
+
+class Torch {
+    name : String
+    weight : double
+    throwable : boolean
+    isOn : boolean
+    turnOn()
+    turnOff()
+}
+
+class Weapon {
+    name : String
+    weight : double
+    throwable : boolean
+    type_ : String
+    minDamage_ : int
+    maxDamage_ : int
+    calculateDamage() : int
 }
 
 class Building {
-  room : Map<String, Room>
-  allItems : Map<String, Item>
-  addRoom(room:Room)
-  getRoom(coordinate:String) : Room
-  removeRoom(coordinate:String)
-  getAvailableDirections(room:Room) : String
+    rooms : Map<String, Room>
+    addRoom(room:Room)
+    getRoom(coordinate:String) : Room
+    removeRoom(coordinate:String)
+    getRooms() : List<Room>
+    getAvailableDirections(room:Room) : String
 }
  
 class Room {
-  coordinate : Coordinate
-  title : String
-  description : String
-  iconPath : String
-  alien=null : Alien
-  is_closed=false : boolean
-  isClosed() : booelan
-  close()
+    coordinate : Coordinate
+    title : String
+    description : String
+    iconPath : String
+    alien=null : Alien
+    is_closed=false : boolean
+    items : list<Item>
+    is_dark=false : boolean
+    addItem(item:Item)
+    removeItem(itemToThrow:String)
+    removeItem(itemToThrow:Item)
+    findItem(itemToFind:String)
+    findItem(itemToFind:Item)
+    close()
+    open()
 }
 
 class Coordinate {
-  column : int
-  row : int
-  setColumn(x int)
-  setRow(y int)
-  equals(o:Object) : boolean
-  toString() : String
+    column : int
+    row : int
+    equals(o:Object) : boolean
+    toString() : String
 }
 
 class Fight {
-  player : Player
-  alien : ALien
-  fight()
+    player : Player
+    alien : ALien
+    ui : UI
+    story : Story
+    vm : VisibilityManager
+    fight()
+    playerTurn()
+    alienTurn()
+    attack()
+    run()
+    heal()
+    tnt()
+    defend()
+    elude()
+    displayStatus()
+}
+
+class Player {
+    health_ : int
+    name_ : String
+    bag_ : List<Item>
+    currentWeight_=0 : double
+    currentRoom_ : Room
+    weapon=null : Weapon
+    shield=null : Shield
+    score_=0 : int
+    numKeys = int
+    vm : VisibilityManager
+    attack() : int
+    defend() : int
+    heal() : boolean
+    takeDamage(damage:int)
+    addItem(item:Item)
+    throwItem(itemToThrow:Item)
+    throwItem(itemToThrow:String)
+    findItem(itemToFind:Item)
+    findItem(itemToFind:String)
+    detonateTNT(int)
+    getData() : String
+    reset()
+}
+
+class AwsConfigReader {
 }
 
 class GameSave {
@@ -86,22 +250,7 @@ class GameSave {
   saveGame(player:Player, building:Building)
 }
 
-class Player {
-  health_ : int
-  name_ : String
-  bag_ : List<Item>
-  currentWeight_ : double
-  currentRoom_ : Room
-  weapon : Weapon
-  score_ : int
-  hasWeapon() : double
-  attack() : int
-  addItem(item:Item)
-  throwItem(item:Item) : Item
-  heal()
-  takeDamage(damage:int)
-  getData() : String
-  reset()
+class S3Uploader {
 }
 
 Alien <|-- Clicker
