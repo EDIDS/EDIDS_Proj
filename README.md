@@ -1,3 +1,4 @@
+# Extraction - Text adventure
 ### Introduzione
 “Extraction” è un’avventura testuale che prende vita dal rinomato videogioco di Ubisoft, “**Rainbow Six Extraction**”. In un mondo sconvolto da un’invasione parassitaria aliena, il caos e la distruzione regnano sovrani. Tu, un valoroso guerriero dell’elite della squadra Rainbow, sei stato selezionato per una missione di vitale importanza. Il tuo compito è quello di infiltrarti in un edificio, affrontare e sconfiggere gli archei che ostacolano il tuo percorso, e portare in salvo il tuo compagno prigioniero. La tua missione è pericolosa, ma la speranza di un mondo migliore riposa sulle tue spalle.
 
