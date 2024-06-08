@@ -126,7 +126,7 @@ class Key {
     throwable : boolean
 }
 
-class Medikit{
+class MedKit{
     name : String
     weight : double
     throwable : boolean
@@ -242,29 +242,123 @@ class Player {
     reset()
 }
 
+class AlienTypeAdapter {
+    Serialize(alien:Alien, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class BuildingTypeAdapter {
+    Serialize(building:Building, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class GameSaveTypeAdapter {
+    Serialize(gameSave:GameSave, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class ItemTypeAdapter {
+    Serialize(item:Item, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class PlayerTypeAdapter {
+    Serialize(player:Player, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
+class RoomTypeAdapter {
+    Serialize(room:Room, type:Type, context:JsonSerializationContext)
+    Deserialize(jsonElement:JsonElement, type:Type, context:JsonSerializationContext)
+}
+
 class AwsConfigReader {
+    readAwsCredentials(profile:String) : Map<String, String>
 }
 
 class GameSave {
-  gson : Gson
-  saveGame(player:Player, building:Building)
+    building : Building
+    playerdata : Player
 }
 
 class S3Uploader {
+    bucketName : String
+    s3Client : AmazonS3
+    gson : Gson
+    uploadDirectory(directoryPath:String)
+    saveGame(player:Player, building:Building)
+    downloadAllGames()
+    getMaxSaveNumberFromS3() : int
 }
 
-Alien <|-- Clicker
-Alien <|-- Runner
-Alien <|-- Shambler
-Fight"1" --> "1"Player : lodges
-Fight"1" --> "1"Alien : lodges
-Item <|-- Weapon
-Item <|-- Medikit
-Building o-- Room
+Alien <|-- Clicker : extends
+Alien <|-- Runner : extends
+Alien <|-- Shambler : extends
+
+Fight"1" --> "1"Player : is fought by
+Fight"1" --> "1"Alien : is fought by
+Fight"1" --> "1"UI : is displayed by
+Fight"1" --> "1"Story : operates on
+Fight"1" --> "1"VisibilityManager : is displayed by
+
+Item <|-- Key : extends
+Item <|-- MedKit : extends
+Item <|-- Shield : extends
+Item <|-- TNT : extends
+Item <|-- Torch : extends
+Item <|-- Weapon : extends
+
+Building"1" o-- "13"Room : are contained
+
 Player"1" --> "1"Weapon : wields
+Player"1" --> "1"Shield : holds
 Player"1" --> "*"Item : holds
+Player"1" --> "1"Room : is in
+Player"1" --> "1"VisibilityManager : is displayed
+
 Room"1" --> "*"Item : keeps
-Room"1" --> "1"Alien : keeps
+Room"1" --> "0..1"Alien : keeps
 Room"1" --> "1"Coordinate : is described by
+
+S3Uploader"1" ..> "1"AwsConfigReader : uses
+S3Uploader ..> GameSave : uploads
+GameSave"1" --> "1"Building : saves
+GameSave"1" --> "1"Player : saves
+
+Game *-- ButtonsHandler : belongs to
+Game *-- LoadHandler : belongs to
+Game"1" --> "1"UI : is displayed by
+Game"1" --> "1"VisibilityManager : is displayed by
+Game"1" --> "1"Building : creates
+Game"1" --> "1"Player : instantiates
+Game"1" --> "1"Story : operates
+Game"1" --> "1"GameSave : loads
+
+VisibilityManager"1" --> "1"UI : operates through
+
+Story"1" --> "1"IntroductionDialog : uses
+Story"1" --> "1"EndingDialog : uses
+Story"1" --> "1"VisibilityManager : is displayed by
+Story"1" --> "1"UI : is displayed by
+Story"1" --> "1"Player : operates
+Story"1" --> "*"Fight : operates
+Story"1" --> "0..13"Room : operates
+
+AlienTypeAdapter"1" <.. "1"RoomTypeAdapter : uses
+RoomTypeAdapter"1" <.. "1"BuildingTypeAdapter : uses
+RoomTypeAdapter"1" <.. "1"PlayerTypeAdapter : uses
+ItemTypeAdapter"1" <.. "1"RoomTypeAdapter :uses
+ItemTypeAdapter"1" <.. "1"PlayerTypeAdapter : uses
+PlayerTypeAdapter"1" <.. "1"GameSaveTypeAdapter : uses
+BuildingTypeAdapter"1" <.. "1"GameSaveTypeAdapter : uses
+GameSaveTypeAdapter"1" <.. "1"Game : uses
+GameSaveTypeAdapter"1" <-- "1"S3Uploader : uses
+
+AlienTypeAdapter ..> Alien : serializes
+RoomTypeAdapter ..> Room : serializes
+ItemTypeAdapter ..> Item : serializes
+PlayerTypeAdapter ..> Player : serializes
+BuildingTypeAdapter ..> Building : serializes
+GameSaveTypeAdapter ..> GameSave : serializes
 
 @enduml
