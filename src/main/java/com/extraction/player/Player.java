@@ -30,8 +30,6 @@ public class Player {
     private int numKeys;
     private final VisibilityManager vm_;
 
-    private int rounds = 0;
-
     public Player(String name, int health, Room currentRoom, VisibilityManager vm) {
         name_ = name;
         health_ = health;
@@ -235,8 +233,8 @@ public class Player {
      * @return the damage after defense.
      */
     public int defend(int damage) {
-        if (this.hasShield()) return damage - shield.getDefense();
-
+        if (this.hasShield())
+            return Math.max(damage - shield.getDefense(), 0);
         return damage;
     }
 
@@ -268,7 +266,7 @@ public class Player {
      * Adds an item to the player's bag if the total weight is under the maximum weight.
      * @param item the item to be added.
      */
-    public void addItem(Item item){
+    public boolean addItem(Item item){
         double newWeight = currentWeight_ + item.getWeight();
         if (newWeight <= MAX_WEIGHT) {
             if(item instanceof Weapon) {
@@ -278,19 +276,19 @@ public class Player {
                     vm_.showMessage("You dropped your current weapon", 2000, Color.ORANGE);
                 }
                 this.setWeapon((Weapon) item);
-            }
-            if(item instanceof Shield) {
+            } else if(item instanceof Shield) {
                 if(shield != null) {
                     vm_.showMessage("You already have a shield", 2000, Color.ORANGE);
-                    return;
+                    return false;
                 }
                 this.setShield((Shield) item);
-            }
-            if(item instanceof Key) this.numKeys++;
+            } else if(item instanceof Key) this.numKeys++;
             bag_.add(item);
             currentWeight_ = newWeight;
+            return true;
         } else {
             vm_.showMessage("You have reached the maximum weight of " + MAX_WEIGHT, 2000, Color.ORANGE);
+            return false;
         }
     }
 

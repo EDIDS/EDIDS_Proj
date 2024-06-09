@@ -46,7 +46,7 @@ public class Game {
      * This is the constructor for the Game class. It sets up the game and starts the game loop.
      * @throws IOException If an I/O error occurs.
      */
-    public Game() throws IOException {
+    public Game() {
         ui.homeScreen("Extraction");
         ui.gameScreen();
 
@@ -103,9 +103,9 @@ public class Game {
         Weapon ak47 = new Weapon("AK47");
         Weapon uspsworm = new Weapon("USPSWORM");
 
-        //room4_1.setAlien(runner);
+        room4_1.setAlien(runner);
         room4_1.addItem(revolver);
-        room4_1.addItem(key1);
+        //room4_1.addItem(key1);
 
         room2_1.addItem(shield);
 
@@ -149,7 +149,7 @@ public class Game {
 
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         new Game();
     }
 

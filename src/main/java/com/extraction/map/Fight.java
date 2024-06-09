@@ -18,10 +18,13 @@ public class Fight {
     UI ui;
     Story story;
     VisibilityManager vm;
-    final Object lock = new Object();
     final int TIMER = 2000;
 
-    volatile Boolean selected = false;
+    final int BASE_SCORE = 1000;
+    final int HEALT_BONUS = 150;
+    final int HEALT_MALUS = 150;
+    private int totalDamage = 0;
+    private int rounds = 0;
 
     /**
      * Constructs a new Fight with the given player, alien, UI, VisibilityManager, and Story.
@@ -59,9 +62,11 @@ public class Fight {
             if (player.getHealth() <= 0) {
                 ui.mainTextArea.setText("You have been defeated by the " + alien.getName() + "!");
                 vm.showEndScreen("GAME OVER");
+            } else {
+                rounds++;
+                ui.setMyTurnButton();
+                ui.mainTextArea.setText(displayStatus() + "\n\nYour turn! \nMake a choice");
             }
-            ui.setMyTurnButton();
-            ui.mainTextArea.setText(displayStatus() + "\n\nYour turn! \nMake a choice");
         });
         timer.setRepeats(false);
         timer.start();
@@ -75,11 +80,14 @@ public class Fight {
         Timer timer = new Timer(TIMER, e -> {
             if (alien.getHealth() <= 0) {
                 ui.mainTextArea.setText("You have defeated the " + alien.getName() + "!");
+                player.setScore(player.getScore() + calcRoundScore());
+                ui.setCol3(player.getScore() + "");
                 vm.showDialogScreen();
                 ui.setEnableButtons();
                 story.checkRoom();
             } else {
-                ui.setAlienTurnButton();
+                rounds++;
+                ui.setAlienTurnButton(player.hasShield());
                 ui.mainTextArea.setText(displayStatus() + "\n\nThe alien is attacking you!\nWhat do you want to do?");
             }
         });
@@ -92,6 +100,7 @@ public class Fight {
      */
     public void attack() {
         int playerDamage = player.attack();
+        totalDamage += playerDamage;
         alien.takeDamage(playerDamage);
         ui.mainTextArea.setText("You attack the " + alien.getName() + "!" +
                 "\n\nYou deal " + playerDamage + " damage to the " + alien.getName() + "!");
@@ -179,6 +188,18 @@ public class Fight {
             ui.mainTextArea.setText("The " + alien.getName() + " deals " + harm + " damage to you!");
         }
         playerTurn();
+    }
+
+    /**
+     * Calculates the player's score.
+     * @return The current score of the player.
+     */
+    private int calcRoundScore() {
+        int score = (BASE_SCORE - rounds * 100) + totalDamage * 10;
+
+        if (player.getHealth() >= 50)
+            return Math.max(score + HEALT_BONUS, 0);
+        return Math.max(score - HEALT_MALUS, 0);
     }
 
     /**

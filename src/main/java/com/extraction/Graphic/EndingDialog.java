@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 public class EndingDialog {
 
-    private List<String> dialogues;
+    private final List<String> dialogues;
     Iterator<String> iterator;
 
     /**
@@ -30,14 +30,6 @@ public class EndingDialog {
      */
     public void initializeDialogues() {
         dialogues.add("THE MISSION WAS A SUCCESS, WELL DONE SOLDIER!");
-    }
-
-    /**
-     * Returns an iterator for the dialogues list.
-     * @return An Iterator for the dialogues list.
-     */
-    public Iterator<String> getDialogueIterator() {
-        return iterator;
     }
 
     /**

@@ -563,10 +563,10 @@ public class UI {
     /**
      * Sets the buttons for the alien's turn.
      */
-    public void setAlienTurnButton() {
+    public void setAlienTurnButton(boolean hasShield) {
         actionButton1.setEnabled(false);
         actionButton2.setEnabled(false);
-        actionButton3.setEnabled(true);
+        actionButton3.setEnabled(hasShield);
         actionButton4.setEnabled(true);
         itemButton1.setEnabled(false);
         itemButton2.setEnabled(false);

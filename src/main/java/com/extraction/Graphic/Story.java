@@ -388,99 +388,74 @@ public class Story {
         switch (item) {
             case "MedKit":
                 MedKit med = (MedKit)nextRoom.findItem("MedKit");
-                player.addItem(med);
-                if (player.findItem(med) != null)
+                if (player.addItem(med))
                     nextRoom.removeItem(med);
                 break;
             case "TNT":
                 TNT tnt = (TNT)nextRoom.findItem("TNT");
-                player.addItem(tnt);
-                if (player.findItem(tnt) != null)
+                if (player.addItem(tnt))
                     nextRoom.removeItem(tnt);
                 break;
             case "Shield":
                 Shield shield = (Shield)nextRoom.findItem("Shield");
-                player.addItem(shield);
-                if (player.getShield() == shield)
+                if (player.addItem(shield))
                     nextRoom.removeItem(shield);
                 break;
             case "Key":
                 Key key = (Key)nextRoom.findItem("Key");
-                player.addItem(key);
-                if (player.findItem(key) != null)
+                if (player.addItem(key))
                     nextRoom.removeItem(key);
                 break;
             case "Torch":
                 Torch torch = (Torch)nextRoom.findItem("Torch");
-                player.addItem(torch);
-                if (player.findItem(torch) != null)
+                if (player.addItem(torch))
                     nextRoom.removeItem(torch);
                 break;
             case "REVOLVER":
-                Weapon revolver = (Weapon)nextRoom.findItem("Weapon");
-                if (!revolver.getType().equals("REVOLVER")) return;
-                Weapon oldWeapon = player.getWeapon();
-                player.addItem(revolver);
-                if (player.getWeapon() == revolver) {
+                Weapon revolver = new Weapon("REVOLVER");
+                if (player.addItem(revolver)) {
                     ui.setCol2(player.getWeapon().getType());
                     nextRoom.removeItem(revolver);
-                    if (oldWeapon != null)
-                        nextRoom.addItem(oldWeapon);
                 }
                 break;
             case "USPSWORM":
-                Weapon usp = (Weapon)nextRoom.findItem("Weapon");
-                if (!usp.getType().equals("USPSWORM")) return;
-                Weapon oldWeapon_ = player.getWeapon();
-                player.addItem(usp);
-                if (player.getWeapon() == usp) {
+                Weapon uspswarm = new Weapon("USPSWORM");
+                if (player.addItem(uspswarm)) {
                     ui.setCol2(player.getWeapon().getType());
-                    nextRoom.removeItem(usp);
-                    if (oldWeapon_ != null)
-                        nextRoom.addItem(oldWeapon_);
+                    nextRoom.removeItem(uspswarm);
                 }
                 break;
             case "AK47":
-                Weapon ak = (Weapon)nextRoom.findItem("Weapon");
-                if (!ak.getType().equals("AK47")) return;
-                Weapon oldWeapon__ = player.getWeapon();
-                player.addItem(ak);
-                if (player.getWeapon() == ak) {
+                Weapon ak47 = new Weapon("AK47");
+                if (player.addItem(ak47)) {
                     ui.setCol2(player.getWeapon().getType());
-                    nextRoom.removeItem(ak);
-                    if (oldWeapon__ != null)
-                        nextRoom.addItem(oldWeapon__);
+                    nextRoom.removeItem(ak47);
                 }
                 break;
             case "RemoveMedKit":
-                Item med_re = player.throwItem("MedKit");
+                player.throwItem("MedKit");
                 exitThrow();
-                nextRoom.addItem(med_re);
                 showItems();
                 break;
             case "RemoveTNT":
-                Item tnt_re = player.throwItem("TNT");
+                player.throwItem("TNT");
                 exitThrow();
-                nextRoom.addItem(tnt_re);
                 showItems();
                 break;
             case "RemoveShield":
-                Item shield_re = player.throwItem("Shield");
+                player.throwItem("Shield");
                 exitThrow();
-                nextRoom.addItem(shield_re);
                 showItems();
                 break;
             case "RemoveTorch":
-                Item torch_re = player.throwItem("Torch");
+                player.throwItem("Torch");
                 exitThrow();
-                nextRoom.addItem(torch_re);
                 showItems();
                 break;
             case "RemoveWeapon":
-                Item weapon_re = player.throwItem("Weapon");
+                player.throwItem("Weapon");
                 ui.setCol2("Punch");
                 exitThrow();
-                nextRoom.addItem(weapon_re);
                 showItems();
                 break;
             default:
