@@ -8,25 +8,17 @@ import com.extraction.map.Coordinate;
 import com.extraction.map.Room;
 import com.extraction.player.Player;
 import com.extraction.items.*;
-import com.extraction.utils.BuildingTypeAdapter;
 import com.extraction.utils.GameSaveTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.TypeAdapterFactory.*;
-import com.google.gson.reflect.TypeToken;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The Game class is the main class for the game. It sets up the game, creates the UI, and handles user actions.
@@ -142,6 +134,9 @@ public class Game {
         vm.showHomeScreen();
     }
 
+    /**
+     * This method is called to load a game. It loads the game state from a file and resumes the game.
+     */
     public void loadGame() {
         story = new Story(this, ui, vm, building, player);
 
@@ -152,14 +147,6 @@ public class Game {
         vm.showHomeScreen();
     }
 
-    /**
-     * This method is called to load a game. It loads the game state from a file and resumes the game.
-     * @param game The name of the game to load.
-     */
-    public void loadGame(String game) {
-
-    }
-
     public static void main(String[] args) {
         new Game();
     }
@@ -168,11 +155,11 @@ public class Game {
      * ButtonsHandler is an inner class that implements ActionListener. It handles all button click events.
      */
     protected class ButtonsHandler implements ActionListener {
-        @Override
         /**
          * This method is called whenever a button is clicked. It handles the button click event.
          * @param e The event that occurred.
          */
+        @Override
         public void actionPerformed(ActionEvent e) {
             String buttonClicked = e.getActionCommand();
 
@@ -186,20 +173,21 @@ public class Game {
                     try {
                         S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
                         s3Uploader.saveGame(player, building);
-                        //@TODO: Display a message to the user that the game has been saved
+                        vm.showMessage("Game Saved", 1500, Color.GREEN);
+                        ui.resetActionButtons();
+                        ui.resetTitle();
+                        newGame();
                     } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                        vm.showMessage("Impossible to Save", 1000, Color.RED);
                     }
-                    newGame();
                     break;
                 case "Start":
                     vm.showDialogScreen();
-                    //story.map();
                     break;
                 case "Load":
                     try {
-                        S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
-                        //s3Uploader.downloadAllGames();
+                        new S3Uploader("default", "eu-north-1", "edidsgamesave");
+                        ui.loadList();
                         vm.showLoadScreen();
                     }
                     catch (Exception ex) {
@@ -244,6 +232,8 @@ public class Game {
 
                         building = gameData.getBuilding();
                         player = gameData.getPlayer();
+                        story.startRoom = new Room();
+                        story.coRoom = new Room();
                         loadGame();
 
                         System.out.println("Game loaded");
@@ -254,21 +244,6 @@ public class Game {
                 default:
 
             }
-        }
-    }
-
-    /**
-     * loadHandler is an inner class that implements ActionListener. It handles all load game events.
-     */
-    protected class loadHandler implements ActionListener {
-
-        /**
-         * This method is called whenever a load game event occurs. It handles the load game event.
-         * @param e The event that occurred.
-         */
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            loadGame(e.getActionCommand());
         }
     }
 }

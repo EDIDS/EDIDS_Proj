@@ -5,7 +5,6 @@ import com.extraction.S3Uploader;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class UI {
     private final GridBagConstraints gbc = new GridBagConstraints();
     private final Color background = Color.BLACK;
     private final Game.ButtonsHandler bHandler;
-    private Game.loadHandler lHandler;
     private final Font textFont = new Font("Serif", Font.BOLD, 20);
 
     private JMenuBar menuBar;
@@ -41,6 +39,7 @@ public class UI {
 
     private JScrollPane scroll;
     JPanel loadPanel;
+    JPanel loadListPanel;
 
     JPanel topPanel;
     private JLabel topLabelCol1;
@@ -196,9 +195,9 @@ public class UI {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(background);
 
-        fillLoadList(panel);
+        //loadList();
 
-        scroll = new JScrollPane(panel);
+        scroll = new JScrollPane(loadListPanel);
         scroll.setBorder(BorderFactory.createEmptyBorder());
 
         loadPanel.add(scroll);
@@ -206,9 +205,9 @@ public class UI {
 
     /**
      * Fills the load list with saved games.
-     * @param panel The panel to add the saved games to.
      */
-    private void fillLoadList(JPanel panel) {
+    public void loadList() {
+        loadListPanel = new JPanel();
         try {
             S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
             List<String> gameList = s3Uploader.downloadGameList();
@@ -222,7 +221,7 @@ public class UI {
                 JButton b = createButton(name, startFont, bHandler, "LoadFile");
                 b.setPreferredSize(new Dimension(650, 50));
                 p.add(b, gbc);
-                panel.add(p, BorderLayout.CENTER);
+                loadListPanel.add(p, BorderLayout.CENTER);
             }
         } catch (IOException e) {
             // TODO: Aggiungere Access Denied
@@ -408,6 +407,7 @@ public class UI {
         mainTextPanel.setBackground(background);
 
         mainTextArea = new JTextArea();
+        mainTextArea.setEditable(false);
         mainTextArea.setLayout(new GridBagLayout());
         mainTextArea.setBounds(20, 50, 700, 250);  // -15
         mainTextArea.setBackground(background);
