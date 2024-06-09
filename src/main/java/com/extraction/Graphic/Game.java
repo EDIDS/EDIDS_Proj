@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -141,6 +142,16 @@ public class Game {
         vm.showHomeScreen();
     }
 
+    public void loadGame() {
+        story = new Story(this, ui, vm, building, player);
+
+        story.startRoom = room4_2;
+        story.coRoom = room0_2;
+        ui.newMap();
+
+        vm.showHomeScreen();
+    }
+
     /**
      * This method is called to load a game. It loads the game state from a file and resumes the game.
      * @param game The name of the game to load.
@@ -188,14 +199,12 @@ public class Game {
                 case "Load":
                     try {
                         S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
-                        s3Uploader.downloadAllGames();
+                        //s3Uploader.downloadAllGames();
+                        vm.showLoadScreen();
                     }
                     catch (Exception ex) {
-                        throw new RuntimeException(ex);
+                        vm.showMessage("Access Denied", 1000, Color.RED);
                     }
-                    vm.showLoadScreen();
-                    //tira con gson
-                    e.getActionCommand();
                     break;
                 case "MedKit":
                     story.fight.heal();
@@ -232,6 +241,11 @@ public class Game {
                     try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + filename)) {
                         GameSave gameData = new GameSave(null, null);
                         gameData = gson.fromJson(reader, gameData.getClass());
+
+                        building = gameData.getBuilding();
+                        player = gameData.getPlayer();
+                        loadGame();
+
                         System.out.println("Game loaded");
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);

@@ -1,9 +1,13 @@
 package com.extraction.Graphic;
 
+import com.extraction.S3Uploader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * The UI class represents the user interface of the game.
@@ -205,37 +209,23 @@ public class UI {
      * @param panel The panel to add the saved games to.
      */
     private void fillLoadList(JPanel panel) {
-        /*for (int i = 0; i < 15; i++) {
-            JPanel p = new JPanel();
-            p.setLayout(new GridBagLayout());
-            p.setBackground(background);
-            p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        try {
+            S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
+            List<String> gameList = s3Uploader.downloadGameList();
 
-            JButton b = createButton("Word" + i, startFont, bHandler, "Null");
-            b.setPreferredSize(new Dimension(650, 50));
-            p.add(b, gbc);
-            panel.add(p, BorderLayout.CENTER);
-        }*/
+            for (String name : gameList) {
+                JPanel p = new JPanel();
+                p.setLayout(new GridBagLayout());
+                p.setBackground(background);
+                p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        File directory = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states");
-        int count = 0;
-        if (directory.exists()) {
-            File[] files = directory.listFiles();
-            for (File file : files) {
-                if (file.getName().contains("save")) {
-                    JPanel p = new JPanel();
-                    p.setLayout(new GridBagLayout());
-                    p.setBackground(background);
-                    p.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-                    JButton b = createButton(file.getName(), startFont, bHandler, "LoadFile");
-
-                    b.setPreferredSize(new Dimension(650, 50));
-                    p.add(b, gbc);
-                    panel.add(p, BorderLayout.CENTER);
-                    count++;
-                }
+                JButton b = createButton(name, startFont, bHandler, "LoadFile");
+                b.setPreferredSize(new Dimension(650, 50));
+                p.add(b, gbc);
+                panel.add(p, BorderLayout.CENTER);
             }
+        } catch (IOException e) {
+            // TODO: Aggiungere Access Denied
         }
     }
 

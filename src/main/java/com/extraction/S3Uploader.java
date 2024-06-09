@@ -12,6 +12,7 @@ import com.extraction.player.PlayerData;
 import com.extraction.utils.GameSaveTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -213,7 +214,7 @@ public class S3Uploader {
                 String fileName = objectSummary.getKey();
 
                 // Check if the file is a save file
-                if (fileName.endsWith(".json")) {
+                if (fileName.endsWith(".json") && fileName.startsWith("save")) {
                     gameList.add(fileName);
                 }
             }
@@ -237,6 +238,40 @@ public class S3Uploader {
 
         // Delete the local game list file
         gameListFile.delete();
+    }
+
+    public List<String> downloadGameList() {
+        String bucketName = "edidsgamesave";
+        String localFilePath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/gameList.json";
+
+        // Download the file from the S3 bucket
+        S3Object s3object = s3Client.getObject(bucketName, "gameList.json");
+        S3ObjectInputStream inputStream = s3object.getObjectContent();
+
+        // Save the file to the local directory
+        File localFile = new File(localFilePath);
+        try (FileOutputStream fos = new FileOutputStream(localFile)) {
+            byte[] read_buf = new byte[1024];
+            int read_len;
+            while ((read_len = inputStream.read(read_buf)) > 0) {
+                fos.write(read_buf, 0, read_len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Deserialize the JSON data in the file into a List<String> object
+        List<String> gameList = new ArrayList<>();
+        try (FileReader reader = new FileReader(localFile)) {
+            gameList = gson.fromJson(reader, new TypeToken<List<String>>(){}.getType());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Delete the local file after deserialization
+        localFile.delete();
+
+        return gameList;
     }
 
     /**
