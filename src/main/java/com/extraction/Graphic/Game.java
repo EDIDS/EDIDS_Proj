@@ -225,6 +225,13 @@ public class Game {
                     JButton button = (JButton) e.getSource();
                     String filename = button.getText();
 
+                    try {
+                        S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
+                        s3Uploader.downloadSaveFile(filename);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
                     Gson gson = new GsonBuilder().registerTypeAdapter(GameSave.class, new GameSaveTypeAdapter()).create();
                     try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + filename)) {
                         GameSave gameData = new GameSave(null, null);

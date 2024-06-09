@@ -244,6 +244,11 @@ public class S3Uploader {
         String bucketName = "edidsgamesave";
         String localFilePath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/gameList.json";
 
+        if (!s3Client.doesObjectExist(bucketName, "gameList.json")) {
+            System.out.println("gameList.json does not exist in the S3 bucket.");
+            return new ArrayList<>(); // return an empty list
+        }
+
         // Download the file from the S3 bucket
         S3Object s3object = s3Client.getObject(bucketName, "gameList.json");
         S3ObjectInputStream inputStream = s3object.getObjectContent();
@@ -272,6 +277,33 @@ public class S3Uploader {
         localFile.delete();
 
         return gameList;
+    }
+
+    public void downloadSaveFile(String fileName) {
+        String bucketName = "edidsgamesave";
+        String localFilePath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + fileName;
+
+        // Check if the file exists in the S3 bucket
+        if (!s3Client.doesObjectExist(bucketName, fileName)) {
+            System.out.println(fileName + " does not exist in the S3 bucket.");
+            return;
+        }
+
+        // Download the file from the S3 bucket
+        S3Object s3object = s3Client.getObject(bucketName, fileName);
+        S3ObjectInputStream inputStream = s3object.getObjectContent();
+
+        // Save the file to the local directory
+        File localFile = new File(localFilePath);
+        try (FileOutputStream fos = new FileOutputStream(localFile)) {
+            byte[] read_buf = new byte[1024];
+            int read_len;
+            while ((read_len = inputStream.read(read_buf)) > 0) {
+                fos.write(read_buf, 0, read_len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

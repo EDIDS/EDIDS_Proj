@@ -47,12 +47,12 @@ public class PlayerTypeAdapter implements JsonSerializer<Player>, JsonDeserializ
         player.setScore(score);
 
 
-        if (jsonObject.has("weapon")){
-            Weapon weapon = itemGson.fromJson(jsonObject.get("weapon"), Weapon.class);
+        if (jsonObject.has("Weapon")){
+            Weapon weapon = itemGson.fromJson(jsonObject.get("Weapon"), Weapon.class);
             player.setWeapon(weapon);
         }
-        if (jsonObject.has("shield")){
-            Shield shield = itemGson.fromJson(jsonObject.get("shield"), Shield.class);
+        if (jsonObject.has("Shield")){
+            Shield shield = itemGson.fromJson(jsonObject.get("Shield"), Shield.class);
             player.setShield(shield);
         }
 
@@ -68,10 +68,10 @@ public class PlayerTypeAdapter implements JsonSerializer<Player>, JsonDeserializ
         jsonObject.add("currentRoom", roomGson.toJsonTree(player.getCurrentRoom_()));
         jsonObject.addProperty("score", player.getScore());
         if (player.getWeapon() != null) {
-            jsonObject.add("weapon", itemGson.toJsonTree(player.getWeapon(), Item.class));
+            jsonObject.add("Weapon", itemGson.toJsonTree(player.getWeapon(), Weapon.class));
         }
         if (player.getShield() != null) {
-            jsonObject.add("shield", itemGson.toJsonTree(player.getShield(), Item.class));
+            jsonObject.add("Shield", itemGson.toJsonTree(player.getShield(), Shield.class));
         }
 
         JsonArray bagArray = new JsonArray();
