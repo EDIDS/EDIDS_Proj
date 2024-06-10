@@ -54,6 +54,9 @@ In this section, the main diagrams required by the assignment are provided.
 ### Domain Model
 ![DomainModel](resources/Documents/Domain-Model-Diagram.png)
 
+## Design class model
+We decided to split the Design Class Model into 3 parts, for readability reasons.
+
 ### Design Class Model Core
 ![DesignClassCore](resources/Documents/Design-Class-Model-Core.png)
 
@@ -217,7 +220,7 @@ Here are the user stories formatted as tables:
 
 ### Unit Test Report
 
-The auto-generated JUnit test report can be found at [this page](/resources/Documents/surefire-report.html).
+The auto-generated JUnit test report can be found at [this page](/resources/UnittestReport/surefire-report.html).
 
 [**Back to Index**](#index-of-contents)
 
