@@ -86,19 +86,6 @@ git clone --branch master https://github.com/EDIDS/EDIDS_Proj.git
 | Amazon S3  |         | An Amazon service used to store our data into an Amazon Bucket                                                                    |
 | Gson       | 2.11.0  | Gson is a Java library that can be used to convert Java Objects into their JSON representation. It's used to save or load a game. |
 
-
-## Dependencies
-
-This projects uses some external libraries to enhance the standard Java capabilities, these include:
-
-- **Gson**
-
-  A simple library made by **Google** that allows us to interact with external files in the ```.json``` format <br>
-  - **AmazonS3 Buckets**
-
-All the above-mentioned dependencies are downloaded form the [**Maven Central Repository**](https://central.sonatype.com/?smo=true)
-and managed by **Gradle**.
-
 ---
 
 ## IDE
