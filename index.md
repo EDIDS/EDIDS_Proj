@@ -47,6 +47,7 @@ Throughout the game, you will have the opportunity to:
 ---
 ## Diagrams
 In this section, the main diagrams required by the assignment are provided.
+
 ### Domain Model
 ![DomainModel](resources/Documents/Domain-Model-Diagram.png)
 
@@ -63,6 +64,7 @@ In this section, the main diagrams required by the assignment are provided.
 
 ## System Sequence Diagram
 This diagram describes the sequence of interactions between external actors and a system for a particular scenario of a use case.
+
 ![SSD](resources/Documents/System-Sequence-Diagram-System_Sequence_Diagram.png)
 
 ---
