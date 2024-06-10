@@ -244,6 +244,15 @@ public class S3Uploader {
 
     public List<String> downloadGameList() {
         String bucketName = "edidsgamesave";
+
+        String localDirectoryPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/";
+
+        // Check if the directory exists, if not, create it
+        File directory = new File(localDirectoryPath);
+        if (!directory.exists()){
+            directory.mkdirs();
+        }
+
         String localFilePath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/gameList.json";
 
         if (!s3Client.doesObjectExist(bucketName, "gameList.json")) {
@@ -283,6 +292,14 @@ public class S3Uploader {
 
     public void downloadSaveFile(String fileName) {
         String bucketName = "edidsgamesave";
+
+        String localDirectoryPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/";
+
+        // Check if the directory exists, if not, create it
+        File directory = new File(localDirectoryPath);
+        if (!directory.exists()){
+            directory.mkdirs();
+        }
         String localFilePath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + fileName;
 
         // Check if the file exists in the S3 bucket
@@ -328,6 +345,14 @@ public class S3Uploader {
 
     public void writeGameList(List<String> gameList) {
         deleteFile("gameList.json");
+
+        String localDirectoryPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/";
+
+        // Check if the directory exists, if not, create it
+        File directory = new File(localDirectoryPath);
+        if (!directory.exists()){
+            directory.mkdirs();
+        }
 
         // Write the game list to a JSON file
         File gameListFile = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/gameList.json");
