@@ -3,49 +3,73 @@
 title Fight
 
 actor User
+participant Story
 participant Fight
 participant Player
 participant Alien
 
-loop playerHealth and enemyHealth > 0
+User -> Story : fight
+Story -> Fight : fight()
+loop
+alt playerTurn
+    opt player dead
+        Fight -> User : displayGameOver
+        Fight -> Fight : end
+    end
+    Fight -> User : displayStatus
     Fight -> User : displayOptions
     User -> User : choose
-    User --> Fight : choice
+    User --> Story : choice
     alt choice = attack
         ref over User, Fight : Attack
-    else choice = escape
+    else choice = leave
+        Story -> Fight : run()
         Fight -> Alien : getEscapeChance()
         return escapeChance
-        opt success
-            Fight -> Fight : endFight
+        alt success
+            Fight --> User : displaySuccess
+            Fight --> User : displayExit
+         else failure
+            Fight --> User : displayFailure
+            Fight -> Fight : alienTurn()
         end
     else choice = heal
         ref over User, Fight : Heal
     else choice = throwTNT
         ref over User, Fight : ThrowTNT
     else illegal choice
-        Fight --> User : Error(invalid choice)
+        Story --> User : Error(invalid choice)
     end
-    Fight -> User : displayStatus()
+else alienTurn
+    opt alien dead
+        Fight -> User : displayVictory
+        Fight -> Fight : calcRoundScore()
+        Fight -> Player : setScore(score)
+        Fight -> Fight : end
+    end
+    Fight -> User : displayStatus
     Fight -> User : displayOptions
         User -> User : choose
-        User --> Fight : choice
+        User --> Story : choice
         alt choice = defend
             ref over User, Fight : Defend
         else choice = elude
+            Story -> Fight : elude()
             Fight -> Alien : getEludeChance()
             return eludeChance
             alt success
                 Fight --> User : displaySuccess
             else failure
-                Fight -> Player : takeDamage()
+                Fight -> Alien :attack()
+                return damage
+                Fight -> Player : takeDamage(damage)
                 Fight --> User : displayFailure
             end
+            Fight -> Fight : playerTurn()
         else illegal choice
-            Fight --> User : Error(invalid choice)
+            Story --> User : Error(invalid choice)
         end
-    Fight -> User : displayStatus()
 end
-Fight -> User : displayResult
+end
 
 @enduml

@@ -65,7 +65,7 @@ class S3Uploader {
     getMaxSaveNumberFromS3() : int
 }
 
-S3Uploader"1" ..> "1"AwsConfigReader : uses
+S3Uploader"1" ..> "1"AwsConfigReader : reads with
 S3Uploader ..> GameSave : uploads
 GameSave"1" --> "1"Building : saves
 GameSave"1" --> "1"Player : saves

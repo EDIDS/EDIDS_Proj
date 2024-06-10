@@ -187,7 +187,7 @@ Alien <|-- Shambler : extends
 
 Fight"1" --> "1"Player : is fought by
 Fight"1" --> "1"Alien : is fought by
-Fight"1" --> "1"Story : operates on
+Fight"1" --> "1"Story : happens in
 
 Item <|-- Key : extends
 Item <|-- MedKit : extends

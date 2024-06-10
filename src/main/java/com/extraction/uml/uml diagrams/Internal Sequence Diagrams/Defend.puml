@@ -3,19 +3,29 @@
 title Defend
 
 actor User
+participant Story
 participant Fight
 participant Player
 participant Shield
 participant Alien
 
-User -> Fight : defend
+User -> Story : defend
+Story -> Fight : defend()
 Fight -> Alien : attack()
 return damage
 Fight -> Player : defend(damage)
-Player -> Shield : getDefense()
-return defense
-Player --> Fight : reducedDamage
-Fight -> Player : takeDamage(reducedDamage)
-Fight --> User : displayReducedDamage
+alt hasShield
+    Player -> Shield : getDefense()
+    return defense
+    Player --> Fight : reducedDamage
+    Fight -> Player : takeDamage(reducedDamage)
+    Fight --> User : displayReducedDamage
+else hasNotShield
+    Player --> Fight : damage
+    Fight -> Player : takeDamage(damage)
+    Fight --> User : Error(no shield)
+    Fight --> User : displayDamage
+end
+Fight -> Fight :playerTurn()
 
 @enduml

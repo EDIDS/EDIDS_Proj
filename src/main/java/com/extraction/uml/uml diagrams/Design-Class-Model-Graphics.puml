@@ -119,10 +119,10 @@ Game"1" --> "1"Player : instantiates
 Game"1" --> "1"Story : operates on
 
 VisibilityManager"1" --> "1"UI : operates through
-UI"1" --> "1"ButtonsHandler : uses
+UI"1" --> "1"ButtonsHandler : operates through
 
-Story"1" --> "1"IntroductionDialog : uses
-Story"1" --> "1"EndingDialog : uses
+Story"1" --> "1"IntroductionDialog : tells
+Story"1" --> "1"EndingDialog : tells
 Story"1" --> "1"VisibilityManager : is displayed by
 Story"1" --> "1"UI : is displayed by
 Story"1" --> "1"Player : operates on

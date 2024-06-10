@@ -5,7 +5,8 @@ title System Sequence Diagram
 actor User
 participant System
 
-User -> System : startGame
+User -> System : start
+return displayIntroduction
 loop finish = false
     User -> System : move(direction)
     alt legal direction
@@ -19,29 +20,43 @@ loop finish = false
             end
         end
         opt enemy
-            loop enemy = true
-                alt
-                    User -> System : fight()
-                    System -> System : fight
-                    System --> User : status
-                else
-                    User -> System : escape()
-                    System -> System : enemy = false
+            loop fight = true
+                alt playerTurn
+                    opt player dead
+                        System -> User : game over
+                        System -> System : finish = true
+                    end
+                    System --> User : displayStatus
+                    System --> User : displayChoices
+                    return choice
+                    System -> System
+                    System -> User : displayResult
+                else alienTurn
+                    opt alien dead
+                        System -> User : displayVictory
+                        System -> System : updateScore
+                        System -> System : fight = false
+                    end
+                    System --> User : displayStatus
+                    System --> User : displayChoices
+                    return choice
+                    System -> System
+                    System -> User : displayResult
                 end
             end
-            System --> User : result
-            opt result = loss
-                System -> User : you lose
-                System -> System : finish = true
-            end
         end
-    opt use item
-        User -> System : useItem(item)
-        alt hasItem
-            System -> System : useItem
-        else hasNotItem
-            System --> User : Error(invalid item)
-        end
+    opt throw item
+        User -> System : throwItem(item)
+        return displayItems
+    end
+    opt exit
+        User -> System : exit
+        System -> System : finish = true
+    end
+    opt save and exit
+        User -> System : save and exit
+        System -> System : save game
+        System -> System : finish = true
     end
   else illegal direction
     System --> User : Error(illegal move)

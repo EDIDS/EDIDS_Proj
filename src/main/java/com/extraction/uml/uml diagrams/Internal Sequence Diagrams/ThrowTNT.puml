@@ -1,13 +1,15 @@
 @startuml
 
 actor User
+participant Story
 participant Fight
 participant Player
 participant Alien
 participant Bag
 participant TNT
 
-User -> Fight : throwTNT
+User -> Story : throwTNT
+Story -> Fight : tnt()
 Fight -> Player : detonateTNT()
 Player -> Bag : findItem(TNT)
 alt hasTNT
@@ -18,10 +20,11 @@ alt hasTNT
     Player --> Fight : damage
     Fight -> Alien : takeDamage(damage)
     Fight --> User : displayDamage
+    Fight -> Fight : alienTurn()
 else hasNotTNT
     Bag --> Player : Error(not found)
-    Player --> Fight : Error(not found)
-    Fight --> User : Error(invalid command)
+    Player --> User : Error(no TNT)
+    Fight -> Fight : playerTurn()
 end
 
 @enduml
