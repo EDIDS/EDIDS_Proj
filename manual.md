@@ -24,7 +24,7 @@ When you start the game, this window appears:
 
 Here you have two options: you can click start and begin a new game or you can load a saved game. If you chose the second option, you will see a list of your saved files:
 
-![[loadList.png]]
+![LoadList](resources/images/loadList.png)
 
 After clicking the desired file, the game starts, and you will see this window:
 
@@ -38,7 +38,7 @@ Everytime you move, a description of the room will appear on screen. This descri
 
 During the game, you can encounter three different types of Alien: Runner, Clicker and Shambler, and the fight window will be:
 
-![[fight.png]]
+![Fight](resources/images/fight.png)
 
 Here you have the options to:
 - Attack: the damage depends on what weapon you have
@@ -61,7 +61,7 @@ Sometimes you will find some items inside the rooms: those items could be:
 - A **Medikit**
 - A **Torch** to access dark rooms
 
-![[itemPick.png]]
+![ItemPick](resources/images/itemPick.png)
 
 To win the game, the only way is to find the keys to open the room where the hostage is trapped and go back to the starting point, the **Extraction point**
 
@@ -110,8 +110,20 @@ repository already contains all the configuration files to run gradle scripts.
 
 ---
 
-## Executables and platforms
+### AmazonAWS toolkit plugin
+This apllication saves and loads the games into an Amazon S3 bucket. 
 
+The connection works by using two keys related to the admin of that bucket or eventually the other member that have access to it.
+
+In this project we decided to use the official toolkit from Amazon to make it possible. This plugin automatically creates a local config file under an hidden folder named .aws in your root directory, which is obviously not uploaded on GitHub for security reasons.
+
+So, when the admin gives your access and secret key, you have to paste them inside this file after
+
+[default]
+aws_access_key_id = [YOUR ACCESS KEY]
+aws_secret_access_key = [YOUR SECRET KEY]
+
+Once this is done, the connection to the bucket will be successful.
 
 ---
 
