@@ -48,26 +48,26 @@ Throughout the game, you will have the opportunity to:
 ## Diagrams
 
 ### Domain Model
-![DomainModel](resources/Documents/Domain-Model-Diagram)
+![DomainModel](resources/Documents/Domain-Model-Diagram.png)
 
 ### Design Class Model Core
-![DesignClassCore](resources/Documents/Design-Class-Model-Core)
+![DesignClassCore](resources/Documents/Design-Class-Model-Core.png)
 
 ### Design Class Model Graphics
-![DesignClassGraphics](resources/Documents/Design-Class-Model-Graphics-Design_Class_Model)
+![DesignClassGraphics](resources/Documents/Design-Class-Model-Graphics-Design_Class_Model.png)
 
 ### Design-Class-Model-Upload
-![DesignClassGraphics](resources/Documents/Design-Class-Model-Graphics-Design_Class_Model)
+![DesignClassGraphics](resources/Documents/Design-Class-Model-Graphics-Design_Class_Model.png)
 
 ---
 
 ## System Sequence Diagram
-![SSD](resources/Documents/System-Sequence-Diagram-System_Sequence_Diagram)
+![SSD](resources/Documents/System-Sequence-Diagram-System_Sequence_Diagram.png)
 
 ---
 
 ## Internal Sequence Diagrams
-![Attack](resources/Documents/Internal-Sequence-Diagram/Attack-Attack)
+![Attack](resources/Documents/Internal-Sequence-Diagram/Attack-Attack.png)
 
 ---
 
