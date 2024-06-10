@@ -15,6 +15,9 @@ Below is reported a clickable list of all the section of this page:
 4) [Specification Document](#Specification-Document)
 5) [Code](#Code)
 6) [System Test Document](#System-Test-Document)
+7) [Unit Test Report](#Unit-Test-Report)
+8) [Manual](#Manual)
+9) [Contributors](#Contributors)
 
 
 ---
@@ -97,6 +100,5 @@ This project was carried out by:
 | Giorgio Prizzolon | 2032447   |
 | Gabriele Posenato | -         |
 
-<br>
 
 [**Back to Index**](#index-of-contents)
