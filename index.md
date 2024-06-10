@@ -228,7 +228,7 @@ The auto-generated JUnit test report can be found at [this page](/resources/Unit
 
 ### Manual
 
-If you want to consult the **Manual** click [here]. 
+If you want to consult the **Manual** click [here](manual.md). 
 
 [**Back to Index**](#index-of-contents)
 
