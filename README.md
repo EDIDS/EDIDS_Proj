@@ -1,8 +1,84 @@
 # Extraction - Text adventure
-### Introduzione
-“Extraction” è un’avventura testuale che prende vita dal rinomato videogioco di Ubisoft, “**Rainbow Six Extraction**”. In un mondo sconvolto da un’invasione parassitaria aliena, il caos e la distruzione regnano sovrani. Tu, un valoroso guerriero dell’elite della squadra Rainbow, sei stato selezionato per una missione di vitale importanza. Il tuo compito è quello di infiltrarti in un edificio, affrontare e sconfiggere gli archei che ostacolano il tuo percorso, e portare in salvo il tuo compagno prigioniero. La tua missione è pericolosa, ma la speranza di un mondo migliore riposa sulle tue spalle.
+### Introduction
+“Extraction” is a text adventure that comes to life from the renowned Ubisoft video game, “**Rainbow Six Extraction**”. In a world upset by an alien parasitic invasion, chaos and destruction reign supreme. You, a valiant warrior of the elite Rainbow team, have been selected for a mission of vital importance. Your task is to infiltrate a building, confront and defeat the archons that hinder your path, and save your imprisoned companion. Your mission is dangerous, but the hope of a better world rests on your shoulders.
 
-## Tecnologie usate
+### Index
+- [[#Project Description and Implementation|Project Description and Implementation]]
+- [[#How to play Extraction|How to play Extraction]]
+- [[#Cloning this repository|Cloning this repository]]
+- [[#Technologies used in this project|Technologies used in this project]]
+- [[#Dependencies|Dependencies]]
+- [[#IDE|IDE]]
+- [[#Executables and platforms|Executables and platforms]]
+- [[#Saved files|Saved files]]
+
+
+## Project Description and Implementation
+During the initial stages of the project, we discussed the plot and specifications of the game. Once the specification and design phases were completed, we began developing the game, dividing the tasks but working in sync. Our goal was to create a simple role-playing game (RPG), based on a pre-existing game, that would allow the player to explore a building full of enemies with the ultimate goal of saving a hostage.
+
+---
+
+## How to play Extraction
+
+When you start the game, this window appears:
+![[startmenu.png]]
+
+Here you have two options: you can click start and begin a new game or you can load a saved game. If you chose the second option, you will see a list of your saved files:
+
+![[loadList.png]]
+
+After clicking the desired file, the game starts, and you will see this window:
+
+
+Here you can visualize the map and move to North, South, East and West. If you have already visisted a room, a checkmark will appear over the room.
+
+Everytime you move, a description of the room will appear on screen. This description includes
+- Name of the room
+- a short visual description
+- eventual enemies or items
+
+During the game, you can encounter three different types of Alien: Runner, Clicker and Shambler, and the fight window will be:
+
+![[fight.png]]
+
+Here you have the options to:
+- Attack: the damage depends on what weapon you have
+- Leave the fight
+- Protect yourself with a **Shielf** if you find one
+- **Elude**
+- Heal yourself using the **Medikit** if you have one
+- Throw a **TNT** to deal more damage
+
+If you successfully won the battle, you will gain a **Score**.
+
+Sometimes you will find some items inside the rooms: those items could be:
+- A **weapon**
+	- Revolver
+	- AK47
+	- USPSWORM
+- A **key** to open the locked mate room
+- **TNTs** to fight the enemies
+- A **Shield** 
+- A **Medikit**
+- A **Torch** to access dark rooms
+
+![[itemPick.png]]
+
+To win the game, the only way is to find the keys to open the room where the hostage is trapped and go back to the starting point, the **Extraction point**
+
+---
+
+## Cloning this repository
+
+
+``` batch
+git clone --branch master https://github.com/EDIDS/EDIDS_Proj.git
+```
+
+---
+
+## Technologies used in this project
+
 | Name       | Version | Description                                                                                                                       |
 | ---------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Java       | 20      | Environment and programming language used to develop the application.                                                             |
@@ -11,33 +87,37 @@
 | Amazon S3  |         | An Amazon service used to store our data into an Amazon Bucket                                                                    |
 | Gson       | 2.11.0  | Gson is a Java library that can be used to convert Java Objects into their JSON representation. It's used to save or load a game. |
 
-## Project Description and Implementation
-Nelle fasi iniziali dello sviluppo del progetto, sono state discusse la trama e le specifiche del gioco. 
-In seguito, ultimate le specifiche e le design phases, abbiamo iniziato a sviluppare il nostro gioco, dividendoci le mansioni ma lavorando comunque in sincronia.
-La nostra idea era quella di implementare un semplice gioco rpg, basato in questo caso su un gioco già esistente, che consentisse l'esplorazione di un edificio occupato da dei nemici con l'obiettivo di salvare un ostaggio.
 
-## Interfaccia grafica e movimento
-L'interfaccia grafica è stata sviluppata attraverso un framework chiamato "Swing" (spiegare ulteriormente come  funziona)
+## Dependencies
 
-L'interfaccia mostra la mappa dell'edificio, con le varie stanze in cui il giocatore può andare. In basso ci sono 4 bottoni: Nord, Sud, Est e Ovest, adibiti allo spostamento del giocatore. Ovviamente, se nella direzione scelta non c'è una stanza allora lo spostamento verrà negato.
-Ogni stanza può contenere un alieno e una serie di oggetti, che eventualmente il giocatore potrà raccogliere.
-Tutte queste informazioni verranno scritte a schermo.
+This projects uses some external libraries to enhance the standard Java capabilities, these include:
 
-## Il gioco
-Il gioco è ambientato in un edificio conquistato da un parassita alieno. Un compagno del team Rainbow è stato catturato da questi alieni e il tuo obiettivo sarà quello di salvarlo, trovandolo e uscendo dall'edificio.
-Nella ricerca, potrai incorrere in alcuni di questi alieni, che dovrai combattere o da cui potrai fuggire. Se durante il combattimento perderai tutta la vita, allora sarà game over.
-Nelle varie stanze potrai trovare alcuni oggetti che potrai raccogliere.
-Attenzione però che potrai portare un certo numero di oggetti e dovrai restare sotto un certo peso. Potrai rimuovere dal tuo inventario gli oggetti che non vuoi puoi tenere.
-In qualsiasi momento della partita, il giocatore potrà salvare la partita. Dal menù iniziale, potrà infine caricare una partita tra quelle salvate in precedenza
+- **Gson**
+
+  A simple library made by **Google** that allows us to interact with external files in the ```.json``` format <br>
+  - **AmazonS3 Buckets**
+
+All the above-mentioned dependencies are downloaded form the [**Maven Central Repository**](https://central.sonatype.com/?smo=true)
+and managed by **Gradle**.
 
 ---
 
-## Specification Document
-Questa sezione contiene gli Use Case Diagram. Sotto sono riportate le tabelle di ogni use case:
+## IDE
 
-inserire tabelle degli use case
+This project was developed entirely in JetBrain's **IntelliJ IDEA 2024**.
+
+If you want to clone this repository and take a look at the code we strongly suggest to use the same IDE as the
+repository already contains all the configuration files to run gradle scripts.
 
 ---
 
-## Design document
+## Executables and platforms
+
+
 ---
+
+## Saved files
+
+The Extraction game includes a **save** features that allows the player to export all the current game data to a ```.json``` file. In this way a game can be resumed at any time and even on a different computer.
+
+Any alteration of the exported files may result in unwanted behaviour or sometimes even complete crashes of the application.
