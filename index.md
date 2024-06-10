@@ -2,6 +2,7 @@
 permalink: /
 ---
 
+
 # Documentation
 
 This page contains all the documentation associated for the **Text adventure** project.
@@ -13,13 +14,16 @@ of choice.
 
 Below is reported a clickable list of all the section of this page:
 
-1. [**Specification Document**](#specification-document)
-2. [**Design Document**](#design-document)
-3. [**Code**](#code)
-4. [**System Test Document**](#system-test-document)
-5. [**Unit Test Report**](#unit-test-report)
-6. [**Manual**](#manual)
-7. [**Contributors**](#contributors)
+- [[#Introduction|Introduction]]
+- [[#Graphic interface and movement control|Graphic interface and movement control]]
+- [[#The Game|The Game]]
+- [[#Specification Document|Specification Document]]
+- [[#Code|Code]]
+- [[#System Test Document|System Test Document]]
+- [[#Unit Test Report|Unit Test Report]]
+- [[#Manual|Manual]]
+- [[#Contributors|Contributors]]
+
 
 ---
 
@@ -28,14 +32,14 @@ Below is reported a clickable list of all the section of this page:
 
 ---
 
-## Graphic interface and movement control 
+### Graphic interface and movement control 
 The graphic interface was created using a framework known as “Swing”, (which requires further details to fully understand its operation).
 
 The interface displays the building’s map, highlighting the different rooms that the player can visit. At the bottom of the interface, there are four buttons: North, South, East, and West, which guide the player’s movement. If the chosen direction does not lead to a room, the movement is prevented. Each room can host an alien and a variety of objects that the player can eventually collect. All this information is displayed on the screen.
 
 ---
 
-## The Game
+### The Game
 The game is set in a building overrun by an alien parasite. A member of the Rainbow team has been taken hostage by these aliens, and your primary goal will be to locate and rescue him, exiting the building. During your mission, you may encounter some of these aliens, whom you will have to fight or from whom you will have to escape. If you lose all your life during a fight, the game will end.
 
 Throughout the game, you will have the opportunity to:
@@ -47,7 +51,7 @@ Throughout the game, you will have the opportunity to:
 
 ---
 
-## Specification Document
+### Specification Document
 
 This section contains the **Use Case Diagram**
 
@@ -56,7 +60,7 @@ This section contains the **Use Case Diagram**
 
 ---
 
-## Code
+### Code
 
 The entire **code** of this project is hosted on GitHub and the repository can be found at [this page](https://github.com/EDIDS/EDIDS_Proj).
 
@@ -64,7 +68,7 @@ The entire **code** of this project is hosted on GitHub and the repository can b
 
 ---
 
-## System Test Document
+### System Test Document
 
 The **System Test Report** can be found at [this page]()
 
@@ -72,7 +76,7 @@ The **System Test Report** can be found at [this page]()
 
 ---
 
-## Unit Test Report
+### Unit Test Report
 
 The auto-generated JUnit test report can be found at [this page](/resources/UnitTestReport/index.html).
 
@@ -82,7 +86,7 @@ These tests were performed on **4 July 2023** and include all the latest test ca
 
 ---
 
-## Manual
+### Manual
 
 If you want to consult the **Manual** of the **Klotski** application click [here]. 
 
@@ -90,7 +94,7 @@ If you want to consult the **Manual** of the **Klotski** application click [here
 
 ---
 
-## Contributors
+### Contributors
 
 This project was carried out by:
 
