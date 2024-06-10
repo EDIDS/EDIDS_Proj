@@ -151,7 +151,8 @@ public class Game {
         ui.setIcon(row, col, ui.playerIconPath);
 
         ui.setCol1(player.getHealth() + "");
-        ui.setCol2(player.getWeapon().getType());
+        if (player.getWeapon() != null)
+            ui.setCol2(player.getWeapon().getType());
         ui.setCol3(player.getScore() + "");
 
         story.map();

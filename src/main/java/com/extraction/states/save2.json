@@ -93,7 +93,7 @@
         "coordinate": "4, 2",
         "title": "Hall",
         "description": "A large dark hall",
-        "iconPath": "C:\\Users\\alexv\\IdeaProjects\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/logout.png",
+        "iconPath": "/home/alevulcu/IdeaProjects/EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/logout.png",
         "is_closed": false,
         "items": []
       },
@@ -228,7 +228,7 @@
       "coordinate": "4, 2",
       "title": "Hall",
       "description": "A large dark hall",
-      "iconPath": "C:\\Users\\alexv\\IdeaProjects\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/logout.png",
+      "iconPath": "/home/alevulcu/IdeaProjects/EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/logout.png",
       "is_closed": false,
       "items": []
     },
