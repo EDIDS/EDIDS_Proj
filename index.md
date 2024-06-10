@@ -45,13 +45,29 @@ Throughout the game, you will have the opportunity to:
 
 
 ---
+## Diagrams
 
-### Specification Document
+### Domain Model
+![DomainModel](resources/Documents/Domain-Model-Diagram)
 
-This section contains the **Use Case Diagram**
+### Design Class Model Core
+![DesignClassCore](resources/Documents/Design-Class-Model-Core)
 
+### Design Class Model Graphics
+![DesignClassGraphics](resources/Documents/Design-Class-Model-Graphics-Design_Class_Model)
 
-[**Back to Index**](#index-of-contents)
+### Design-Class-Model-Upload
+![DesignClassGraphics](resources/Documents/Design-Class-Model-Graphics-Design_Class_Model)
+
+---
+
+## System Sequence Diagram
+![SSD](resources/Documents/System-Sequence-Diagram-System_Sequence_Diagram)
+
+---
+
+## Internal Sequence Diagrams
+![Attack](resources/Documents/Internal-Sequence-Diagram/Attack-Attack)
 
 ---
 
@@ -105,19 +121,8 @@ Here are the user stories formatted as tables:
 | **Actual result**   | The player sees a save button.<br>The game gathers and saves the required information.<br>The saved data file is uploaded to the cloud.<br>A success message confirms the upload.                        |
 | **Status**          |    **PASSED**                        |
 
-### User Story 4: Displaying Possible Combat Actions
 
-| **Titolo**          | Displaying Possible Combat Actions                                                                       |
-| ------------------- | -------------------------------------------------------------------------------------------------------- |
-| **Summary**         | As a player, I want to see the possible actions during combat, so that I can choose how to fight.        |
-| **Pre Condition**   | The player is in combat with an enemy.<br>The game interface is active.                                  |
-| **Post Condition**  | The player can see a list of possible actions.                                                           |
-| **Flow of Events**  | 1. The game enters combat mode.<br>2. Display possible actions (e.g., Attack, Defend, Elude, Cure, Run). |
-| **Expected result** | The player is presented with a list of combat actions.                                                   |
-| **Actual result**   | [To be filled in after test execution]                                                                   |
-| **Status**          |    **PASSED**                        |
-
-### User Story 5: Attacking the Enemy
+### User Story 4: Attacking the Enemy
 
 | **Titolo**          | Attacking the Enemy                                           |
 |---------------------|---------------------------------------------------------------|
@@ -126,10 +131,10 @@ Here are the user stories formatted as tables:
 | **Post Condition**  | The enemy's health is decreased by the player's attack value. |
 | **Flow of Events**  | 1. The player chooses to attack.<br>2. Retrieve player's attack value.<br>3. Decrease enemy's health by the attack value (e.g., attack = 30, enemy's health 50 -> 20). |
 | **Expected result** | The enemy's health decreases according to the player's attack value. |
-| **Actual result**   | [To be filled in after test execution]                        |
+| **Actual result**   | The enemy's health decreases according to the player's attack value.                         |
 | **Status**          |    **PASSED**                        |
 
-### User Story 6: Defending Against an Attack
+### User Story 5: Defending Against an Attack
 
 | **Titolo**          | Defending Against an Attack                                   |
 |---------------------|---------------------------------------------------------------|
@@ -138,10 +143,10 @@ Here are the user stories formatted as tables:
 | **Post Condition**  | The player's health decreases based on the enemy's attack minus the player's defense. |
 | **Flow of Events**  | 1. The player chooses to defend.<br>2. Retrieve enemy's attack value and player's defense value.<br>3. Decrease enemy's attack by player's defense and decrease player's health by the resulting value (e.g., enemy's attack = 20, defense = 10 -> health 100 -> 90). |
 | **Expected result** | The player's health decreases by the reduced damage amount. |
-| **Actual result**   | [To be filled in after test execution]                        |
+| **Actual result**   | The player's health decreases by the reduced damage amount.                        |
 | **Status**          |    **PASSED**                        |
 
-### User Story 7: Curing with a Medkit
+### User Story 6: Curing with a Medkit
 
 | **Titolo**          | Curing with a Medikit                                                                                                                                                                                                        |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -150,10 +155,10 @@ Here are the user stories formatted as tables:
 | **Post Condition**  | The player's health is restored to its maximum value if a medikit is found.<br>An error message is displayed if no medikit is found.                                                                                         |
 | **Flow of Events**  | 1. The player chooses to cure.<br>2. Search the bag for a medikit.<br>3. If a medikit is found, set player's health to its maximum value.<br>4. If no medikit is found, display an error message (e.g., "No medikit found"). |
 | **Expected result** | The player's health is restored to its maximum value if a medikit is found.<br>An error message is displayed if no medikit is found.                                                                                         |
-| **Actual result**   | [To be filled in after test execution]                                                                                                                                                                                       |
+| **Actual result**   | The player's health is restored to its maximum value if a medikit is found.<br>An error message is displayed if no medikit is found.                                                                                                                                                                                        |
 | **Status**          |    **PASSED**                        |
 
-### User Story 8: Updating Player's Score
+### User Story 7: Updating Player's Score
 
 | **Titolo**          | Updating Player's Score                                       |
 |---------------------|---------------------------------------------------------------|
@@ -162,23 +167,11 @@ Here are the user stories formatted as tables:
 | **Post Condition**  | The player's score is updated based on the combat results. |
 | **Flow of Events**  | 1. The combat ends.<br>2. Compute the score based on the fight's data.<br>3. Update the player's score. |
 | **Expected result** | The player's score is updated based on the combat results. |
-| **Actual result**   | [To be filled in after test execution]                        |
+| **Actual result**   | The player's score is updated based on the combat results.                        |
 | **Status**          |    **PASSED**                        |
 
 
-### User Story 9: Saving the Game's State
-
-| **Titolo**          | Saving the Game's State                                       |
-|---------------------|---------------------------------------------------------------|
-| **Summary**         | As a player, I want to be able to save the game's state, so that I can reuse it later. |
-| **Pre Condition**   | The player is in the game interface.                          |
-| **Post Condition**  | The game's state is saved and uploaded successfully.          |
-| **Flow of Events**  | 1. Display save button.<br>2. Gather game's information (e.g., Player's and Building's data).<br>3. Save the gathered data in a file.<br>4. Upload the file to a cloud service (e.g., AWS).<br>5. Display success message if the upload is successful. |
-| **Expected result** | The game's state is saved and a success message is displayed. |
-| **Actual result**   | The game's state is saved and a success message is displayed. |
-| **Status**          |    **PASSED**                        |
-
-### User Story 10: Loading Previous Games
+### User Story 8: Loading Previous Games
 
 | **Titolo**          | Loading Previous Games                                        |
 |---------------------|---------------------------------------------------------------|
