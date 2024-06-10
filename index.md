@@ -46,7 +46,7 @@ Throughout the game, you will have the opportunity to:
 
 ---
 ## Diagrams
-
+In this section, the main diagrams required by the assignment are provided.
 ### Domain Model
 ![DomainModel](resources/Documents/Domain-Model-Diagram.png)
 
@@ -62,12 +62,35 @@ Throughout the game, you will have the opportunity to:
 ---
 
 ## System Sequence Diagram
+This diagram describes the sequence of interactions between external actors and a system for a particular scenario of a use case.
 ![SSD](resources/Documents/System-Sequence-Diagram-System_Sequence_Diagram.png)
 
 ---
 
 ## Internal Sequence Diagrams
+Unlike the System Sequence Diagram, the Internal Sequence Diagram describes the interactions between internal components or objects within a system for a specific scenario of a use case. Here are some of the main ISD:
+
+### Attack
 ![Attack](resources/Documents/Internal-Sequence-Diagram/Attack-Attack.png)
+
+### Collect Item/Add Item
+![CollectItem](resources/Documents/Collect-Item-Add_Item.png)
+
+### Defend
+![Defend](resources/Documents/Defend-Defend.png)
+
+### Fight
+![Fight](resources/Documents/Fight-Fight.png)
+
+### Heal
+![Heal](resources/Documents/Heal-Heal.png)
+
+### Throw Item
+![ThrowItem](resources/Documents/Throw-Item-Throw_Item.png)
+
+### Throw TNT
+![ThrowTNT](resources/Documents/ThrowTNT.png)
+
 
 ---
 
