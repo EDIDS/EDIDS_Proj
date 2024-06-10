@@ -1,3 +1,5 @@
+Design Class Model which describes the system's loading behaviour.
+
 @startuml
 'https://plantuml.com/class-diagram
 
@@ -12,8 +14,13 @@ class Game {
     loadGame()
 }
 
-class LoadHandler {
+class ButtonsHandler {
     actionPerformed(e:ActionEvent)
+}
+
+class UI {
+    bHandler : buttonsHandler
+    createLoadPanel()
 }
 
 class AlienTypeAdapter {
@@ -63,16 +70,20 @@ class S3Uploader {
     saveGame(player:Player, building:Building)
     downloadAllGames()
     getMaxSaveNumberFromS3() : int
+    downloadSaveFile(fileName:String)
 }
+
+UI ..> S3Uploader : loads through
 
 S3Uploader"1" ..> "1"AwsConfigReader : reads with
 S3Uploader ..> GameSave : uploads
 GameSave"1" --> "1"Building : saves
 GameSave"1" --> "1"Player : saves
 
-Game *-- LoadHandler : belongs to
+Game *--ButtonsHandler : belongs to
+UI --> ButtonsHandler : operates through
 Game"1" --> "1"GameSave : loads
-Game"1" ..> S3Uploader : uses
+Game"1" ..> S3Uploader : loads through
 
 AlienTypeAdapter"1" <.. "1"RoomTypeAdapter : uses
 RoomTypeAdapter"1" <.. "1"BuildingTypeAdapter : uses
