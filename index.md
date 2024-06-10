@@ -219,9 +219,9 @@ This project was carried out by:
 |     **Name**      | **Badge** |
 | :---------------: | --------- |
 | Alessandro Vulcu  | 2041835   |
-|  Gabriele Zolla   | 2032448   |
-| Giorgio Prizzolon | 2032447   |
-| Gabriele Posenato | -         |
+|  Gabriele Zolla   |  2066629  |
+| Giorgio Prizzon | 2066587   |
+| Gabriele Posenato |   2066668   |
 
 
 [**Back to Index**](#index-of-contents)
