@@ -28,7 +28,7 @@ public class UI {
     JPanel titlePanel;
     private JLabel titleLabel;
     private String title = "Extraction";
-    private Font titleFont = new Font("Serif", Font.BOLD, 70);
+    private final Font titleFont = new Font("Serif", Font.BOLD, 70);
 
     JPanel startPanel;
     private JButton startButton;
@@ -191,12 +191,16 @@ public class UI {
         loadPanel.setLayout(new BoxLayout(loadPanel, BoxLayout.Y_AXIS));
         loadPanel.setBackground(Color.BLACK);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(background);
+        //JPanel panel = new JPanel();
+        //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        //panel.setBackground(background);
+        loadListPanel = new JPanel();
+        loadListPanel.setLayout(new BoxLayout(loadListPanel, BoxLayout.Y_AXIS));
+        loadListPanel.setBackground(background);
 
-        //loadList();
+        loadList();
 
+        //loadListPanel = new JPanel();
         scroll = new JScrollPane(loadListPanel);
         scroll.setBorder(BorderFactory.createEmptyBorder());
 
@@ -207,7 +211,7 @@ public class UI {
      * Fills the load list with saved games.
      */
     public void loadList() {
-        loadListPanel = new JPanel();
+        loadListPanel.removeAll();
         try {
             S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
             List<String> gameList = s3Uploader.downloadGameList();

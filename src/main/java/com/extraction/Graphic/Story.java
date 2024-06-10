@@ -415,21 +415,21 @@ public class Story {
                 Weapon revolver = new Weapon("REVOLVER");
                 if (player.addItem(revolver)) {
                     ui.setCol2(player.getWeapon().getType());
-                    nextRoom.removeItem(revolver);
+                    nextRoom.removeItem("REVOLVER");
                 }
                 break;
             case "USPSWORM":
                 Weapon uspswarm = new Weapon("USPSWORM");
                 if (player.addItem(uspswarm)) {
                     ui.setCol2(player.getWeapon().getType());
-                    nextRoom.removeItem(uspswarm);
+                    nextRoom.removeItem("USPSWORM");
                 }
                 break;
             case "AK47":
                 Weapon ak47 = new Weapon("AK47");
                 if (player.addItem(ak47)) {
                     ui.setCol2(player.getWeapon().getType());
-                    nextRoom.removeItem(ak47);
+                    nextRoom.removeItem("AK47");
                 }
                 break;
             case "RemoveMedKit":
