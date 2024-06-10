@@ -1,18 +1,15 @@
----
-permalink: /manual/
----
-
 # Extraction Manual
 
 # Index
-- [[#Project Description and Implementation|Project Description and Implementation]]
-- [[#How to play Extraction|How to play Extraction]]
-- [[#Cloning this repository|Cloning this repository]]
-- [[#Technologies used in this project|Technologies used in this project]]
-- [[#Dependencies|Dependencies]]
-- [[#IDE|IDE]]
-- [[#Executables and platforms|Executables and platforms]]
-- [[#Saved files|Saved files]]
+- [Project Description and Implementation](#project-description-and-implementation)
+- [How to Play Extraction](#how-to-play-extraction)
+- [Cloning This Repository](#cloning-this-repository)
+- [Technologies Used in This Project](#technologies-used-in-this-project)
+- [Dependencies](#dependencies)
+- [IDE](#ide)
+- [Executables and Platforms](#executables-and-platforms)
+- [Saved Files](#saved-files)
+
 
 
 ## Project Description and Implementation
@@ -23,7 +20,7 @@ During the initial stages of the project, we discussed the plot and specificatio
 ## How to play Extraction
 
 When you start the game, this window appears:
-![[startmenu.png]]
+![StartMenu](resources/images/startmenu.png)
 
 Here you have two options: you can click start and begin a new game or you can load a saved game. If you chose the second option, you will see a list of your saved files:
 
