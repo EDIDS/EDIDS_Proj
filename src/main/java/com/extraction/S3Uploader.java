@@ -8,7 +8,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import com.extraction.map.Building;
 import com.extraction.player.Player;
-import com.extraction.player.PlayerData;
 import com.extraction.utils.GameSaveTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,7 +15,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +23,9 @@ import java.util.Map;
  * It also provides functionality to save the game state, download all games, and generate a list of games.
  */
 public class S3Uploader {
-    private String bucketName;
-    private AmazonS3 s3Client;
-    private Gson gson = new GsonBuilder().registerTypeAdapter(GameSave.class, new GameSaveTypeAdapter()).setPrettyPrinting().create();
+    private final String bucketName;
+    private final AmazonS3 s3Client;
+    private final Gson gson = new GsonBuilder().registerTypeAdapter(GameSave.class, new GameSaveTypeAdapter()).setPrettyPrinting().create();
 
     /**
      * Constructs a new S3Uploader with the given AWS profile, region, and bucket name.
@@ -44,21 +42,6 @@ public class S3Uploader {
                 .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                 .build();
         this.bucketName = bucketName;
-    }
-
-    /**
-     * Uploads all files in a directory to the S3 bucket.
-     * @param directoryPath The path of the directory.
-     */
-    public void uploadDirectory(String directoryPath) {
-        File dir = new File(directoryPath);
-        File[] files = dir.listFiles();
-
-        if (files != null) {
-            for (File file : files) {
-                uploadFile(file);
-            }
-        }
     }
 
     /**
@@ -88,7 +71,6 @@ public class S3Uploader {
             if (!directory.exists()){
                 directory.mkdirs();
             }
-            File[] files = directory.listFiles();
 
             // The new save number is one more than the max save number
             int newSaveNumber = getMaxSaveNumberFromS3();
@@ -169,7 +151,6 @@ public class S3Uploader {
      */
     public int getMaxSaveNumberFromS3() {
         String bucketName = "edidsgamesave";
-        //String prefix = "com/extraction/states/save";
         int maxSaveNumber = 0;
 
         ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName);//.withPrefix(prefix);

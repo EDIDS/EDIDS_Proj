@@ -40,7 +40,7 @@ public class IntroductionDialog {
                     You are at the HQ, heading towards the operations room.\s
                     You meet the leader of the Rainbow team.\s
                     """);
-        dialogues.add("...: \"You are SERGIO, the new recruit to the team.\"");
+        dialogues.add("...: \"You are THERMITE, the new recruit to the team.\"");
         dialogues.add("YOU: \"Yes, that's me.\"");
         dialogues.add("""
                     Mira: "Good, I'm Ash, the leader of Rainbow Six team.\s

@@ -28,7 +28,7 @@ public class Player {
     private Shield shield = null;
     private int score_ = 0;
     private int numKeys;
-    private final VisibilityManager vm_;
+    private VisibilityManager vm_;
 
     public Player(String name, int health, Room currentRoom, VisibilityManager vm) {
         name_ = name;
@@ -58,6 +58,10 @@ public class Player {
         health_ = FULL_HEALTH;
         bag_ = new ArrayList<>();
         vm_ = vm;
+    }
+
+    public void setVM(VisibilityManager vm) {
+        this.vm_ = vm;
     }
 
     /**
@@ -272,7 +276,7 @@ public class Player {
             if(item instanceof Weapon) {
                 if(weapon != null) {
                     Weapon oldWeapon = weapon;
-                    this.throwItem(oldWeapon);
+                    this.throwItem(oldWeapon.getName());
                     vm_.showMessage("You dropped your current weapon", 2000, Color.ORANGE);
                 }
                 this.setWeapon((Weapon) item);

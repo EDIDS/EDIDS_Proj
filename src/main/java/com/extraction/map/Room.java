@@ -1,6 +1,7 @@
 package com.extraction.map;
 import com.extraction.aliens.Alien;
 import com.extraction.items.Item;
+import com.extraction.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,8 @@ public class Room {
      */
     public Item findItem(String itemToFind){
         for (Item item : items) {
+            if (item instanceof Weapon)
+                if (((Weapon) item).getType().equals(itemToFind)) return item;
             if (item.getName().equals(itemToFind))
                 return item;
         }

@@ -37,12 +37,11 @@ public class Game {
 
     /**
      * This is the constructor for the Game class. It sets up the game and starts the game loop.
-     * @throws IOException If an I/O error occurs.
      */
     public Game() {
         ui.homeScreen("Extraction");
         ui.gameScreen();
-
+        vm.showHomeScreen();
         newGame();
     }
 
@@ -139,12 +138,23 @@ public class Game {
      */
     public void loadGame() {
         story = new Story(this, ui, vm, building, player);
+        player.setVM(this.vm);
 
-        story.startRoom = room4_2;
-        story.coRoom = room0_2;
         ui.newMap();
+        for(Room room : building.getRooms()) {
+            int row = room.getCoordinate().getRow();
+            int col = room.getCoordinate().getColumn();
+            ui.setIcon(row, col, room.getIconPath());
+        }
+        int row = player.getCurrentRoom_().getCoordinate().getRow();
+        int col = player.getCurrentRoom_().getCoordinate().getColumn();
+        ui.setIcon(row, col, ui.playerIconPath);
 
-        vm.showHomeScreen();
+        ui.setCol1(player.getHealth() + "");
+        ui.setCol2(player.getWeapon().getType());
+        ui.setCol3(player.getScore() + "");
+
+        story.map();
     }
 
     public static void main(String[] args) {
@@ -182,6 +192,7 @@ public class Game {
                     }
                     break;
                 case "Start":
+                    //newGame();
                     vm.showDialogScreen();
                     break;
                 case "Load":
