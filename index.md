@@ -12,12 +12,15 @@ Below is reported a clickable list of all the section of this page:
 1) [Introduction](#Introduction)
 2) [Graphic interface and movement control](#Graphic-interface-and-movement-control)
 3) [The Game](#The-Game)
-4) [Specification Document](#Specification-Document)
-5) [Code](#Code)
-6) [System Test Document](#System-Test-Document)
-7) [Unit Test Report](#Unit-Test-Report)
-8) [Manual](#Manual)
-9) [Contributors](#Contributors)
+4) [Diagrams](#Diagrams)
+5) [System Sequence Diagram](#System-Sequence-Diagram)
+6) [Internal Sequence Diagrams](#Internal-Sequence-Diagrams)
+7) [Specification Document](#Specification-Document)
+8) [Code](#Code)
+9) [System Test Document](#System-Test-Document)
+10) [Unit Test Report](#Unit-Test-Report)
+11) [Manual](#Manual)
+12) [Contributors](#Contributors)
 
 
 ---
