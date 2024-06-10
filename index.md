@@ -196,9 +196,7 @@ Here are the user stories formatted as tables:
 
 ### Unit Test Report
 
-The auto-generated JUnit test report can be found at [this page](/resources/UnitTestReport/index.html).
-
-These tests were performed on **4 July 2023** and include all the latest test case that have been developed.
+The auto-generated JUnit test report can be found at [this page](/resources/Documents/surefire-report.html).
 
 [**Back to Index**](#index-of-contents)
 
@@ -206,7 +204,7 @@ These tests were performed on **4 July 2023** and include all the latest test ca
 
 ### Manual
 
-If you want to consult the **Manual** of the **Klotski** application click [here]. 
+If you want to consult the **Manual** click [here]. 
 
 [**Back to Index**](#index-of-contents)
 
