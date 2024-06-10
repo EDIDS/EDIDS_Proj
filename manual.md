@@ -4,7 +4,16 @@ permalink: /manual/
 
 # Extraction Manual
 
-[**Back to home page**](/Klotski/)
+# Index
+- [[#Project Description and Implementation|Project Description and Implementation]]
+- [[#How to play Extraction|How to play Extraction]]
+- [[#Cloning this repository|Cloning this repository]]
+- [[#Technologies used in this project|Technologies used in this project]]
+- [[#Dependencies|Dependencies]]
+- [[#IDE|IDE]]
+- [[#Executables and platforms|Executables and platforms]]
+- [[#Saved files|Saved files]]
+
 
 ## Project Description and Implementation
 During the initial stages of the project, we discussed the plot and specifications of the game. Once the specification and design phases were completed, we began developing the game, dividing the tasks but working in sync. Our goal was to create a simple role-playing game (RPG), based on a pre-existing game, that would allow the player to explore a building full of enemies with the ultimate goal of saving a hostage.
@@ -13,7 +22,51 @@ During the initial stages of the project, we discussed the plot and specificatio
 
 ## How to play Extraction
 
+When you start the game, this window appears:
+![[startmenu.png]]
 
+Here you have two options: you can click start and begin a new game or you can load a saved game. If you chose the second option, you will see a list of your saved files:
+
+![[loadList.png]]
+
+After clicking the desired file, the game starts, and you will see this window:
+
+
+Here you can visualize the map and move to North, South, East and West. If you have already visisted a room, a checkmark will appear over the room.
+
+Everytime you move, a description of the room will appear on screen. This description includes
+- Name of the room
+- a short visual description
+- eventual enemies or items
+
+During the game, you can encounter three different types of Alien: Runner, Clicker and Shambler, and the fight window will be:
+
+![[fight.png]]
+
+Here you have the options to:
+- Attack: the damage depends on what weapon you have
+- Leave the fight
+- Protect yourself with a **Shielf** if you find one
+- **Elude**
+- Heal yourself using the **Medikit** if you have one
+- Throw a **TNT** to deal more damage
+
+If you successfully won the battle, you will gain a **Score**.
+
+Sometimes you will find some items inside the rooms: those items could be:
+- A **weapon**
+	- Revolver
+	- AK47
+	- USPSWORM
+- A **key** to open the locked mate room
+- **TNTs** to fight the enemies
+- A **Shield** 
+- A **Medikit**
+- A **Torch** to access dark rooms
+
+![[itemPick.png]]
+
+To win the game, the only way is to find the keys to open the room where the hostage is trapped and go back to the starting point, the **Extraction point**
 
 ---
 
@@ -21,7 +74,7 @@ During the initial stages of the project, we discussed the plot and specificatio
 
 
 ``` batch
-git clone --branch master --recurse-submodules https://github.com/...
+git clone --branch master https://github.com/EDIDS/EDIDS_Proj.git
 ```
 
 ---
