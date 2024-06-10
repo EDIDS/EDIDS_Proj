@@ -3,21 +3,19 @@
 title Throw Item
 
 actor User
+participant Story
 participant Player
 participant Bag
-participant RoomList
 
-User -> Player : throwItem(item)
+User -> Story : throwItem
+Story -> Player : throwItem(item)
 Player -> Bag : findItem(item)
-alt hasItem
+opt hasItem
   return item
   Player -> Bag : remove(item)
   Player -> Bag : updateCurrentWeight
-  Player -> RoomList : setItem(item, currentRomm)
-  Player --> User : item
-else hasNotItem
-  Bag --> Player : Error(invalid item)
-  Player --> User : Error(item not in bag)
+  Player --> Story : item
+  Story --> User : displayItems
 end
 
 @enduml

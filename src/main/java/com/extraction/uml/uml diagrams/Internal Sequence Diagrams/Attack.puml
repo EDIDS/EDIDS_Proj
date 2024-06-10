@@ -3,12 +3,14 @@
 title Attack
 
 actor User
+participant Story
 participant Fight
 participant Player
 participant Alien
 participant Weapon
 
-User -> Fight : attack
+User -> Story : attack
+Story -> Fight : attack()
 Fight -> Player : attack()
 opt
     Player -> Weapon : calculateDamage()
@@ -16,6 +18,7 @@ opt
 end
 Player --> Fight : playerAttack
 Fight -> Alien : takeDamage(playerAttack)
-Fight -> User : displayDamage
+Fight --> User : displayDamage
+Fight -> Fight : alienTurn()
 
 @enduml

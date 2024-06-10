@@ -1,0 +1,133 @@
+Design Class Model which describes the user interface's functioning.
+
+@startuml
+'https://plantuml.com/class-diagram
+
+
+title Design Class Model
+
+class Game {
+    bHandler : ButtonsHandler
+    ui : UI
+    vm : VisibilityManager
+    building : Building
+    player : Player
+    story : Story
+    newGame()
+}
+
+class ButtonsHandler {
+    actionPerformed(e:ActionEvent)
+}
+
+class Story {
+    game : Game
+    ui : UI
+    vm : VisibilityManager
+    player : Player
+    defaultSetup()
+    selectPosition(nextPosition:String)
+    map()
+    proceed()
+    checkRoom()
+    showItems()
+    exitItems()
+    throwItems()
+    exitThrow()
+    room(nextRow:int, nextColumn:int)
+    showDialog(text:String, buttonText:String, actionCommand:String)
+    lightOn()
+    fightAlien(alien:Alien)
+}
+
+class EndingDialog {
+    dialogues : List<String>
+    iterator : Iterator<String>
+    initializeDialogues()
+    nextDialogue() : String
+}
+
+class IntroductionDialog {
+    dialogues : List<String>
+    iterator : Iterator<String>
+    initializeDialogues()
+    nextDialogue() : String
+}
+
+class UI {
+    bHandler : ButtonsHandler
+    homeScreen(gameTitle:String)
+    gameScreen()
+    newMap()
+}
+
+class VisibilityManager {
+    ui : UI
+    everythingNotVisible()
+    showHomeScreen()
+    showLoadScreen()
+    showMapScreen()
+    showDialogScreen()
+    showTextScreen()
+    showFightScreen()
+    showEndScreen()
+    showMessage()
+}
+
+class Fight {
+    player : Player
+    alien : ALien
+    ui : UI
+    story : Story
+    vm : VisibilityManager
+    fight()
+    playerTurn()
+    alienTurn()
+    attack()
+    run()
+    heal()
+    tnt()
+    defend()
+    elude()
+    displayStatus()
+}
+
+class Player {
+    health_ : int
+    name_ : String
+    bag_ : List<Item>
+    currentWeight_=0 : double
+    currentRoom_ : Room
+    weapon=null : Weapon
+    shield=null : Shield
+    score_=0 : int
+    numKeys = int
+    vm : VisibilityManager
+    heal() : boolean
+    addItem(item:Item)
+    detonateTNT(int)
+}
+
+Fight"1" --> "1"UI : is displayed by
+Fight"1" --> "1"Story : operates on
+Fight"1" --> "1"VisibilityManager : is displayed by
+
+Player"1" --> "1"VisibilityManager : is displayed by
+
+Game *-- ButtonsHandler : belongs to
+Game"1" --> "1"UI : is displayed by
+Game"1" --> "1"VisibilityManager : is displayed by
+Game"1" --> "1"Player : instantiates
+Game"1" --> "1"Story : operates on
+
+VisibilityManager"1" --> "1"UI : operates through
+UI"1" --> "1"ButtonsHandler : operates through
+
+Story"1" --> "1"IntroductionDialog : tells
+Story"1" --> "1"EndingDialog : tells
+Story"1" --> "1"VisibilityManager : is displayed by
+Story"1" --> "1"UI : is displayed by
+Story"1" --> "1"Player : operates on
+Story"1" --> "*"Fight : operates on
+
+@enduml

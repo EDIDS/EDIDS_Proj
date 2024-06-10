@@ -3,6 +3,7 @@ package com.extraction.map;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.extraction.map.Coordinate.fromString;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CoordinateTest {
@@ -42,5 +43,15 @@ class CoordinateTest {
         coordinate2.setRow(coordinate1.getRow());
         coordinate2.setColumn(coordinate1.getColumn());
         assertEquals(coordinate1, coordinate2);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"35,22", "0,7", "98,1"})
+    void testFromString(String value) {
+        Coordinate coordinate = fromString(value);
+        int row = coordinate.getRow();
+        int column = coordinate.getColumn();
+        String sym = row + "," + column;
+        assertEquals(value, sym);
     }
 }

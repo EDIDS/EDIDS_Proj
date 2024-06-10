@@ -1,0 +1,220 @@
+Design Class Model which describes the game's core functioning.
+
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Alien  {
+    {abstract} attack() : int
+    {abstract} takeDamage(damage:int)
+    {abstract} getEscapeChance() : double
+    {abstract} getEludeChance() : double
+}
+
+class Clicker {
+    name_ : String
+    health_ : int
+    attack_ : int
+    attack() : int
+    takeDamage(damage:int)
+    getEscapeChance() : double
+    getEludeChance() : double
+}
+
+class Runner {
+    name_ : String
+    health_ : int
+    attack_ : int
+    attack() : int
+    takeDamage(damage:int)
+    getEscapeChance() : double
+    getEludeChance() : double
+}
+
+class Shambler {
+    name_ : String
+    health_ : int
+    attack_ : int
+    attack() : int
+    takeDamage(damage:int)
+    getEscapeChance() : double
+    getEludeChance() : double
+}
+
+class Game {
+    building : Building
+    player : Player
+    story : Story
+    newGame()
+    loadGame()
+}
+
+class Item {
+}
+
+class Key {
+    name : String
+    weight : double
+    throwable : boolean
+}
+
+class MedKit{
+    name : String
+    weight : double
+    throwable : boolean
+}
+
+class Shield {
+    name : String
+    weight : double
+    throwable : boolean
+    getDefense() : int
+}
+
+class TNT {
+    name : String
+    weight : double
+    throwable : boolean
+    getDamage() : int
+}
+
+class Torch {
+    name : String
+    weight : double
+    throwable : boolean
+    isOn : boolean
+    turnOn()
+    turnOff()
+}
+
+class Weapon {
+    name : String
+    weight : double
+    throwable : boolean
+    type_ : String
+    minDamage_ : int
+    maxDamage_ : int
+    calculateDamage() : int
+}
+
+class Building {
+    rooms : Map<String, Room>
+    addRoom(room:Room)
+    getRoom(coordinate:String) : Room
+    removeRoom(coordinate:String)
+    getRooms() : List<Room>
+    getAvailableDirections(room:Room) : String
+}
+
+class Room {
+    coordinate : Coordinate
+    title : String
+    description : String
+    iconPath : String
+    alien=null : Alien
+    is_closed=false : boolean
+    items : list<Item>
+    is_dark=false : boolean
+    addItem(item:Item)
+    removeItem(itemToThrow:String)
+    removeItem(itemToThrow:Item)
+    findItem(itemToFind:String)
+    findItem(itemToFind:Item)
+    close()
+    open()
+}
+
+class Coordinate {
+    column : int
+    row : int
+    equals(o:Object) : boolean
+    toString() : String
+}
+
+class Fight {
+    player : Player
+    alien : ALien
+    story : Story
+    fight()
+    playerTurn()
+    alienTurn()
+    attack()
+    run()
+    heal()
+    tnt()
+    defend()
+    elude()
+    displayStatus()
+}
+
+class Player {
+    health_ : int
+    name_ : String
+    bag_ : List<Item>
+    currentWeight_=0 : double
+    currentRoom_ : Room
+    weapon=null : Weapon
+    shield=null : Shield
+    score_=0 : int
+    numKeys = int
+    attack() : int
+    defend() : int
+    heal() : boolean
+    takeDamage(damage:int)
+    addItem(item:Item)
+    throwItem(itemToThrow:Item)
+    throwItem(itemToThrow:String)
+    findItem(itemToFind:Item)
+    findItem(itemToFind:String)
+    detonateTNT(int)
+}
+
+class Story {
+    game : Game
+    player : Player
+    building : Building
+    fight : Fight
+    startRoom : Room
+    nextRoom : Room
+    selectPosition(nextPosition:String)
+    checkRoom()
+    execute(item:String)
+    room(nextRow:int, nextColumn:int)
+    lightOn()
+    fightAlien(alien:Alien)
+}
+
+Alien <|-- Clicker : extends
+Alien <|-- Runner : extends
+Alien <|-- Shambler : extends
+
+Fight"1" --> "1"Player : is fought by
+Fight"1" --> "1"Alien : is fought by
+Fight"1" --> "1"Story : happens in
+
+Item <|-- Key : extends
+Item <|-- MedKit : extends
+Item <|-- Shield : extends
+Item <|-- TNT : extends
+Item <|-- Torch : extends
+Item <|-- Weapon : extends
+
+Building"1" o-- "13"Room : are contained in
+
+Player"1" --> "1"Weapon : wields
+Player"1" --> "1"Shield : holds
+Player"1" --> "*"Item : holds
+Player"1" --> "1"Room : is in
+
+Room"1" --> "*"Item : keeps
+Room"1" --> "0..1"Alien : keeps
+Room"1" --> "1"Coordinate : is described by
+
+Game"1" --> "1"Building : creates
+Game"1" --> "1"Player : instantiates
+Game"1" --> "1"Story : operates on
+
+Story"1" --> "1"Player : operates on
+Story"1" --> "*"Fight : operates on
+Story"1" --> "0..13"Room : operates on
+
+@enduml

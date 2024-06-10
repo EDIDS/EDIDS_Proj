@@ -1,23 +1,26 @@
 @startuml
 
-title Collect Item
+title Add Item
 
 actor User
+participant Story
 participant Player
 participant Item
 participant Bag
-participant RoomList
+participant Room
 
-
-User -> Player : addItem(item)
+User -> Story : addItem
+Story -> Player : addItem(item)
 Player -> Item : getWeight()
 return weight
 alt currentWeight + weight <= MAX_WEIGHT
-    Player -> RoomList : removeItem(item, currentRoom)
     Player -> Bag : add(item)
     Player -> Bag : updateCurrentWeight
+    Player --> Story : success
+    Story -> Room : removeItem(item)
 else currentWeight + weight > MAX_WEIGHTT
     Player --> User : Error(bag full)
+    Player --> Story : failure
 end
 
 @enduml

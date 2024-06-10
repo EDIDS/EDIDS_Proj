@@ -20,26 +20,35 @@ Acceptance Criteria :
 
 
 User Story 3 :
-    "As a player, I want to be able to fight with encountered enemies, so that I can enter in new rooms."
+    "As a player, I want to be able to fight with encountered enemies, so that I can raise my score."
 Acceptance Criteria :
     1) Display possible actions (e.g. Attack, Defend, Elude, Cure, Run)
     2) Check chosen action
-    3) Return error message if invalid choice (e.g. "Invalid command")
-    4) If choice is attack, get player's attack and decrease enemy's health by that value
+    3) If choice is attack, get player's attack and decrease enemy's health by that value
         (e.g. attack = 30 -> alien's health 50 => 20)
-    5) If choice is defend, decrease enemy's attack by player's defense and decrease player's health by that value
+    4) If choice is defend, decrease enemy's attack by player's defense and decrease player's health by that value
         (e.g. alien's attack = 20, defense = 10 -> health 100 => 90)
-    6) If choice is elude, get the percentage of eluding that enemy and a random number between 0 and 1 and decrease
+    5) If choice is elude, get the percentage of eluding that enemy and a random number between 0 and 1 and decrease
         player's health by enemy's attack only if the number is greater than the percentage
         (e.g. percentage = 0.7, random number = 0.6 -> nothing happens)
-    7) If choice is cure, search the bag for a medikit and if the research ends successfully set player's health to its
+    6) If choice is cure, search the bag for a medikit and if the research ends successfully set player's health to its
         maximum value, otherwise display error message (e.g. "No medikit found")
-    8) If choice is run, get the percentage of running away from that enemy and a random number between 0 and 1 and end
+    7) If choice is run, get the percentage of running away from that enemy and a random number between 0 and 1 and end
         the fight only if the number is smaller than the percentage (e.g. percentage = 0.7, random number = 0.6 -> fight ends)
-    9) End game if player's health reaches 0 (Game Over)
-    10) Unlock next room(s) if enemy's health reaches 0 (Enemy defeated)
+    8) End game if player's health reaches 0 (Game Over)
+    9) Resume game if enemy's health reaches 0 (Enemy defeated)
+    10) Compute score based on fight's data and update player's score
 
 
 User Story 4 :
-    "As a player, I want to be able to save the game's state, so that I can restart the game whenever I want"
+    "As a player, I want to be able to save the game's state, so that I can reuse it later"
 Acceptance Criteria:
+    1) Display save button
+    2) Gather game's information (e.g. Player's and Building's data)
+    3)
+
+User Story 5 :
+    "As a player, I want to be able to load previous games, so that I can restart playing them"
+Acceptance Criteria:
+    1) Display load button
+    2)

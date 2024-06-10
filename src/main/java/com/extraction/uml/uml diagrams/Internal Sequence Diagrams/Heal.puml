@@ -3,23 +3,27 @@
 title Heal
 
 actor User
+participant Story
 participant Fight
 participant Player
 participant Bag
 
-User -> Fight : heal
+User -> Story : heal
+Story -> Fight : heal()
 Fight -> Player : heal()
-Player -> Bag : search(medikit)
+Player -> Bag : findItem(medikit)
 alt hasMedikit
     return medikit
     Player -> Player : heal()
     Player -> Bag : throwItem(medikit)
-    Player --> Fight : FULL:HEALTH
-    Fight --> User
+    Player --> Fight : success
+    Fight --> User : displaySuccess
+    Fight -> Fight : alienTurn()
 else hasNotMedikit
     Bag --> Player : Error(not found)
-    Player --> Fight : Error(not found)
-    Fight --> User : Error(invalid choice)
+    Player --> User : Error( no medKit)
+    Player --> Fight : failure
+    Fight -> Fight : playerTurn()
 end 
 
 @enduml
