@@ -1,8 +1,3 @@
----
-permalink: /
----
-
-
 # Documentation
 
 This page contains all the documentation associated for the **Text adventure** project.
@@ -14,15 +9,12 @@ of choice.
 
 Below is reported a clickable list of all the section of this page:
 
-- [[#Introduction|Introduction]]
-- [[#Graphic interface and movement control|Graphic interface and movement control]]
-- [[#The Game|The Game]]
-- [[#Specification Document|Specification Document]]
-- [[#Code|Code]]
-- [[#System Test Document|System Test Document]]
-- [[#Unit Test Report|Unit Test Report]]
-- [[#Manual|Manual]]
-- [[#Contributors|Contributors]]
+1) [Introduction](#Introduction)
+2) [Graphic interface and movement control](#Graphic-interface-and-movement-control)
+3) [The Game](#The-Game)
+4) [Specification Document](#Specification-Document)
+5) [Code](#Code)
+6) [System Test Document](#System-Test-Document)
 
 
 ---
