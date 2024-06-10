@@ -76,22 +76,22 @@ Unlike the System Sequence Diagram, the Internal Sequence Diagram describes the 
 ![Attack](resources/Documents/Internal-Sequence-Diagram/Attack-Attack.png)
 
 ### Collect Item/Add Item
-![CollectItem](resources/Documents/Collect-Item-Add_Item.png)
+![CollectItem](resources/Documents/Internal-Sequence-Diagram/Collect-Item-Add_Item.png)
 
 ### Defend
-![Defend](resources/Documents/Defend-Defend.png)
+![Defend](resources/Documents/Internal-Sequence-Diagram/Defend-Defend.png)
 
 ### Fight
-![Fight](resources/Documents/Fight-Fight.png)
+![Fight](resources/Documents/Internal-Sequence-Diagram/Fight-Fight.png)
 
 ### Heal
-![Heal](resources/Documents/Heal-Heal.png)
+![Heal](resources/Documents/Internal-Sequence-Diagram/Heal-Heal.png)
 
 ### Throw Item
-![ThrowItem](resources/Documents/Throw-Item-Throw_Item.png)
+![ThrowItem](resources/Documents/Internal-Sequence-Diagram/Throw-Item-Throw_Item.png)
 
 ### Throw TNT
-![ThrowTNT](resources/Documents/ThrowTNT.png)
+![ThrowTNT](resources/Documents/Internal-Sequence-Diagram/ThrowTNT.png)
 
 
 ---
