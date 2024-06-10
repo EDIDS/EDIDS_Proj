@@ -33,7 +33,6 @@ class RoomTest {
         room.addItem(new Weapon(type));
         assertNotNull(room.findItem("Weapon"));
         room.removeItem("Weapon");
-        //throwable item
         assertNull(room.findItem("Weapon"));
     }
 }

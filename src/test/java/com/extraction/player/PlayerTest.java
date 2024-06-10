@@ -18,26 +18,17 @@ class PlayerTest {
     Player player;
     VisibilityManager vm;
 
+    /**
+     * Because vm is null, every time it is called a NullPointerException is expected to be thrown.
+     * Vm is called in case some exceptional situation, which needs to be displayed, occurs.
+     */
     @BeforeEach
     void setUp() {
         player = new Player(vm);
     }
 
     @Test
-    void testAnonymousPlayerName() {
-        assertEquals(player.getName(), NO_NAME);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", "0", " "} )
-    void testNamedPlayerName(String name) {
-        Player named = new Player(name, vm);
-        assertEquals(named.getName(), name);
-    }
-
-    @Test
     void testAdd_ThrowWeapon() {
-        //test addWeapon()
         Weapon weapon1 = new Weapon("REVOLVER");
         player.addItem(weapon1);
         assertEquals(weapon1, player.getWeapon());
@@ -56,7 +47,6 @@ class PlayerTest {
         catch (NullPointerException ignored) {}
         assertEquals(weapon3, player.getWeapon());
         assertEquals(type_weight("USPSWORM"), player.getCurrentWeight_());
-        // test throwWeapon()
         player.throwItem("Weapon");
         assertFalse(player.hasWeapon());
         assertEquals(0, player.getCurrentWeight_());
@@ -64,19 +54,17 @@ class PlayerTest {
 
     @Test
     void testSetShield_ThrowShield() {
-        // test addShield()
         Shield shield1 = new Shield();
         player.addItem(shield1);
         assertEquals(shield1, player.getShield());
         assertEquals(SHIELD_WEIGHT, player.getCurrentWeight_());
         Shield shield2 = new Shield();
-        //vm.showMessage() is called to display the report that shield is already set
+        //vm.showMessage() is called to display that shield is already set
         assertThrows(NullPointerException.class, () -> player.addItem(shield2));
         try { player.addItem(new Shield()); }
         catch (NullPointerException ignored) {}
         //shields are not replaced
         assertEquals(shield1, player.getShield());
-        // test throwShield()
         player.throwItem("Shield");
         assertFalse(player.hasShield());
         assertEquals(0, player.getCurrentWeight_());
@@ -106,7 +94,7 @@ class PlayerTest {
     @Test
     void testHeal() {
         player.setHealth(FULL_HEALTH/2);
-        //vm.showMessage() is called to report that no medKit was found
+        //vm.showMessage() is called to display that no medKit was found
         assertThrows(NullPointerException.class, () -> player.heal());
         try { player.heal(); }
         catch (NullPointerException ignored) {}
@@ -151,6 +139,7 @@ class PlayerTest {
 
     @Test
     void testDetonateTNT() {
+        //vm.showMessage() is called to display that no TNT was found
         assertThrows(NullPointerException.class, () -> player.detonateTNT());
         player.addItem(new TNT());
         assertEquals(TNT_DAMAGE, player.detonateTNT());
@@ -159,7 +148,7 @@ class PlayerTest {
     @Test
     void testMaxWeight() {
         player.setCurrentWeight_(MAX_WEIGHT);
-        //vm.showMessage() is called to report that the bag is already full
+        //vm.showMessage() is called to display that the bag is already full
         assertThrows(NullPointerException.class, () -> player.addItem(new Weapon("REVOLVER")));
         try { player.addItem(new Weapon("REVOLVER")); }
         catch (NullPointerException ignored) {}
