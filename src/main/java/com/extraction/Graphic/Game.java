@@ -12,13 +12,14 @@ import com.extraction.utils.GameSaveTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * The Game class is the main class for the game. It sets up the game, creates the UI, and handles user actions.
@@ -30,6 +31,7 @@ public class Game {
     Building building;
     Player player;
     Story story;
+    String loadedFileName = "";
 
     String nextPosition0, nextPosition1, nextPosition2, nextPosition3, nextPosition4;
 
@@ -42,7 +44,7 @@ public class Game {
         ui.homeScreen("Extraction");
         ui.gameScreen();
         vm.showHomeScreen();
-        newGame();
+        //newGame();
     }
 
     /**
@@ -130,7 +132,7 @@ public class Game {
         }
 
         story.defaultSetup();
-        vm.showHomeScreen();
+        //vm.showHomeScreen();
     }
 
     /**
@@ -176,31 +178,47 @@ public class Game {
 
             switch (buttonClicked) {
                 case "Exit":
+
+                    if (!loadedFileName.isEmpty()) {
+                        File fileToDelete = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + loadedFileName);
+                        fileToDelete.delete();
+                    }
+
                     ui.resetActionButtons();
                     ui.resetTitle();
-                    newGame();
+                    vm.showHomeScreen();
+                    //newGame();
                     break;
                 case "Save":
                     try {
                         S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
-                        s3Uploader.saveGame(player, building);
+
+                        if (!loadedFileName.isEmpty()) {
+                            s3Uploader.deleteFile(loadedFileName);
+                            s3Uploader.removeFileFromGameList(loadedFileName);
+                            s3Uploader.saveGame(player, building, loadedFileName);
+                        } else s3Uploader.saveGame(player, building);
+
                         vm.showMessage("Game Saved", 1500, Color.GREEN);
                         ui.resetActionButtons();
                         ui.resetTitle();
-                        newGame();
+                        vm.showHomeScreen();
+                        //newGame();
                     } catch (IOException ex) {
                         vm.showMessage("Impossible to Save", 1000, Color.RED);
                     }
                     break;
                 case "Start":
-                    //newGame();
+                    loadedFileName = "";
+                    newGame();
                     vm.showDialogScreen();
                     break;
                 case "Load":
                     try {
-                        new S3Uploader("default", "eu-north-1", "edidsgamesave");
-                        ui.loadList();
-                        vm.showLoadScreen();
+                        S3Uploader s3Uploader =  new S3Uploader("default", "eu-north-1", "edidsgamesave");
+                        s3Uploader.generateGameList();
+                        if (ui.loadList()) vm.showLoadScreen();
+                        else vm.showMessage("No Game Saved", 1000, Color.ORANGE);
                     }
                     catch (Exception ex) {
                         vm.showMessage("Access Denied", 1000, Color.RED);
@@ -235,24 +253,23 @@ public class Game {
                     break;
                 case "LoadFile":
                     JButton button = (JButton) e.getSource();
-                    String filename = button.getText();
+                    loadedFileName = button.getText();
 
                     try {
                         S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
-                        s3Uploader.downloadSaveFile(filename);
+                        s3Uploader.downloadSaveFile(loadedFileName);
+
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
 
                     Gson gson = new GsonBuilder().registerTypeAdapter(GameSave.class, new GameSaveTypeAdapter()).create();
-                    try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + filename)) {
+                    try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + loadedFileName)) {
                         GameSave gameData = new GameSave(null, null);
                         gameData = gson.fromJson(reader, gameData.getClass());
 
                         building = gameData.getBuilding();
                         player = gameData.getPlayer();
-                        story.startRoom = new Room();
-                        story.coRoom = new Room();
                         loadGame();
 
                         System.out.println("Game loaded");
@@ -261,7 +278,6 @@ public class Game {
                     }
 
                 default:
-
             }
         }
     }

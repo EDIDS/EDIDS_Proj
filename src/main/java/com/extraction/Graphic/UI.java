@@ -210,12 +210,13 @@ public class UI {
     /**
      * Fills the load list with saved games.
      */
-    public void loadList() {
+    public boolean loadList() {
         loadListPanel.removeAll();
         try {
             S3Uploader s3Uploader = new S3Uploader("default", "eu-north-1", "edidsgamesave");
             List<String> gameList = s3Uploader.downloadGameList();
 
+            if (gameList.isEmpty()) return false;
             for (String name : gameList) {
                 JPanel p = new JPanel();
                 p.setLayout(new GridBagLayout());
@@ -227,8 +228,9 @@ public class UI {
                 p.add(b, gbc);
                 loadListPanel.add(p, BorderLayout.CENTER);
             }
+            return true;
         } catch (IOException e) {
-            // TODO: Aggiungere Access Denied
+            return false;
         }
     }
 
