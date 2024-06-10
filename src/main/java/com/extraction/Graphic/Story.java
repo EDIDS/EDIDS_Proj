@@ -329,6 +329,7 @@ public class Story {
             Timer timer = new Timer(2000, e -> showItems());
             timer.setRepeats(false);
             timer.start();
+
             return;
         }
         StringBuilder str = new StringBuilder("You have:\n");
@@ -427,38 +428,39 @@ public class Story {
                 break;
             case "AK47":
                 Weapon ak47 = new Weapon("AK47");
-                if (player.addItem(ak47)) {
-                    ui.setCol2(player.getWeapon().getType());
-                    nextRoom.removeItem("AK47");
-                }
+                emptyRoom();
                 break;
             case "RemoveMedKit":
                 player.throwItem("MedKit");
-                exitThrow();
-                showItems();
+                emptyRoom();
                 break;
             case "RemoveTNT":
                 player.throwItem("TNT");
-                exitThrow();
-                showItems();
+                emptyRoom();
                 break;
             case "RemoveShield":
                 player.throwItem("Shield");
-                exitThrow();
-                showItems();
+                emptyRoom();
                 break;
             case "RemoveTorch":
                 player.throwItem("Torch");
-                exitThrow();
-                showItems();
+                emptyRoom();
                 break;
             case "RemoveWeapon":
                 player.throwItem("Weapon");
                 ui.setCol2("Punch");
-                exitThrow();
-                showItems();
+                emptyRoom();
                 break;
             default:
+        }
+    }
+
+    public void emptyRoom() {
+        if (nextRoom.getItems().isEmpty()) {
+            exitItems();
+        } else {
+            exitThrow();
+            showItems();
         }
     }
 

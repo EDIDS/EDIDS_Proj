@@ -276,7 +276,7 @@ public class Player {
             if(item instanceof Weapon) {
                 if(weapon != null) {
                     Weapon oldWeapon = weapon;
-                    this.throwItem(oldWeapon);
+                    this.throwItem(oldWeapon.getName());
                     vm_.showMessage("You dropped your current weapon", 2000, Color.ORANGE);
                 }
                 this.setWeapon((Weapon) item);

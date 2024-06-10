@@ -37,7 +37,6 @@ public class Game {
 
     /**
      * This is the constructor for the Game class. It sets up the game and starts the game loop.
-     * @throws IOException If an I/O error occurs.
      */
     public Game() {
         ui.homeScreen("Extraction");

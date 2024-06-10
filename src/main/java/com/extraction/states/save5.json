@@ -93,7 +93,7 @@
         "coordinate": "4, 2",
         "title": "Hall",
         "description": "A large dark hall",
-        "iconPath": "C:\\Users\\alexv\\IdeaProjects\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/logout.png",
+        "iconPath": "C:\\Users\\alexv\\Documents\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/logout.png",
         "is_closed": false,
         "items": []
       },
@@ -125,21 +125,9 @@
         "coordinate": "4, 1",
         "title": "Hall",
         "description": "A large dark hall",
-        "iconPath": "C:\\Users\\alexv\\IdeaProjects\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/check-mark.png",
+        "iconPath": "C:\\Users\\alexv\\Documents\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/check-mark.png",
         "is_closed": false,
-        "items": [
-          {
-            "type": "Weapon",
-            "properties": {
-              "type_": "REVOLVER",
-              "minDamage_": 20,
-              "maxDamage_": 40,
-              "name": "Weapon",
-              "weight": 10.0,
-              "throwable": true
-            }
-          }
-        ]
+        "items": []
       },
       "(3, 4)": {
         "coordinate": "3, 4",
@@ -162,7 +150,7 @@
         "coordinate": "3, 1",
         "title": "Hall",
         "description": "A large dark hall",
-        "iconPath": "C:\\Users\\alexv\\IdeaProjects\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/check-mark.png",
+        "iconPath": "",
         "is_closed": false,
         "items": []
       },
@@ -213,28 +201,25 @@
     }
   },
   "player": {
-    "health": 94,
+    "health": 91,
     "name": "",
     "currentWeight": 10.0,
     "currentRoom": {
-      "coordinate": "3, 1",
+      "coordinate": "4, 1",
       "title": "Hall",
       "description": "A large dark hall",
-      "iconPath": "C:\\Users\\alexv\\IdeaProjects\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/check-mark.png",
+      "iconPath": "C:\\Users\\alexv\\Documents\\EDIDS_Proj/src/main/java/com/extraction/Graphic/imgs/check-mark.png",
       "is_closed": false,
       "items": []
     },
     "score": 1350,
     "Weapon": {
-      "type": "Weapon",
-      "properties": {
-        "type_": "REVOLVER",
-        "minDamage_": 20,
-        "maxDamage_": 40,
-        "name": "Weapon",
-        "weight": 10.0,
-        "throwable": true
-      }
+      "type_": "REVOLVER",
+      "minDamage_": 20,
+      "maxDamage_": 40,
+      "name": "Weapon",
+      "weight": 10.0,
+      "throwable": true
     },
     "bag": [
       {

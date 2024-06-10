@@ -327,7 +327,7 @@ public class UI {
         // Populate the grid with buttons (or panels)
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                grid[i][j] = createRoom((i + ", " + j), textFont);
+                grid[i][j] = createRoom(/*(i + ", " + j)*/ "", textFont);
                 mapPanel.add(grid[i][j]);
             }
         }
