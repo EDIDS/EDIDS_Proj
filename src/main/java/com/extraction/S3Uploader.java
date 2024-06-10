@@ -99,6 +99,41 @@ public class S3Uploader {
     }
 
     /**
+     * Saves the game state to the S3 bucket.
+     * @param player The player data.
+     * @param building The building data.
+     */
+    public void saveGame(Player player, Building building, String fileName){
+        try {
+            File directory = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states");
+            if (!directory.exists()){
+                directory.mkdirs();
+            }
+
+            File file = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/" + fileName);
+            file.createNewFile();
+
+            FileWriter writer = new FileWriter(file);
+
+            // Create a map to hold both Player and Building objects
+
+            GameSave gameSave = new GameSave(player, building);
+
+
+            // Convert the map to JSON and write it to the file
+            gson.toJson(gameSave, writer);
+            writer.flush();
+            writer.close();
+            uploadFile(file);
+            file.delete();
+            generateGameList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Downloads all games from the S3 bucket.
      */
     public void downloadAllGames() {
@@ -183,7 +218,7 @@ public class S3Uploader {
     /**
      * Generates a list of games and uploads it to the S3 bucket.
      */
-    private void generateGameList() {
+    public void generateGameList() {
         ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName);
         ListObjectsV2Result result;
         List<String> gameList = new ArrayList<>();
@@ -204,21 +239,7 @@ public class S3Uploader {
             req.setContinuationToken(token);
         } while (result.isTruncated());
 
-        deleteFile("gameList.json");
-
-        // Write the game list to a JSON file
-        File gameListFile = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/gameList.json");
-        try (FileWriter writer = new FileWriter(gameListFile)) {
-            gson.toJson(gameList, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Upload the game list file to the S3 bucket
-        uploadFile(gameListFile);
-
-        // Delete the local game list file
-        gameListFile.delete();
+        writeGameList(gameList);
     }
 
     public List<String> downloadGameList() {
@@ -291,11 +312,32 @@ public class S3Uploader {
      * Deletes a file from the S3 bucket.
      * @param fileName The name of the file to delete.
      */
-    private void deleteFile(String fileName) {
+    public void deleteFile(String fileName) {
         try {
             s3Client.deleteObject(new DeleteObjectRequest(bucketName, fileName));
         } catch (AmazonServiceException e) {
             System.err.println(e.getErrorMessage());
         }
+    }
+
+    public void removeFileFromGameList(String fileName) {
+        List<String> gameList = downloadGameList();
+        gameList.remove(fileName);
+        writeGameList(gameList);
+    }
+
+    public void writeGameList(List<String> gameList) {
+        deleteFile("gameList.json");
+
+        // Write the game list to a JSON file
+        File gameListFile = new File(System.getProperty("user.dir") + "/src/main/java/com/extraction/states/gameList.json");
+        try (FileWriter writer = new FileWriter(gameListFile)) {
+            gson.toJson(gameList, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        uploadFile(gameListFile);
+        gameListFile.delete();
     }
 }
