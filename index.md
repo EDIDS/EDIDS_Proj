@@ -25,12 +25,12 @@ Below is reported a clickable list of all the section of this page:
 
 ---
 
-### Introduction
+# Introduction
 “Extraction” is a text adventure that comes to life from the renowned Ubisoft video game, “**Rainbow Six Extraction**”. In a world upset by an alien parasitic invasion, chaos and destruction reign supreme. You, a valiant warrior of the elite Rainbow team, have been selected for a mission of vital importance. Your task is to infiltrate a building, confront and defeat the archons that hinder your path, and save your imprisoned companion. Your mission is dangerous, but the hope of a better world rests on your shoulders.
 
 ---
 
-### Graphic interface and movement control 
+# Graphic interface and movement control 
 The graphic interface was created using a framework known as “Swing”.
 Java Swing is a part of Java Foundation Classes (JFC) used for building graphical user interfaces (GUIs) in Java applications. It provides a set of "lightweight" (all-Java language) components that, unlike the Abstract Window Toolkit (AWT) components, do not rely on native peers (platform-specific code). Swing components are platform-independent and more flexible, offering a richer set of GUI components than AWT.
 
@@ -38,7 +38,7 @@ The interface displays the building’s map, highlighting the different rooms th
 
 ---
 
-### The Game
+# The Game
 The game is set in a building overrun by an alien parasite. A member of the Rainbow team has been taken hostage by these aliens, and your primary goal will be to locate and rescue him, exiting the building. During your mission, you may encounter some of these aliens, whom you will have to fight or from whom you will have to escape. If you lose all your life during a fight, the game will end.
 
 Throughout the game, you will have the opportunity to:
@@ -103,7 +103,7 @@ Unlike the System Sequence Diagram, the Internal Sequence Diagram describes the 
 
 ---
 
-### Code
+## Code
 
 The entire **code** of this project is hosted on GitHub and the repository can be found at [this page](https://github.com/EDIDS/EDIDS_Proj).
 
@@ -111,7 +111,7 @@ The entire **code** of this project is hosted on GitHub and the repository can b
 
 ---
 
-### System Test Document
+## System Test Document
 
 Here are the user stories formatted as tables:
 
@@ -219,7 +219,7 @@ Here are the user stories formatted as tables:
 
 ---
 
-### Unit Test Report
+## Unit Test Report
 
 The auto-generated JUnit test report can be found at [this page](/resources/UnittestReport/surefire-report.html).
 
@@ -227,7 +227,7 @@ The auto-generated JUnit test report can be found at [this page](/resources/Unit
 
 ---
 
-### Manual
+## Manual
 
 If you want to consult the **Manual** click [here](manual.md). 
 
@@ -235,7 +235,7 @@ If you want to consult the **Manual** click [here](manual.md).
 
 ---
 
-### Contributors
+## Contributors
 
 This project was carried out by:
 
