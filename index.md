@@ -31,7 +31,8 @@ Below is reported a clickable list of all the section of this page:
 ---
 
 ### Graphic interface and movement control 
-The graphic interface was created using a framework known as “Swing”, (which requires further details to fully understand its operation).
+The graphic interface was created using a framework known as “Swing”.
+Java Swing is a part of Java Foundation Classes (JFC) used for building graphical user interfaces (GUIs) in Java applications. It provides a set of "lightweight" (all-Java language) components that, unlike the Abstract Window Toolkit (AWT) components, do not rely on native peers (platform-specific code). Swing components are platform-independent and more flexible, offering a richer set of GUI components than AWT.
 
 The interface displays the building’s map, highlighting the different rooms that the player can visit. At the bottom of the interface, there are four buttons: North, South, East, and West, which guide the player’s movement. If the chosen direction does not lead to a room, the movement is prevented. Each room can host an alien and a variety of objects that the player can eventually collect. All this information is displayed on the screen.
 
