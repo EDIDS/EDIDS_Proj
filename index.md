@@ -53,26 +53,43 @@ Throughout the game, you will have the opportunity to:
 In this section, the main diagrams required by the assignment are provided.
 
 ### Domain Model
-![DomainModel](resources/Documents/Domain-Model-Diagram.png)
+The Domain Model represents the main concepts of the system and the relationships between them. It is a high-level representation of the system's structure and is used to define the scope of the system.
+Here are defined the main classes of the system, such as Player, Room, Item, and Alien, their attributes, operations, and the relationships between them
+<div style="text-align: center;">
+<div style="text-align: center;">
+![DomainModel](resources/documents/Domain-Model-Diagram.png)
+</div>
 
 ## Design class model
-We decided to split the Design Class Model into 3 parts, for readability reasons.
+A Design Class Model is a detailed, structured representation of the software system's classes, interfaces, and their relationships.
+For readability reasons, we decided to split the Design Class Model into thee parts: Core, Graphics, and Upload.
 
 ### Design Class Model Core
-![DesignClassCore](resources/Documents/Design-Class-Model-Core.png)
+This part of the Design Class Model represents the core classes of the system, such as Player, Room, Item, Alien, and the main controller, Game.
+<div style="text-align: center;">
+![DesignClassCore](resources/documents/Design-Class-Model-Core.png)
+</div>
 
 ### Design Class Model Graphics
-![DesignClassGraphics](resources/Documents/Design-Class-Model-Graphics-Design_Class_Model.png)
+This part of the Design Class Model represents the classes related to the graphic interface.
+<div style="text-align: center;">
+![DesignClassGraphics](resources/documents/Design-Class-Model-Graphics-Design_Class_Model.png)
+</div>
 
 ### Design-Class-Model-Upload
-![DesignClassGraphics](resources/Documents/Design-Class-Model-Graphics-Design_Class_Model.png)
+This part of the Design Class Model represents the classes related to the upload of the game's state.
+<div style="text-align: center;">
+![DesignClassGraphics](resources/documents/Design-Class-Model-Graphics-Design_Class_Model.png)
+</div>
 
 ---
 
 ## System Sequence Diagram
 This diagram describes the sequence of interactions between external actors and a system for a particular scenario of a use case.
 
-![SSD](resources/Documents/System-Sequence-Diagram-System_Sequence_Diagram.png)
+<div style="text-align: center;">
+![SSD](resources/documents/System-Sequence-Diagram-System_Sequence_Diagram.png)
+</div>
 
 ---
 
@@ -80,25 +97,46 @@ This diagram describes the sequence of interactions between external actors and 
 Unlike the System Sequence Diagram, the Internal Sequence Diagram describes the interactions between internal components or objects within a system for a specific scenario of a use case. Here are some of the main ISD:
 
 ### Attack
-![Attack](resources/Documents/Internal-Sequence-Diagram/Attack-Attack.png)
+This diagram describes the sequence of interactions between the player and the alien during an attack.
+<div style="text-align: center;">
+![Attack](resources/documents/Internal-Sequence-Diagram/Attack-Attack.png)
+</div>
 
 ### Collect Item/Add Item
-![CollectItem](resources/Documents/Internal-Sequence-Diagram/Collect-Item-Add_Item.png)
+This diagram describes the sequence of interactions between the player and the item during the collection.
+<div style="text-align: center;">
+![CollectItem](resources/documents/Internal-Sequence-Diagram/Collect-Item-Add_Item.png)
+</div>
 
 ### Defend
-![Defend](resources/Documents/Internal-Sequence-Diagram/Defend-Defend.png)
+This diagram describes the sequence of interactions between the player and the alien during a defense.
+<div style="text-align: center;">
+![Defend](resources/documents/Internal-Sequence-Diagram/Defend-Defend.png)
+</div>
 
 ### Fight
-![Fight](resources/Documents/Internal-Sequence-Diagram/Fight-Fight.png)
+This diagram describes the sequence of interactions between the player and the alien during a fight.
+<div style="text-align: center;">
+![Fight](resources/documents/Internal-Sequence-Diagram/Fight-Fight.png)
+</div>
 
 ### Heal
-![Heal](resources/Documents/Internal-Sequence-Diagram/Heal-Heal.png)
+This diagram describes the sequence of interactions between the player and the medikit during a heal.
+<div style="text-align: center;">
+![Heal](resources/documents/Internal-Sequence-Diagram/Heal-Heal.png)
+</div>
 
 ### Throw Item
-![ThrowItem](resources/Documents/Internal-Sequence-Diagram/Throw-Item-Throw_Item.png)
+<div style="text-align: center;">
+This diagram describes the sequence of interactions between the player and the alien during a throw item.
+![ThrowItem](resources/documents/Internal-Sequence-Diagram/Throw-Item-Throw_Item.png)
+</div>
 
 ### Throw TNT
-![ThrowTNT](resources/Documents/Internal-Sequence-Diagram/ThrowTNT.png)
+This diagram describes the sequence of interactions between the player and the alien during a throw TNT.
+<div style="text-align: center;">
+![ThrowTNT](resources/documents/Internal-Sequence-Diagram/ThrowTNT.png)
+</div>
 
 
 ---
@@ -221,7 +259,7 @@ Here are the user stories formatted as tables:
 
 ## Unit Test Report
 
-The auto-generated JUnit test report can be found at [this page](/resources/UnittestReport/surefire-report.html).
+The auto-generated JUnit test report can be found at [this page](/resources/UnitTestReport/surefire-report.html).
 
 [**Back to Index**](#index-of-contents)
 

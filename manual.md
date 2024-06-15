@@ -44,7 +44,7 @@ Here you have the options to:
 - Attack: the damage depends on what weapon you have
 - Leave the fight
 - Protect yourself with a **Shielf** if you find one
-- **Elude**
+- **Elude**: you can try to elude the enemy, but it's not always successful
 - Heal yourself using the **Medikit** if you have one
 - Throw a **TNT** to deal more damage
 
@@ -79,9 +79,9 @@ git clone --branch master https://github.com/EDIDS/EDIDS_Proj.git
 ## Technologies used in this project
 
 | Name       | Version | Description                                                                                                                       |
-| ---------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| ---------- |---------| --------------------------------------------------------------------------------------------------------------------------------- |
 | Java       | 20      | Environment and programming language used to develop the application.                                                             |
-| Java swing | ?       | A Graphic User Interface (GUI) widget toolkit for Java                                                                            |
+| Java swing | 2.3.1   | A Graphic User Interface (GUI) widget toolkit for Java                                                                            |
 | JUnit      | 5.10.2  | Framework for automated testing of Java classes                                                                                   |
 | Amazon S3  |         | An Amazon service used to store our data into an Amazon Bucket                                                                    |
 | Gson       | 2.11.0  | Gson is a Java library that can be used to convert Java Objects into their JSON representation. It's used to save or load a game. |
@@ -97,7 +97,7 @@ repository already contains all the configuration files to run gradle scripts.
 
 ---
 
-### AmazonAWS toolkit plugin
+### AmazonAWS connection
 This apllication saves and loads the games into an Amazon S3 bucket. 
 
 The connection works by using two keys related to the admin of that bucket or eventually the other member that have access to it.
@@ -120,5 +120,3 @@ The Extraction game includes a **save** features that allows the player to expor
 
 Any alteration of the exported files may result in unwanted behaviour or sometimes even complete crashes of the application.
 
-
-[**Back to home page**](/Klotski/)
