@@ -132,7 +132,6 @@ public class Game {
         }
 
         story.defaultSetup();
-        //vm.showHomeScreen();
     }
 
     /**
@@ -187,7 +186,6 @@ public class Game {
                     ui.resetActionButtons();
                     ui.resetTitle();
                     vm.showHomeScreen();
-                    //newGame();
                     break;
                 case "Save":
                     try {
@@ -203,7 +201,6 @@ public class Game {
                         ui.resetActionButtons();
                         ui.resetTitle();
                         vm.showHomeScreen();
-                        //newGame();
                     } catch (IOException ex) {
                         vm.showMessage("Impossible to Save", 1000, Color.RED);
                     }

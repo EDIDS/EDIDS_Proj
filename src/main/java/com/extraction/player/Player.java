@@ -298,10 +298,10 @@ public class Player {
 
     /**
      * Removes an item from the player's bag.
+     *
      * @param itemToThrow the item to be removed.
-     * @return the removed item if it was found and is throwable, null otherwise.
      */
-    public Item throwItem(Item itemToThrow) {
+    public void throwItem(Item itemToThrow) {
         Item item = this.findItem(itemToThrow);
             if (item != null && item.isThrowable()) {
                 if(itemToThrow instanceof Weapon) this.throwWeapon();
@@ -309,17 +309,15 @@ public class Player {
                 if(itemToThrow instanceof Key) this.numKeys--;
                 bag_.remove(item);
                 currentWeight_ -= item.getWeight();
-                return item;
             }
-        return null;
     }
 
     /**
      * Removes an item from the player's bag.
+     *
      * @param itemToThrow the name of the item to be removed.
-     * @return the removed item if it was found and is throwable, null otherwise.
      */
-    public Item throwItem(String itemToThrow) {
+    public void throwItem(String itemToThrow) {
         Item item = this.findItem(itemToThrow);
         if (item != null && item.isThrowable()) {
             if(item instanceof Weapon) this.throwWeapon();
@@ -327,9 +325,7 @@ public class Player {
             if(item instanceof Key) this.numKeys--;
             bag_.remove(item);
             currentWeight_ -= item.getWeight();
-            return item;
         }
-        return null;
     }
 
     /**

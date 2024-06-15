@@ -2,13 +2,12 @@ package com.extraction.aliens;
 
 import java.util.Random;
 
-public abstract class Alien
-{
-    /**
-     * This abstract class represents an alien in the game.
-     * It contains information about the alien's health, name, escape chance, and elude chance.
-     * It also contains methods for attacking, taking damage, and getting the escape and elude chances.
-     */
+/**
+ * This abstract class represents an alien in the game.
+ * It contains information about the alien's health, name, escape chance, and elude chance.
+ * It also contains methods for attacking, taking damage, and getting the escape and elude chances.
+ */
+public abstract class Alien {
 
     /** The maximum attack damage of this enemy. */
     public static final int TIER1_MAXIMUM_ATTACK_DAMAGE = 25;

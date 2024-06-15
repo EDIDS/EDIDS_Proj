@@ -134,53 +134,6 @@ public class S3Uploader {
     }
 
     /**
-     * Downloads all games from the S3 bucket.
-     */
-    public void downloadAllGames() {
-        String bucketName = "edidsgamesave";
-        String localDirectoryPath = System.getProperty("user.dir") + "/src/main/java/com/extraction/states/";
-
-        // Check if the directory exists, if not, create it
-        File directory = new File(localDirectoryPath);
-        if (!directory.exists()){
-            directory.mkdirs();
-        }
-
-        ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName);
-        ListObjectsV2Result result;
-        do {
-            result = s3Client.listObjectsV2(req);
-            if (result.getObjectSummaries().isEmpty()) {
-                break;
-            }
-
-            for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
-                String fileName = objectSummary.getKey();
-
-                // Check if the file is a save file
-                if (fileName.endsWith(".json")) {
-                    S3Object s3object = s3Client.getObject(bucketName, fileName);
-                    S3ObjectInputStream inputStream = s3object.getObjectContent();
-
-                    // Save the file to the local directory
-                    File localFile = new File(localDirectoryPath + fileName);
-                    try (FileOutputStream fos = new FileOutputStream(localFile)) {
-                        byte[] read_buf = new byte[1024];
-                        int read_len = 0;
-                        while ((read_len = inputStream.read(read_buf)) > 0) {
-                            fos.write(read_buf, 0, read_len);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            String token = result.getNextContinuationToken();
-            req.setContinuationToken(token);
-        } while (result.isTruncated());
-    }
-
-    /**
      * Gets the maximum save number from the S3 bucket.
      * @return The maximum save number.
      */

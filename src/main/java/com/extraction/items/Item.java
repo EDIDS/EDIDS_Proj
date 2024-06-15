@@ -18,8 +18,8 @@ public abstract class Item {
     };
 
     private String name;
-    private double weight;
-    private boolean throwable;
+    private final double weight;
+    private final boolean throwable;
 
     /**
      * Constructs a new Item with the given name, weight, and throwable status.
