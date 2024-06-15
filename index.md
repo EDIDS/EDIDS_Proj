@@ -55,10 +55,7 @@ In this section, the main diagrams required by the assignment are provided.
 ### Domain Model
 The Domain Model represents the main concepts of the system and the relationships between them. It is a high-level representation of the system's structure and is used to define the scope of the system.
 Here are defined the main classes of the system, such as Player, Room, Item, and Alien, their attributes, operations, and the relationships between them
-<div style="text-align: center;">
-<div style="text-align: center;">
 ![DomainModel](resources/documents/Domain-Model-Diagram.png)
-</div>
 
 ## Design class model
 A Design Class Model is a detailed, structured representation of the software system's classes, interfaces, and their relationships.
@@ -66,30 +63,22 @@ For readability reasons, we decided to split the Design Class Model into thee pa
 
 ### Design Class Model Core
 This part of the Design Class Model represents the core classes of the system, such as Player, Room, Item, Alien, and the main controller, Game.
-<div style="text-align: center;">
 ![DesignClassCore](resources/documents/Design-Class-Model-Core.png)
-</div>
 
 ### Design Class Model Graphics
 This part of the Design Class Model represents the classes related to the graphic interface.
-<div style="text-align: center;">
 ![DesignClassGraphics](resources/documents/Design-Class-Model-Graphics-Design_Class_Model.png)
-</div>
 
 ### Design-Class-Model-Upload
 This part of the Design Class Model represents the classes related to the upload of the game's state.
-<div style="text-align: center;">
 ![DesignClassGraphics](resources/documents/Design-Class-Model-Graphics-Design_Class_Model.png)
-</div>
 
 ---
 
 ## System Sequence Diagram
 This diagram describes the sequence of interactions between external actors and a system for a particular scenario of a use case.
 
-<div style="text-align: center;">
 ![SSD](resources/documents/System-Sequence-Diagram-System_Sequence_Diagram.png)
-</div>
 
 ---
 
@@ -98,45 +87,33 @@ Unlike the System Sequence Diagram, the Internal Sequence Diagram describes the 
 
 ### Attack
 This diagram describes the sequence of interactions between the player and the alien during an attack.
-<div style="text-align: center;">
 ![Attack](resources/documents/Internal-Sequence-Diagram/Attack-Attack.png)
-</div>
 
 ### Collect Item/Add Item
 This diagram describes the sequence of interactions between the player and the item during the collection.
-<div style="text-align: center;">
 ![CollectItem](resources/documents/Internal-Sequence-Diagram/Collect-Item-Add_Item.png)
-</div>
 
 ### Defend
 This diagram describes the sequence of interactions between the player and the alien during a defense.
-<div style="text-align: center;">
 ![Defend](resources/documents/Internal-Sequence-Diagram/Defend-Defend.png)
-</div>
 
 ### Fight
 This diagram describes the sequence of interactions between the player and the alien during a fight.
-<div style="text-align: center;">
 ![Fight](resources/documents/Internal-Sequence-Diagram/Fight-Fight.png)
-</div>
 
 ### Heal
 This diagram describes the sequence of interactions between the player and the medikit during a heal.
-<div style="text-align: center;">
 ![Heal](resources/documents/Internal-Sequence-Diagram/Heal-Heal.png)
-</div>
 
 ### Throw Item
-<div style="text-align: center;">
 This diagram describes the sequence of interactions between the player and the alien during a throw item.
 ![ThrowItem](resources/documents/Internal-Sequence-Diagram/Throw-Item-Throw_Item.png)
-</div>
 
 ### Throw TNT
 This diagram describes the sequence of interactions between the player and the alien during a throw TNT.
-<div style="text-align: center;">
+<center>
 ![ThrowTNT](resources/documents/Internal-Sequence-Diagram/ThrowTNT.png)
-</div>
+</center>
 
 
 ---
