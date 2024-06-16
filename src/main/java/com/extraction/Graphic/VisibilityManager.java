@@ -2,8 +2,6 @@ package com.extraction.Graphic;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * The VisibilityManager class manages the visibility of various UI components in the game.
@@ -11,13 +9,21 @@ import java.awt.event.ActionListener;
  */
 public class VisibilityManager {
     UI ui;
+    private static VisibilityManager instance;
 
     /**
-     * Constructs a new VisibilityManager with the given UI.
+     * Singleton Constructs a new VisibilityManager with the given UI.
      * @param ui The UI instance.
      */
-    public VisibilityManager(UI ui) {
+    private VisibilityManager(UI ui) {
         this.ui = ui;
+    }
+
+    public static VisibilityManager getInstance(UI ui) {
+        if (instance == null) {
+            instance = new VisibilityManager(ui);
+        }
+        return instance;
     }
 
     private void everythingNotVisible() {
@@ -119,11 +125,7 @@ public class VisibilityManager {
     public void showMessage(String message, int timerTime, Color borderColor) {
         ui.setMessageVisible(message, borderColor);
 
-        Timer timer = new Timer(timerTime, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ui.setMessageNotVisible();
-            }
-        });
+        Timer timer = new Timer(timerTime, e -> ui.setMessageNotVisible());
         timer.setRepeats(false);
         timer.restart();
     }

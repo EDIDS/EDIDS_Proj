@@ -13,6 +13,8 @@ import java.util.List;
  * It manages the game window, panels, buttons, and other UI components.
  */
 public class UI {
+    private static UI instance;
+
     private JFrame window;
     private final GridBagConstraints gbc = new GridBagConstraints();
     private final Color background = Color.BLACK;
@@ -76,11 +78,18 @@ public class UI {
     private JLabel messageLabel;
 
     /**
-     * Constructs a new UI with the given ButtonsHandler.
+     * Singleton Constructs a new UI with the given ButtonsHandler.
      * @param bHandler The ButtonsHandler instance.
      */
-    protected UI(Game.ButtonsHandler bHandler) {
+    private UI(Game.ButtonsHandler bHandler) {
         this.bHandler = bHandler;
+    }
+
+    protected static UI getInstance(Game.ButtonsHandler bHandler) {
+        if (instance == null) {
+            instance = new UI(bHandler);
+        }
+        return instance;
     }
 
     // Home GUI

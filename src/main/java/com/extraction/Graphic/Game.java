@@ -19,15 +19,14 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * The Game class is the main class for the game. It sets up the game, creates the UI, and handles user actions.
  */
 public class Game {
     ButtonsHandler bHandler = new ButtonsHandler();
-    UI ui = new UI(bHandler);
-    VisibilityManager vm = new VisibilityManager(ui);
+    UI ui = UI.getInstance(bHandler);
+    VisibilityManager vm = VisibilityManager.getInstance(ui);
     Building building;
     Player player;
     Story story;
@@ -44,7 +43,6 @@ public class Game {
         ui.homeScreen("Extraction");
         ui.gameScreen();
         vm.showHomeScreen();
-        //newGame();
     }
 
     /**
@@ -99,7 +97,6 @@ public class Game {
 
         room4_1.setAlien(runner);
         room4_1.addItem(revolver);
-        //room4_1.addItem(key1);
 
         room2_1.addItem(shield);
 
