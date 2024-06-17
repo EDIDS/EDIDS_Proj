@@ -19,8 +19,8 @@ Below is reported a clickable list of all the section of this page:
 8) [Code](#Code) <br>
 9) [System Test Document](#System-Test-Document) <br>
 10) [Unit Test Report](#Unit-Test-Report) <br>
-11) [Manual](#Manual) <br>
-12) [Contributors](#Contributors) <br>
+11) [Manual](#Manual) 
+12) [Contributors](#Contributors) 
 
 
 ---
