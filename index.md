@@ -9,18 +9,18 @@ of choice.
 
 Below is reported a clickable list of all the section of this page:
 
-1) [Introduction](#Introduction)<br>
-2) [Graphic interface and movement control](#Graphic-interface-and-movement-control)<br>
-3) [The Game](#The-Game)<br>
+1) [Introduction](#Introduction) <br>
+2) [Graphic interface and movement control](#Graphic-interface-and-movement-control) <br>
+3) [The Game](#The-Game) <br>
 4) [Diagrams](#Diagrams)<br>
-5) [System Sequence Diagram](#System-Sequence-Diagram)<br>
-6) [Internal Sequence Diagrams](#Internal-Sequence-Diagrams)<br>
-7) [Specification Document](#Specification-Document)<br>
-8) [Code](#Code)<br>
-9) [System Test Document](#System-Test-Document)<br>
-10) [Unit Test Report](#Unit-Test-Report)<br>
-11) [Manual](#Manual)<br>
-12) [Contributors](#Contributors)<br>
+5) [System Sequence Diagram](#System-Sequence-Diagram) <br>
+6) [Internal Sequence Diagrams](#Internal-Sequence-Diagrams) <br>
+7) [Specification Document](#Specification-Document) <br>
+8) [Code](#Code) <br>
+9) [System Test Document](#System-Test-Document) <br>
+10) [Unit Test Report](#Unit-Test-Report) <br>
+11) [Manual](#Manual) <br>
+12) [Contributors](#Contributors) <br>
 
 
 ---
