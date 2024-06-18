@@ -15,12 +15,11 @@ Below is reported a clickable list of all the section of this page:
 4) [Diagrams](#Diagrams)<br>
 5) [System Sequence Diagram](#System-Sequence-Diagram) <br>
 6) [Internal Sequence Diagrams](#Internal-Sequence-Diagrams) <br>
-7) [Specification Document](#Specification-Document) <br>
-8) [Code](#Code) <br>
-9) [System Test Document](#System-Test-Document) <br>
-10) [Unit Test Report](#Unit-Test-Report) <br>
-11) [Manual](#Manual) 
-12) [Contributors](#Contributors) 
+7) [Code](#Code) <br>
+8) [System Test Document](#System-Test-Document) <br>
+9) [Unit Test Report](#Unit-Test-Report) <br>
+10) [Manual](#Manual)
+11) [Contributors](#Contributors) 
 
 
 ---
@@ -30,7 +29,7 @@ Below is reported a clickable list of all the section of this page:
 
 ---
 
-# Graphic interface and movement control 
+# Graphic interface and movement control
 The graphic interface was created using a framework known as “Swing”.
 Java Swing is a part of Java Foundation Classes (JFC) used for building graphical user interfaces (GUIs) in Java applications. It provides a set of "lightweight" (all-Java language) components that, unlike the Abstract Window Toolkit (AWT) components, do not rely on native peers (platform-specific code). Swing components are platform-independent and more flexible, offering a richer set of GUI components than AWT.
 
@@ -111,9 +110,8 @@ This diagram describes the sequence of interactions between the player and the a
 
 ### Throw TNT
 This diagram describes the sequence of interactions between the player and the alien during a throw TNT.
-<center>
 ![ThrowTNT](resources/documents/Internal-Sequence-Diagram/ThrowTNT.png)
-</center>
+
 
 
 ---
@@ -128,107 +126,7 @@ The entire **code** of this project is hosted on GitHub and the repository can b
 
 ## System Test Document
 
-Here are the user stories formatted as tables:
-
-### User Story 1: Moving to Adjacent Rooms
-
-| **Titolo**          | Movement to Adjacent Rooms                                    |
-|---------------------|---------------------------------------------------------------|
-| **Summary**         | As a player, I want to be able to move to adjacent rooms, so that I can explore the map. |
-| **Pre Condition**   | The player is located in a room on the map.<br>The game is in a state where movement is allowed. |
-| **Post Condition**  | The player’s position is updated if the chosen direction is accessible.<br>An error message is displayed if the chosen direction is inaccessible.<br>The new room is displayed if the movement is successful. |
-| **Flow of Events**  | 1. Display possible directions (North, South, East, West).<br>2. Player chooses a direction.<br>3. Check if the chosen direction is accessible.<br>4. If the direction is inaccessible, display an error message (e.g. "Path Closed").<br>5. If the direction is accessible, update the player's position (increase or decrease coordinate).<br>6. Display the new room if the direction is accessible. |
-| **Expected result** | The game displays possible directions.<br>The player can choose a direction and move to an adjacent room if it is accessible.<br>An error message is displayed if the chosen direction is inaccessible.<br>The player's position is updated correctly for accessible directions.<br>The new room is displayed correctly after a successful move. |
-| **Actual result**   | The game displays possible directions.<br>The player can choose a direction and move to an adjacent room if it is accessible.<br>An error message is displayed if the chosen direction is inaccessible.<br>The player's position is updated correctly for accessible directions.<br>The new room is displayed correctly after a successful move.                       |
-| **Status**          |    **PASSED**                        |
-
-### User Story 2: Picking Up Found Items
-
-| **Titolo**          | Picking Up Found Items                                        |
-|---------------------|---------------------------------------------------------------|
-| **Summary**         | As a player, I want to be able to pick up found items, so that I can use them. |
-| **Pre Condition**   | The player is in a room with one or more items available to be picked up.<br>The player has a bag for storing items. |
-| **Post Condition**  | The item is added to the player’s bag if the bag has enough free weight capacity.<br>An error message is displayed if the item cannot be added due to weight constraints. |
-| **Flow of Events**  | 1. Create a bag to contain items (e.g. List<item>).<br>2. Set the maximum weight the bag can endure (e.g. 100 units).<br>3. Keep track of the bag's current weight.<br>4. Retrieve the weight of the requested item (e.g. 10 units).<br>5. Check if the item's weight is less than or equal to the current free weight of the bag.<br>6. If the item’s weight is within the free weight limit, add the item to the bag.<br>7. If the item’s weight exceeds the free weight limit, display an error message (e.g. "Bag is already full"). |
-| **Expected result** | The player can see the bag's current weight and maximum capacity.<br>Items can be picked up and added to the bag if there is enough free weight capacity.<br>An error message is displayed if an item cannot be added due to exceeding the weight limit. |
-| **Actual result**   | The player can see the bag's current weight and maximum capacity.<br>Items can be picked up and added to the bag if there is enough free weight capacity.<br>An error message is displayed if an item cannot be added due to exceeding the weight limit.                        |
-| **Status**          |    **PASSED**                        |
-
-
-
-### User Story 3: Saving Game's State
-
-| **Titolo**          | Saving Game's State                                           |
-|---------------------|---------------------------------------------------------------|
-| **Summary**         | As a player, I want to be able to save the game's state, so that I can reuse it later. |
-| **Pre Condition**   | The player is in a playable state.<br>The game allows saving the state. |
-| **Post Condition**  | The game's state is saved in a file.<br>The file is uploaded to a cloud service.<br>A success message is displayed if the upload is successful. |
-| **Flow of Events**  | 1. Display save button.<br>2. Gather game's information (e.g., Player's and Building's data).<br>3. Save the gathered data in a file.<br>4. Upload the file to a cloud service (e.g., AWS).<br>5. Display success message if the upload is successful. |
-| **Expected result** | The player sees a save button.<br>The game gathers and saves the required information.<br>The saved data file is uploaded to the cloud.<br>A success message confirms the upload. |
-| **Actual result**   | The player sees a save button.<br>The game gathers and saves the required information.<br>The saved data file is uploaded to the cloud.<br>A success message confirms the upload.                        |
-| **Status**          |    **PASSED**                        |
-
-
-### User Story 4: Attacking the Enemy
-
-| **Titolo**          | Attacking the Enemy                                           |
-|---------------------|---------------------------------------------------------------|
-| **Summary**         | As a player, I want to attack the enemy, so that I can decrease its health. |
-| **Pre Condition**   | The player chooses the Attack action. |
-| **Post Condition**  | The enemy's health is decreased by the player's attack value. |
-| **Flow of Events**  | 1. The player chooses to attack.<br>2. Retrieve player's attack value.<br>3. Decrease enemy's health by the attack value (e.g., attack = 30, enemy's health 50 -> 20). |
-| **Expected result** | The enemy's health decreases according to the player's attack value. |
-| **Actual result**   | The enemy's health decreases according to the player's attack value.                         |
-| **Status**          |    **PASSED**                        |
-
-### User Story 5: Defending Against an Attack
-
-| **Titolo**          | Defending Against an Attack                                   |
-|---------------------|---------------------------------------------------------------|
-| **Summary**         | As a player, I want to defend against an enemy attack, so that I can reduce the damage taken. |
-| **Pre Condition**   | The player chooses the Defend action. |
-| **Post Condition**  | The player's health decreases based on the enemy's attack minus the player's defense. |
-| **Flow of Events**  | 1. The player chooses to defend.<br>2. Retrieve enemy's attack value and player's defense value.<br>3. Decrease enemy's attack by player's defense and decrease player's health by the resulting value (e.g., enemy's attack = 20, defense = 10 -> health 100 -> 90). |
-| **Expected result** | The player's health decreases by the reduced damage amount. |
-| **Actual result**   | The player's health decreases by the reduced damage amount.                        |
-| **Status**          |    **PASSED**                        |
-
-### User Story 6: Curing with a Medkit
-
-| **Titolo**          | Curing with a Medikit                                                                                                                                                                                                        |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Summary**         | As a player, I want to use a medkit to restore my health to its maximum value.                                                                                                                                               |
-| **Pre Condition**   | The player chooses the Cure action.<br>The player has a medikit in the bag.                                                                                                                                                  |
-| **Post Condition**  | The player's health is restored to its maximum value if a medikit is found.<br>An error message is displayed if no medikit is found.                                                                                         |
-| **Flow of Events**  | 1. The player chooses to cure.<br>2. Search the bag for a medikit.<br>3. If a medikit is found, set player's health to its maximum value.<br>4. If no medikit is found, display an error message (e.g., "No medikit found"). |
-| **Expected result** | The player's health is restored to its maximum value if a medikit is found.<br>An error message is displayed if no medikit is found.                                                                                         |
-| **Actual result**   | The player's health is restored to its maximum value if a medikit is found.<br>An error message is displayed if no medikit is found.                                                                                                                                                                                        |
-| **Status**          |    **PASSED**                        |
-
-### User Story 7: Updating Player's Score
-
-| **Titolo**          | Updating Player's Score                                       |
-|---------------------|---------------------------------------------------------------|
-| **Summary**         | As a player, I want my score to be updated based on the combat, so that I can see my progress. |
-| **Pre Condition**   | The combat has ended. |
-| **Post Condition**  | The player's score is updated based on the combat results. |
-| **Flow of Events**  | 1. The combat ends.<br>2. Compute the score based on the fight's data.<br>3. Update the player's score. |
-| **Expected result** | The player's score is updated based on the combat results. |
-| **Actual result**   | The player's score is updated based on the combat results.                        |
-| **Status**          |    **PASSED**                        |
-
-
-### User Story 8: Loading Previous Games
-
-| **Titolo**          | Loading Previous Games                                        |
-|---------------------|---------------------------------------------------------------|
-| **Summary**         | As a player, I want to be able to load previous games, so that I can restart playing them. |
-| **Pre Condition**   | The player is in the game interface.<br>There are saved game files available. |
-| **Post Condition**  | The chosen game's data is loaded and the game resumes from the saved state. |
-| **Flow of Events**  | 1. Display load button.<br>2. Show a list of saved games.<br>3. Get the chosen game's data.<br>4. Load the game's data.<br>5. Display success message if the load is successful. |
-| **Expected result** | The game loads the chosen saved state and a success message is displayed. |
-| **Actual result**   | The game loads the chosen saved state and a success message is displayed.   |
-| **Status**          |    **PASSED**                        |
+You can find the system test document at [this page](resources/documents/System-test-document.pdf).
 
 [**Back to Index**](#index-of-contents)
 

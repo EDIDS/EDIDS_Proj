@@ -19,6 +19,14 @@ During the initial stages of the project, we discussed the plot and specificatio
 
 ## How to play Extraction
 
+You can play the game by running the executable file.
+
+``` batch
+java -jar Extraction_1.0.0.jar
+```
+
+You can download the executable file from the [release page](https://github.com/EDIDS/EDIDS_Proj/releases/tag/Extraction_stable).
+
 When you start the game, this window appears:
 ![StartMenu](resources/images/startmenu.png)
 
